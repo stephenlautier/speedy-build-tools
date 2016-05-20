@@ -34,7 +34,7 @@ gulp.task("ci", (cb) => {
 });
 
 gulp.task("build:copy-dist", () => {
-	return runSeq(["copy-dist:scripts", "copy-dist:dts"]);
+	return $.runSequence(["copy-dist:scripts", "copy-dist:dts"]);
 });
 
 gulp.task("copy-dist:scripts", () => {

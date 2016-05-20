@@ -11,6 +11,7 @@ gulp.task("prepare-release", (cb) => {
 		"build",
 		"test",
 		"bump-version",
+		// todo: find a solution for the docs
 		// "doc",
 		"changelog",
 		cb);
