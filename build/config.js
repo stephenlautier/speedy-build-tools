@@ -1,22 +1,27 @@
-var path = require("path");
 var fs = require("fs");
 
 var pkg = JSON.parse(fs.readFileSync("./package.json", "utf-8"));
-var appRoot = "src";
+var srcRoot = "src";
+var artifactRoot = "_artifact";
 const typings = "typings/index.d.ts";
 
 module.exports = {
-	root: appRoot,
-	output: "dist",
-	artifact: "_artifact",
+	output: {
+		root: "dist"
+	},
 	src: {
-		ts: `${appRoot}/**/*.ts`,
+		root: srcRoot,
+		ts: `${srcRoot}/**/*.ts`,
 		typings: typings
 	},
+	artifact: {
+		root: artifactRoot,
+		amd: `${artifactRoot}/amd`
+	},
 	test: {
-		files: `${appRoot}/**/*.spec.{ts,d.ts}`,
+		files: `${srcRoot}/**/*.spec.{ts,d.ts}`,
 		karmaConfig: "karma.conf.js",
-		output: "_artifact/test/unit",
+		output: `${artifactRoot}/test/unit`,
 		reporters: ["mocha"],
 		browsers: ["Chrome"]
 	},
@@ -28,11 +33,12 @@ module.exports = {
 			"gulp.*",
 			"run-sequence",
 			"del",
-			"browser-sync",
 			"conventional-changelog",
 			"merge2",
 			"karma",
-			"path"
+			"path",
+			"stylelint",
+			"postcss-*"
 		]
 	}
 };
