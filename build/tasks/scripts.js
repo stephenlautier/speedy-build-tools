@@ -16,9 +16,9 @@ gulp.task("compile:ts", () => {
 
 	return $.merge2([
 		tsResult.js
-			.pipe(gulp.dest(`${config.artifact}/amd`)),
+			.pipe(gulp.dest(`${config.artifact.amd}`)),
 		tsResult.dts
-			.pipe(gulp.dest(`${config.artifact}/typings`))
+			.pipe(gulp.dest(`${config.artifact.root}/typings`))
 	]);
 });
 
