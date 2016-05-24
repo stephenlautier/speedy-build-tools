@@ -34,10 +34,11 @@ module.exports = function (config) {
 		},
 
 		typescriptPreprocessor: {
-			// options: require("./tsconfig.json").compilerOptions
 			options: {
 				inlineSourceMap: true,
-				inlineSources: true
+				inlineSources: true,
+				emitDecoratorMetadata: true,
+				experimentalDecorators: true,
 			}
 		},
 		reporters: ["mocha"],
