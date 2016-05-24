@@ -1,4 +1,3 @@
-var path = require("path");
 var conf = require("./build/config");
 
 module.exports = function (config) {
