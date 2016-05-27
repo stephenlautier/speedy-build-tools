@@ -11,12 +11,12 @@ gulp.task("build", (cb) => {
 
 	if (args.isRelease) {
 		return $.runSequence(tasksToRun,
-		"build:copy-dist",
-		cb);
+			"build:copy-dist",
+			cb);
 	}
 
 	return $.runSequence(tasksToRun,
-	cb);
+		cb);
 });
 
 gulp.task("rebuild", (cb) => {
@@ -38,7 +38,7 @@ gulp.task("build:copy-dist", () => {
 });
 
 gulp.task("copy-dist:scripts", () => {
-	return gulp.src(`${config.artifact.amd}/**/*.js`)
+	return gulp.src(`${config.artifact.amd}/**/*.{js,map}`)
 		.pipe(gulp.dest(`${config.output.root}/amd`));
 });
 
