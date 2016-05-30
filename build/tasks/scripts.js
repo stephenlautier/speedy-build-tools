@@ -12,10 +12,12 @@ gulp.task("compile:ts", () => {
 	const tsProject = getTscOptions();
 	const tsResult = gulp.src([config.src.typings, config.src.ts, `!${config.test.files}`])
 		.pipe($.plumber())
+		.pipe($.sourcemaps.init())
 		.pipe($.typescript(tsProject));
 
 	return $.merge2([
 		tsResult.js
+			.pipe($.sourcemaps.write("."))
 			.pipe(gulp.dest(`${config.artifact.amd}`)),
 		tsResult.dts
 			.pipe(gulp.dest(`${config.artifact.root}/typings`))
