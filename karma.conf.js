@@ -25,7 +25,8 @@ module.exports = function (config) {
 		],
 
 		exclude: [
-			"node_modules/@angular/**/*_spec.js"
+			"node_modules/**/*_spec.js",
+			"node_modules/**/*.spec.js",
 		],
 
 		preprocessors: {
