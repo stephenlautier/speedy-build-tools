@@ -22,18 +22,18 @@ System.config({
 		"@angular/core": { main: "index.js", defaultExtension: "js" },
 		"@angular/http": { main: "index.js", defaultExtension: "js" },
 		"@angular/platform-browser": { main: "index.js", defaultExtension: "js" },
-		'@angular/platform-browser-dynamic': { main: 'index.js', defaultExtension: 'js' }
+		"@angular/platform-browser-dynamic": { main: "index.js", defaultExtension: "js" }
 	}
 });
 
-System.import('@angular/platform-browser/src/browser/browser_adapter')
+System.import("@angular/platform-browser/src/browser/browser_adapter")
 	.then(function (browser_adapter) { 
 		browser_adapter.BrowserDomAdapter.makeCurrent(); 
 	})
 	.then(function () {
 		return Promise.all([
-			System.import('@angular/core/testing'),
-			System.import('@angular/platform-browser-dynamic/testing/browser')
+			System.import("@angular/core/testing"),
+			System.import("@angular/platform-browser-dynamic/testing/browser")
 		]);
 	})
 	.then(function (modules) {
