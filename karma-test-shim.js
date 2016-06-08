@@ -14,11 +14,7 @@ System.config({
 	defaultJSExtensions: true,
 	map: {
 		"@angular": "node_modules/@angular",
-		"cachefactory": "node_modules/cachefactory/dist",
-		"rxjs": "node_modules/rxjs",
-		"lodash": "node_modules/lodash",
-		"jasmine-jquery": "node_modules/jasmine-jquery/lib",
-		"jquery": "node_modules/jquery/dist"
+		"rxjs": "node_modules/rxjs"
 	},
 	packages: {
 		"@angular/common": { main: "index.js", defaultExtension: "js" },
@@ -26,9 +22,7 @@ System.config({
 		"@angular/core": { main: "index.js", defaultExtension: "js" },
 		"@angular/http": { main: "index.js", defaultExtension: "js" },
 		"@angular/platform-browser": { main: "index.js", defaultExtension: "js" },
-		'@angular/platform-browser-dynamic': { main: 'index.js', defaultExtension: 'js' },
-		"jasmine-jquery": { main: "jasmine-jquery.js", defaultExtension: "js" },
-		"jquery": { main: "jquery.min.js", defaultExtension: "js" }
+		'@angular/platform-browser-dynamic': { main: 'index.js', defaultExtension: 'js' }
 	}
 });
 
