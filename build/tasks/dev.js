@@ -1,4 +1,5 @@
 var config = require("../config");
+var args = require("../args");
 var gulp = require("gulp");
 var $ = require("gulp-load-plugins")(config.loadPluginsOptions);
 
@@ -12,12 +13,20 @@ var swallowError = function (error) {
 
 gulp.task("watch", () => {
 
-	gulp.watch(`${config.src.ts}`, ["compile:ts"])
-		.on("change", reportChange)
+	if (args.isRelease) {
+		// ts
+		gulp.watch(config.src.ts, () => {
+			return $.runSequence(
+				"compile:ts",
+				"build:copy-dist"
+			);
+		}).on("change", reportChange)
 		.on("error", swallowError);
-	
-	gulp.watch(`${config.test.files}`, ["compile:test"])
-		.on("change", reportChange)
-		.on("error", swallowError);
+	} else {
+		// ts
+		gulp.watch(config.src.ts, ["compile:ts"])
+			.on("change", reportChange)
+			.on("error", swallowError);
+	}
 
 });
