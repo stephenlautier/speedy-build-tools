@@ -15,16 +15,16 @@ gulp.task("watch", () => {
 
 	if (args.isRelease) {
 		// ts
-		gulp.watch(config.src.ts, () => {
+		gulp.watch([config.src.ts, `!${config.test.files}`], () => {
 			return $.runSequence(
 				"compile:ts",
 				"build:copy-dist"
 			);
 		}).on("change", reportChange)
-		.on("error", swallowError);
+			.on("error", swallowError);
 	} else {
 		// ts
-		gulp.watch(config.src.ts, ["compile:ts"])
+		gulp.watch([config.src.ts, `!${config.test.files}`], ["compile:ts"])
 			.on("change", reportChange)
 			.on("error", swallowError);
 	}
