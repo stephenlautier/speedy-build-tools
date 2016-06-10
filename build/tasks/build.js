@@ -14,7 +14,6 @@ gulp.task("build", (cb) => {
 			"build:copy-dist",
 			cb);
 	}
-
 	return $.runSequence(tasksToRun,
 		cb);
 });
@@ -24,7 +23,6 @@ gulp.task("rebuild", (cb) => {
 		return $.runSequence(
 			"clean",
 			"build",
-			"build:copy-dist",
 			cb);
 	}
 	return $.runSequence(
@@ -42,7 +40,7 @@ gulp.task("ci", (cb) => {
 
 gulp.task("build:copy-dist", () => {
 	return gulp.src([
-			`${config.artifact.root}/**/*`,
-			`!${config.test.output}/**/*`])
-		.pipe(gulp.dest(config.output.root));
+		`${config.artifact.root}/**/*`,
+		`!${config.test.output}/**/*`
+	]).pipe(gulp.dest(config.output.root));
 });
