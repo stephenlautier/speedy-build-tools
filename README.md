@@ -19,7 +19,7 @@ OBG angular2 skeleton setup for sdk global, utils, services, providers and clien
 ## Installation
 
 ```
-npm install obg.ng2.sdk.skeleton --save
+npm install @obg/ng2.sdk.skeleton --save
 ```
 
 # Usage
@@ -27,7 +27,7 @@ npm install obg.ng2.sdk.skeleton --save
 ## Register providers
 
 ```ts
-import {SKELETON_PROVIDERS} from "obg.ng2.sdk.skeleton";
+import { SKELETON_PROVIDERS } from "@obg/ng2.sdk.skeleton";
 
 // within bootstrap or AppComponent
 providers: [
@@ -36,7 +36,7 @@ providers: [
 ```
 
 ```ts
-import {SkeletonService} from "obg.ng2.sdk.skeleton";
+import { SkeletonService } from "@obg/ng2.sdk.skeleton";
 
 @Injectable()
 constructor(
