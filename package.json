@@ -1,5 +1,5 @@
 {
-  "name": "obg.ng2.sdk.skeleton",
+  "name": "@obg/ng2.sdk.skeleton",
   "version": "0.0.0",
   "description": "OBG angular2 skeleton setup for sdk global, utils, services, providers and client",
   "main": "dist/amd/index.js",

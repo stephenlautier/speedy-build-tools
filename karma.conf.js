@@ -21,9 +21,9 @@ module.exports = function (config) {
 			{ pattern: "node_modules/rxjs/**/*.js", included: false, watched: false, served: true },
 			{ pattern: "node_modules/rxjs/**/*.js.map", included: false, watched: false, served: true },
 			{ pattern: "node_modules/systemjs/dist/system-polyfills.js", included: false, watched: false, served: true }, // PhantomJS2 (and possibly others) might require it
-			{ pattern: "node_modules/obg.ng2.*/dist/**/*.js", included: false, watched: false, served: true },
-			{ pattern: "node_modules/obg.ng2.*/dist/**/*.js.map", included: false, watched: false, served: true },
-			
+			{ pattern: "node_modules/@obg/*/dist/**/*.js", included: false, watched: false, served: true },
+			{ pattern: "node_modules/@obg/*/dist/**/*.js.map", included: false, watched: false, served: true },
+
 			{ pattern: conf.src.ts, included: false, watched: true }, // source files
 			"karma-test-shim.js"
 		],
@@ -36,7 +36,7 @@ module.exports = function (config) {
 		preprocessors: {
 			"src/**/*.ts": ["typescript"]
 		},
-		
+
 		typescriptPreprocessor: {
 			options: {
 				inlineSourceMap: true,
