@@ -4,21 +4,17 @@ var gulp = require("gulp");
 var $ = require("gulp-load-plugins")(config.loadPluginsOptions);
 
 gulp.task("watch", () => {
-	if (args.isRelease) {
-		// ts
-		gulp.watch([config.src.ts, `!${config.test.files}`], () => {
-			return $.runSequence(
-				"compile:ts",
-				"build:copy-dist"
-			);
-		}).on("change", reportChange)
-			.on("error", swallowError);
-	} else {
-		// ts
-		gulp.watch([config.src.ts, `!${config.test.files}`], ["compile:ts"])
-			.on("change", reportChange)
-			.on("error", swallowError);
-	}
+	// ts/html
+	gulp.watch([config.src.ts, config.src.html, `!${config.test.files}`], () => {
+		if (!args.isRelease) {
+			return $.runSequence("scripts");
+		}
+		return $.runSequence(
+			"scripts",
+			"build:copy-dist"
+		);
+	}).on("change", reportChange)
+		.on("error", swallowError);
 });
 
 function reportChange(event) {
