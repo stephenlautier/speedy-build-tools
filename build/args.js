@@ -21,5 +21,5 @@ module.exports = {
 	versionSuffix: argv.versionSuffix.toLowerCase(),
 	isRelease: argv.rel,
 	reporter: argv.reporter,
-	browser: argv.browser,
+	browser: argv.browser
 };
