@@ -5,7 +5,7 @@ var argv = yargs
 	.alias("rel", "release")
 	.default("rel", false)
 
-	.choices("bump", "major|minor|patch|prerelease".split("|"))
+	.choices("bump", ["major", "minor", "patch", "prerelease"])
 	.default("bump", "patch")
 
 	.default("versionSuffix", "rc")
