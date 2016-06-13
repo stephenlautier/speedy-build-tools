@@ -10,7 +10,9 @@ var argv = yargs
 
 	.default("versionSuffix", "rc")
 	.default("reporter", config.test.reporters)
+
 	.default("browser", config.test.browsers)
+	.array("browser")
 
 	.argv;
 
@@ -19,5 +21,5 @@ module.exports = {
 	versionSuffix: argv.versionSuffix.toLowerCase(),
 	isRelease: argv.rel,
 	reporter: argv.reporter,
-	browser: [].concat(argv.browser),
+	browser: argv.browser,
 };
