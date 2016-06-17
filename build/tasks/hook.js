@@ -6,7 +6,7 @@ var guppy = $.gitGuppy(gulp);
 
 gulp.task("pre-commit", () => {
 	return guppy.stream("pre-commit")
-		.pipe($.filter([config.src.ts, `!${config.test.files}`]))
+		.pipe($.filter(config.src.ts))
 		.pipe($.tslint())
 		.pipe($.tslint.report($.tslintStylish, {
 			emitError: true,
