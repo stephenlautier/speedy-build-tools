@@ -5,7 +5,7 @@ var $ = require("gulp-load-plugins")(config.loadPluginsOptions);
 
 gulp.task("watch", () => {
 	// ts/html
-	gulp.watch([config.src.ts, config.src.html, `!${config.test.files}`], () => {
+	gulp.watch([config.src.ts, `!${config.test.files}`], () => {
 		if (!args.isRelease) {
 			return $.runSequence("scripts");
 		}
