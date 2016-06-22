@@ -5,6 +5,10 @@ var $ = require("gulp-load-plugins")(config.loadPluginsOptions);
 
 gulp.task("watch", () => {
 	// ts/html
+	
+	// used to stop task errors from exiting watch process
+	args.bubbleError = false;
+
 	gulp.watch([config.src.ts, `!${config.test.files}`], () => {
 		if (!args.isRelease) {
 			return $.runSequence("scripts");
