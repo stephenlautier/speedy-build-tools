@@ -15,9 +15,8 @@ gulp.task("compile:ts", () => {
 		.pipe($.plumber())
 		.pipe($.sourcemaps.init())
 		.pipe($.typescript(tsProject))
-		.on("error", function () {
-			// bubbleError argument of true or undefined will exit the process
-			if (args.bubbleError !== false) {
+		.on("error", () => {
+			if (!args.continueOnError) {
 				process.exit(1);
 			}
 		});
