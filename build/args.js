@@ -14,6 +14,8 @@ var argv = yargs
 	.default("browser", config.test.browsers)
 	.array("browser")
 
+	.default("continueOnError", false)
+
 	.argv;
 
 module.exports = {
@@ -21,5 +23,6 @@ module.exports = {
 	versionSuffix: argv.versionSuffix.toLowerCase(),
 	isRelease: argv.rel,
 	reporter: argv.reporter,
-	browser: argv.browser
+	browser: argv.browser,
+	continueOnError: argv.continueOnError
 };

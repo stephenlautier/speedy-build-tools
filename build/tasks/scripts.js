@@ -1,6 +1,7 @@
 var config = require("../config");
 var gulp = require("gulp");
 var $ = require("gulp-load-plugins")(config.loadPluginsOptions);
+var args = require("../args");
 
 gulp.task("scripts", (cb) => {
 	return $.runSequence(
@@ -13,7 +14,12 @@ gulp.task("compile:ts", () => {
 	const tsResult = gulp.src([config.src.typings, config.src.ts, `!${config.test.files}`])
 		.pipe($.plumber())
 		.pipe($.sourcemaps.init())
-		.pipe($.typescript(tsProject));
+		.pipe($.typescript(tsProject))
+		.on("error", () => {
+			if (!args.continueOnError) {
+				process.exit(1);
+			}
+		});
 
 	return $.merge2([
 		tsResult.js
