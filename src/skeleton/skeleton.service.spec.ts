@@ -6,7 +6,10 @@ import {
 	beforeEach,
 	beforeEachProviders
 } from "@angular/core/testing";
+
 import { SkeletonService } from "./skeleton.service";
+
+
 
 describe("SkeletonService", () => {
 	beforeEachProviders(() => [SkeletonService]);
