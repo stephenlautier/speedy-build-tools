@@ -4,6 +4,21 @@
 		"node_modules/@obg/fe.tools.tslint/dist/amd/rules"
 	],
 	"rules": {
+		"filename-suffix": [
+			true,
+			"spec",
+			"mock"
+		],
+		"multiline-constructor-params": true,
+		"no-duplicate-imports": true,
+		"import-vendors-first": [
+			true,
+			"@obg"
+		],
+		"effects-selector-suffix": true,
+		"seperator-between-imports": true,
+		"linebreak-after-classname": true,
+		"linebreak-after-method": true,
 		"import-destructuring-spacing": true,
 		"class-name": true,
 		"comment-format": [
@@ -24,21 +39,6 @@
 			true,
 			140
 		],
-		"filename-suffix": [
-			true,
-			"spec",
-			"mock"
-		],
-		"multiline-constructor-params": true,
-		"no-duplicate-imports": true,
-		"import-vendors-first": [
-			true,
-			"@obg"
-		],
-		"effects-selector-suffix": true,
-		"seperator-between-imports": true,
-		"linebreak-after-classname": true,
-		"linebreak-after-method": true,
 		"member-ordering": [
 			true,
 			{
