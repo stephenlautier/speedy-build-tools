@@ -39,6 +39,7 @@
     "es6-module-loader": "^0.17.11",
     "es6-shim": "^0.35.1",
     "git-guppy": "^1.2.1",
+	"guppy-pre-commit": "^0.3.0",
     "gulp": "^3.9.1",
     "gulp-bump": "^2.1.0",
     "gulp-filter": "^4.0.0",
