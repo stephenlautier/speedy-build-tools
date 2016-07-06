@@ -9,8 +9,6 @@ import {
 
 import { SkeletonService } from "./skeleton.service";
 
-
-
 describe("SkeletonService", () => {
 	beforeEachProviders(() => [SkeletonService]);
 	beforeEach(() => {
