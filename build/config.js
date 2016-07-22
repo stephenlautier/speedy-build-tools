@@ -31,6 +31,7 @@ module.exports = {
 		pattern: [
 			"gulp-*",
 			"gulp.*",
+			"git-guppy",
 			"run-sequence",
 			"del",
 			"conventional-changelog",

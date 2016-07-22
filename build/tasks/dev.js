@@ -1,23 +1,29 @@
 var config = require("../config");
+var args = require("../args");
 var gulp = require("gulp");
 var $ = require("gulp-load-plugins")(config.loadPluginsOptions);
 
-var reportChange = function (event) {
-	console.log(`File ${event.path} was ${event.type}, running tasks...`);
-};
-
-var swallowError = function (error) {
-	console.log($.util.colors.red(`Error occurred while running watched task...`));
-};
-
 gulp.task("watch", () => {
+	// ts/html
 
-	gulp.watch(`${config.src.ts}`, ["compile:ts"])
-		.on("change", reportChange)
-		.on("error", swallowError);
-	
-	gulp.watch(`${config.test.files}`, ["compile:test"])
-		.on("change", reportChange)
-		.on("error", swallowError);
+	args.continueOnError = true;
 
+	gulp.watch([config.src.ts, `!${config.test.files}`], () => {
+		if (!args.isRelease) {
+			return $.runSequence("scripts");
+		}
+		return $.runSequence(
+			"scripts",
+			"build:copy-dist"
+		);
+	}).on("change", reportChange)
+		.on("error", swallowError);
 });
+
+function reportChange(event) {
+	$.util.log(`File ${event.path} was ${event.type}, running tasks...`);
+}
+
+function swallowError(error) {
+	$.util.log($.util.colors.red(`Error occurred while running watched task. Error details: ${error}`));
+}

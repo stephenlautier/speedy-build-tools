@@ -1,4 +1,4 @@
-import {SkeletonService} from "./skeleton.service";
+import { SkeletonService } from "./skeleton.service";
 
 export * from "./skeleton.service";
 

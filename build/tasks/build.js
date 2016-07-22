@@ -14,12 +14,17 @@ gulp.task("build", (cb) => {
 			"build:copy-dist",
 			cb);
 	}
-
 	return $.runSequence(tasksToRun,
 		cb);
 });
 
 gulp.task("rebuild", (cb) => {
+	if (args.isRelease) {
+		return $.runSequence(
+			"clean",
+			"build",
+			cb);
+	}
 	return $.runSequence(
 		"clean:artifact",
 		"build",
@@ -34,15 +39,8 @@ gulp.task("ci", (cb) => {
 });
 
 gulp.task("build:copy-dist", () => {
-	return $.runSequence(["copy-dist:scripts", "copy-dist:dts"]);
-});
-
-gulp.task("copy-dist:scripts", () => {
-	return gulp.src(`${config.artifact.amd}/**/*.{js,map}`)
-		.pipe(gulp.dest(`${config.output.root}/amd`));
-});
-
-gulp.task("copy-dist:dts", () => {
-	return gulp.src(`${config.artifact.root}/typings/**/*.d.ts`)
-		.pipe(gulp.dest(`${config.output.root}/typings`));
+	return gulp.src([
+		`${config.artifact.root}/**/*`,
+		`!${config.test.output}/**/*`
+	]).pipe(gulp.dest(config.output.root));
 });
