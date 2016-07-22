@@ -1,6 +1,8 @@
 {
+	"rulesDirectory": [
 		"node_modules/codelyzer",
 		"node_modules/@obg/fe.tools.tslint/dist/amd/rules"
+	],
 	"rules": {
 		"filename-suffix": [
 			true,
