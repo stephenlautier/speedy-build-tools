@@ -19,6 +19,11 @@
 		"seperator-between-imports": true,
 		"linebreak-after-classname": true,
 		"linebreak-after-method": true,
+		"no-linebreak-after-decorators": true,
+		"no-linebreak-between-vendors": [
+			true,
+			"@obg"
+		],
 		"import-destructuring-spacing": true,
 		"class-name": true,
 		"comment-format": [
