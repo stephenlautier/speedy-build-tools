@@ -10,4 +10,5 @@ export class SkeletonService {
 			(<any>console)[logType](message);
 		}
 	}
+
 }
