@@ -22,7 +22,7 @@ module.exports = {
 		files: `${srcRoot}/**/*.spec.{ts,d.ts}`,
 		karmaConfig: "karma.conf.js",
 		output: `${artifactRoot}/test/unit`,
-		reporters: ["mocha"],
+		reporters: ["nyan"],
 		browsers: ["Chrome"]
 	},
 	doc: "./doc",

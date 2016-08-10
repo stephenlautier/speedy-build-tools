@@ -1,7 +1,6 @@
 var config = require("../config");
 var gulp = require("gulp");
 var $ = require("gulp-load-plugins")(config.loadPluginsOptions);
-
 var args = require("../args");
 
 gulp.task("test", (cb) => {
@@ -21,7 +20,7 @@ function runTests(singleRun, cb) {
 		reporters: args.reporter,
 		browsers: args.browser
 	}, (code) => {
-		
+
 		// make sure failed karma tests cause gulp to exit non-zero
 		if (code === 1) {
 			$.util.log($.util.colors.red("------- Error: unit test failed -------"));
