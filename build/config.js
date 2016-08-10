@@ -37,7 +37,6 @@ module.exports = {
 			"conventional-changelog",
 			"merge2",
 			"karma",
-			"karma-*",
 			"path",
 			"stylelint",
 			"postcss-*"
