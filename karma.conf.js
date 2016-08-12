@@ -6,7 +6,7 @@ module.exports = function (config) {
 		frameworks: ["jasmine"],
 
 		files: [
-			"node_modules/es6-shim/es6-shim.js",
+			"node_modules/core-js/client/core.min.js",
 			"node_modules/zone.js/dist/zone.js",
 			"node_modules/zone.js/dist/async-test.js",
 			"node_modules/zone.js/dist/fake-async-test.js",
