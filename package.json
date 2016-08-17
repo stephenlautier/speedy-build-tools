@@ -72,7 +72,7 @@
     "typedoc": "^0.4.4",
     "typescript": "^2.0.0",
     "yargs": "^4.7.1",
-    "zone.js": "^0.6.12"
+    "zone.js": "0.6.12"
   },
   "typings": "dist/typings/index.d.ts"
 }
