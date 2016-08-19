@@ -3,12 +3,23 @@ var gulp = require("gulp");
 var $ = require("gulp-load-plugins")(config.loadPluginsOptions);
 var args = require("../args");
 
-gulp.task("test", (cb) => {
+gulp.task("test", ["compile:test"], (cb) => {
 	runTests(true, cb);
 });
 
-gulp.task("tdd", (cb) => {
+gulp.task("tdd", ["compile:test"], (cb) => {
 	runTests(false, cb);
+});
+
+gulp.task("compile:test", () => {
+	const tsProject = getTscOptions();
+	return gulp.src([config.src.typings, config.test.files])
+		.pipe($.typescript(tsProject))
+		.on("error", () => {
+			if (!args.continueOnError) {
+				process.exit(1);
+			}
+		});
 });
 
 function runTests(singleRun, cb) {
@@ -28,4 +39,10 @@ function runTests(singleRun, cb) {
 		}
 		cb();
 	}).start();
+}
+
+function getTscOptions() {
+	return $.typescript.createProject("tsconfig.json", {
+		typescript: require("typescript")
+	});
 }
