@@ -23,7 +23,6 @@ gulp.task("compile:test", () => {
 });
 
 function runTests(singleRun, cb) {
-
 	new $.karma.Server({
 		configFile: $.path.join(__dirname, `../../${config.test.karmaConfig}`),
 		singleRun: singleRun,
