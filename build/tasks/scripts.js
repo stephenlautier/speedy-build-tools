@@ -10,11 +10,10 @@ gulp.task("scripts", (cb) => {
 });
 
 gulp.task("compile:ts", () => {
-	const tsProject = getTscOptions();
 	const tsResult = gulp.src([config.src.typings, config.src.ts, `!${config.test.files}`])
 		.pipe($.plumber())
 		.pipe($.sourcemaps.init())
-		.pipe($.typescript(tsProject))
+		.pipe($.typescript(getTscOptions()))
 		.on("error", () => {
 			if (!args.continueOnError) {
 				process.exit(1);
