@@ -27,5 +27,5 @@ module.exports = {
 	reporter: argv.reporter,
 	browser: argv.browser,
 	continueOnError: argv.continueOnError,
-	attachOnStopHandlers: argv._.length && argv._[0] === "test"
+	attachOnStopHandlers: argv._.length && (argv._[0] === "test" || argv._[0] === "ci")
 };
