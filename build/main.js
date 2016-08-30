@@ -9,8 +9,7 @@ require("require-dir")("./tasks");
 /* Fixes issue where gulp test process never ends after finishing
  * running the tests.
  */
-if (args.attachOnStopHandlers) {
-	
+if (args.attachOnStopHandlers) {	
 	gulp.on("stop", () => process.exit(0));
 
 	gulp.on("err", () => process.exit(1));
