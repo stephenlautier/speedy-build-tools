@@ -3,10 +3,6 @@ var gulp = require("gulp");
 var $ = require("gulp-load-plugins")(config.loadPluginsOptions);
 var args = require("../args");
 
-gulp.on("stop", () => process.exit(0));
-
-gulp.on("err", () => process.exit(1));
-
 gulp.task("test", ["compile:test"], (cb) => {
 	runTests(true, cb);
 });
