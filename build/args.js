@@ -16,6 +16,8 @@ var argv = yargs
 
 	.default("continueOnError", false)
 
+	.default("attachOnStopHandlers", false)
+
 	.argv;
 
 module.exports = {
@@ -24,5 +26,6 @@ module.exports = {
 	isRelease: argv.rel,
 	reporter: argv.reporter,
 	browser: argv.browser,
-	continueOnError: argv.continueOnError
+	continueOnError: argv.continueOnError,
+	attachOnStopHandlers: argv._.length && argv._[0] === "test"
 };
