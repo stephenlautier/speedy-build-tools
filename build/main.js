@@ -1,9 +1,19 @@
 var gulp = require("gulp");
 var gutil = require("gulp-util");
 
+var args = require("./args");
 var config = require("./config")
 
 require("require-dir")("./tasks");
+
+/* Fixes issue where gulp test process never ends after finishing
+ * running the tests.
+ */
+if (args.attachOnStopHandlers) {	
+	gulp.on("stop", () => process.exit(0));
+
+	gulp.on("err", () => process.exit(1));
+}
 
 gulp.task("default", () => {
 
