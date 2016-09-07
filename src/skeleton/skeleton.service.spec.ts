@@ -1,25 +1,30 @@
-import {
-	it,
-	inject,
-	describe,
-	expect,
-	beforeEach,
-	beforeEachProviders
-} from "@angular/core/testing";
+import { TestBed, inject } from "@angular/core/testing";
 
 import { SkeletonService } from "./skeleton.service";
 
 describe("SkeletonService", () => {
-	beforeEachProviders(() => [SkeletonService]);
+
+	let skeletonService: SkeletonService;
+
+	beforeEach(() => TestBed.configureTestingModule({
+		providers: [
+			SkeletonService
+		]
+	}));
+
+	beforeEach(inject([
+		SkeletonService
+	], (_skeletonService: SkeletonService) => {
+		skeletonService = _skeletonService;
+	}));
+
 	beforeEach(() => {
 		spyOn(console, "log");
 	});
 
-	it("should log successfully", inject([
-		SkeletonService
-	], (logger: SkeletonService) => {
+	it("should log successfully", () => {
 		let message = "Hello";
-		logger.log("log", message);
+		skeletonService.log("log", message);
 		expect(console.log).toHaveBeenCalledWith(message);
-	}));
+	});
 });
