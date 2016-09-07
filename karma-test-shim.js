@@ -9,7 +9,7 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 100;
 // we will call `__karma__.start()` later, once all the specs are loaded.
 __karma__.loaded = function () { };
 
-System.config({
+SystemJS.config({
 	baseURL: "/base/",
 	defaultJSExtensions: true,
 	paths: {
@@ -44,7 +44,7 @@ System.config({
 	}
 });
 
-System.import("test/test-setup")
+SystemJS.import("test/test-setup")
 	.then(function (util) {
 		return Promise.all(
 			Object.keys(window.__karma__.files)

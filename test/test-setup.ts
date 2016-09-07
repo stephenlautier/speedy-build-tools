@@ -22,5 +22,5 @@ export function file2moduleName(filePath: string) {
 
 // import module path
 export function importModules(path: string) {
-	return System.import(path);
+	return SystemJS.import(path);
 }
