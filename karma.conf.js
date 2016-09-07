@@ -23,6 +23,8 @@ module.exports = function (config) {
 			"node_modules/intl/locale-data/jsonp/en.js",
 			// phantomJS2 (and possibly others) might require it
 			{ pattern: "node_modules/systemjs/dist/system-polyfills.js", included: false, watched: false, served: true },
+			{ pattern: "node_modules/reflect-metadata/**/*.js.map", included: false, watched: false, served: true },
+			{ pattern: "node_modules/intl/**/*.js.map", included: false, watched: false, served: true },
 
 			// vendors - package vendors here...
 
