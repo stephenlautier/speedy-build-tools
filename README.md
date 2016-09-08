@@ -103,6 +103,12 @@ Spawns test runner and keep watching for changes.
 gulp tdd
 ```
 
+### Link package
+*NPM Link + Typings install*
+```bash
+npm run obg-link ng2.common
+```
+
 
 ## Preparation for Release
 
