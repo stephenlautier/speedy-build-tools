@@ -62,12 +62,10 @@ module.exports = function (config) {
 				experimentalDecorators: true,
 			}
 		},
-		reporters: ["mocha"],
 		port: 9876,
 		colors: true,
 		logLevel: config.LOG_INFO,
 		autoWatch: true,
-		browsers: ["Chrome"],
 		singleRun: false
 	})
 }
