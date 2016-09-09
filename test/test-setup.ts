@@ -9,18 +9,19 @@ TestBed.initTestEnvironment(
 	BrowserDynamicTestingModule,
 	platformBrowserDynamicTesting()
 );
-export function onlySpecFiles(path: string) {
+
+export function onlySpecFiles(path: string): boolean {
 	return /\.spec\.js$/.test(path);
 }
 
 // normalize paths to module names
-export function file2moduleName(filePath: string) {
+export function file2moduleName(filePath: string): string {
 	return filePath.replace(/\\/g, "/")
 		.replace(/^\/base\//, "")
 		.replace(/\.js/, "");
 }
 
 // import module path
-export function importModules(path: string) {
+export function importModules(path: string): Promise<any> {
 	return SystemJS.import(path);
 }
