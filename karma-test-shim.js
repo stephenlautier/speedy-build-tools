@@ -50,7 +50,7 @@ SystemJS.import("test/test-setup")
 			Object.keys(window.__karma__.files)
 				.filter(util.onlySpecFiles)
 				.map(util.file2moduleName)
-				.map(util.importModules)
+				.map(importModules)
 		);
 	})
 	.then(function () {
@@ -58,3 +58,7 @@ SystemJS.import("test/test-setup")
 	}, function (error) {
 		__karma__.error(error.name + ": " + error.message);
 	});
+
+function importModules(path) {
+	return SystemJS.import(path);
+}

@@ -20,8 +20,3 @@ export function file2moduleName(filePath: string): string {
 		.replace(/^\/base\//, "")
 		.replace(/\.js/, "");
 }
-
-// import module path
-export function importModules(path: string): Promise<any> {
-	return SystemJS.import(path);
-}
