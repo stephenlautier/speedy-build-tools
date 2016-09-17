@@ -65,15 +65,13 @@ SystemJS.import("test/test-setup")
 			Object.keys(window.__karma__.files)
 				.filter(util.onlySpecFiles)
 				.map(util.file2moduleName)
-				.map(importModules)
+				.map(function (path) {
+					return System.import(path);
+				})
 		);
 	})
 	.then(function () {
-		__karma__.start();
-	}, function (error) {
-		__karma__.error(error.name + ": " + error.message);
-	});
-
-function importModules(path) {
-	return SystemJS.import(path);
-}
+	__karma__.start();
+}, function (error) {
+	__karma__.error(error.name + ": " + error.message);
+});
