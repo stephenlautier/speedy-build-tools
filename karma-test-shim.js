@@ -31,16 +31,31 @@ SystemJS.config({
 		"@angular/platform-browser-dynamic/testing": "npm:@angular/platform-browser-dynamic/bundles/platform-browser-dynamic-testing.umd.js",
 		"@angular/http/testing": "npm:@angular/http/bundles/http-testing.umd.js",
 
+		// skeleton vendors - DO NOT TOUCH UNLESS FROM SKELETON.
+		"@obg": "npm:@obg",
 		"rxjs": "npm:rxjs",
 		"lodash": "npm:lodash",
 		"moment": "npm:moment/min",
-		"cachefactory": "npm:cachefactory/dist"
+		"cachefactory": "npm:cachefactory/dist",
+		"raven-js": "npm:raven-js/dist",
+		"ng2-translate": "npm:ng2-translate"
+
+		// vendors - package vendors here...
+
 	},
 	packages: {
+		// skeleton vendors - DO NOT TOUCH UNLESS FROM SKELETON.
 		"lodash": { main: "index.js", defaultExtension: "js" },
 		"moment": { main: "moment-with-locales.js", defaultExtension: "js" },
 		"cachefactory": { main: "cachefactory.js", defaultExtension: "js" },
-		"rxjs": { main: "Rx.js", defaultExtension: "js" }
+		"rxjs": { main: "Rx.js", defaultExtension: "js" },
+		"raven-js": { main: "raven.min.js", defaultExtension: "js" },
+		"ng2-translate": { main: "ng2-translate.js", defaultExtension: "js" }
+
+		// obg
+
+		// vendors - package vendors here...
+
 	}
 });
 

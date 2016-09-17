@@ -26,8 +26,6 @@ module.exports = function (config) {
 			{ pattern: "node_modules/reflect-metadata/**/*.js.map", included: false, watched: false, served: true },
 			{ pattern: "node_modules/intl/**/*.js.map", included: false, watched: false, served: true },
 
-			// vendors - package vendors here...
-
 			// skeleton vendors - DO NOT TOUCH UNLESS FROM SKELETON.
 			{ pattern: "node_modules/rxjs/**/*.js", included: false, watched: false },
 			{ pattern: "node_modules/rxjs/**/*.js.map", included: false, watched: false },
@@ -37,6 +35,8 @@ module.exports = function (config) {
 			// obg
 			{ pattern: "node_modules/@obg/*/dist/**/*.js", included: false, watched: false, served: true },
 			{ pattern: "node_modules/@obg/*/dist/**/*.js.map", included: false, watched: false, served: true },
+
+			// vendors - package vendors here...
 
 			// source
 			{ pattern: conf.src.ts, included: false, watched: true },
