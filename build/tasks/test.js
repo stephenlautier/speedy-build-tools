@@ -12,7 +12,7 @@ gulp.task("tdd", ["compile:test"], (cb) => {
 });
 
 gulp.task("compile:test", () => {
-	return gulp.src([config.src.typings, config.test.files])
+	return gulp.src([config.src.typings, config.test.files, config.test.setup])
 		.pipe($.typescript(getTscOptions()))
 		.on("error", () => {
 			if (!args.continueOnError) {
