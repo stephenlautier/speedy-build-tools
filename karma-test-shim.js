@@ -71,7 +71,7 @@ SystemJS.import("test/test-setup")
 		);
 	})
 	.then(function () {
-	__karma__.start();
-}, function (error) {
-	__karma__.error(error.name + ": " + error.message);
-});
+		__karma__.start();
+	}, function (error) {
+		__karma__.error(error.name + ": " + error.message);
+	});
