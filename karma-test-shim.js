@@ -66,7 +66,7 @@ SystemJS.import("test/test-setup")
 				.filter(util.onlySpecFiles)
 				.map(util.file2moduleName)
 				.map(function (path) {
-					return System.import(path);
+					return SystemJS.import(path);
 				})
 		);
 	})
