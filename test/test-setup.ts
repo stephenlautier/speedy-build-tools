@@ -10,6 +10,8 @@ TestBed.initTestEnvironment(
 	platformBrowserDynamicTesting()
 );
 
+beforeEach(() => TestBed.resetTestingModule());
+
 export function onlySpecFiles(path: string): boolean {
 	return /\.spec\.js$/.test(path);
 }
