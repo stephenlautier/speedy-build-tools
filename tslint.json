@@ -16,7 +16,7 @@
 			"@obg"
 		],
 		"effects-selector-suffix": true,
-		"seperator-between-imports": true,
+		"seperator-between-imports": false,
 		"linebreak-after-classname": true,
 		"linebreak-after-method": true,
 		"no-linebreak-after-decorators": true,
