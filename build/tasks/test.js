@@ -12,8 +12,9 @@ gulp.task("tdd", ["compile:test"], (cb) => {
 });
 
 gulp.task("compile:test", () => {
+	const tsProject = getTscOptions();
 	return gulp.src([config.src.typings, config.test.files, config.test.setup])
-		.pipe($.typescript(getTscOptions()))
+		.pipe(tsProject())
 		.on("error", () => {
 			if (!args.continueOnError) {
 				process.exit(1);
