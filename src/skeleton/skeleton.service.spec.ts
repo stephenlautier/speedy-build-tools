@@ -1,4 +1,4 @@
-import { TestBed, inject } from "@angular/core/testing";
+import { TestBed } from "@angular/core/testing";
 
 import { SkeletonService } from "./skeleton.service";
 
@@ -12,11 +12,9 @@ describe("SkeletonService", () => {
 		]
 	}));
 
-	beforeEach(inject([
-		SkeletonService
-	], (_skeletonService: SkeletonService) => {
-		skeletonService = _skeletonService;
-	}));
+	beforeEach(() => {
+		skeletonService = TestBed.get(SkeletonService);
+	});
 
 	beforeEach(() => {
 		spyOn(console, "log");
