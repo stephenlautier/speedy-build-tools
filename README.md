@@ -24,17 +24,20 @@ npm install @obg/ng2.sdk.skeleton --save
 
 # Usage
 
-## Register providers
+## Register module
 
 ```ts
-import { SKELETON_PROVIDERS } from "@obg/ng2.sdk.skeleton";
+import { SkeletonModule } from "@obg/ng2.sdk.skeleton";
 
-// within bootstrap or AppComponent
-providers: [
-	SKELETON_PROVIDERS
-]
+@NgModule({
+	imports: [SkeletonModule]
+})
+export class AppModule {
+
+}
 ```
 
+## Consuming
 ```ts
 import { SkeletonService } from "@obg/ng2.sdk.skeleton";
 
@@ -101,6 +104,12 @@ gulp watch
 Spawns test runner and keep watching for changes.
 ```
 gulp tdd
+```
+
+### Link package
+*NPM Link + Typings install*
+```bash
+npm run obg-link ng2.common
 ```
 
 

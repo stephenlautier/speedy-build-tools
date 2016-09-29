@@ -20,8 +20,8 @@ module.exports = {
 	},
 	test: {
 		files: `${srcRoot}/**/*.spec.{ts,d.ts}`,
+		setup: "test/test-setup.ts",
 		karmaConfig: "karma.conf.js",
-		output: `${artifactRoot}/test/unit`,
 		reporters: ["nyan"],
 		browsers: ["Chrome"]
 	},

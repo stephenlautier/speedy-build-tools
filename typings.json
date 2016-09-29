@@ -1,10 +1,8 @@
 {
 	"name": "obg.ng2.sdk.skeleton",
 	"main": "dist/typings/index.d.ts",
-	"globalDependencies": {
-		"core-js": "registry:dt/core-js#0.0.0+20160725163759"
-	},
 	"globalDevDependencies": {
+		"core-js": "registry:dt/core-js#0.0.0+20160725163759",
 		"jasmine": "registry:dt/jasmine#2.2.0+20160412134438"
 	}
 }
