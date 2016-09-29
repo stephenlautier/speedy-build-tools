@@ -26,6 +26,5 @@ module.exports = {
 	isRelease: argv.rel,
 	reporter: argv.reporter,
 	browser: argv.browser,
-	continueOnError: argv.continueOnError,
-	attachOnStopHandlers: argv._.length && (argv._[0] === "test" || argv._[0] === "ci")
+	continueOnError: argv.continueOnError
 };
