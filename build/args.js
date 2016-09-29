@@ -16,8 +16,6 @@ var argv = yargs
 
 	.default("continueOnError", false)
 
-	.default("attachOnStopHandlers", false)
-
 	.argv;
 
 module.exports = {
