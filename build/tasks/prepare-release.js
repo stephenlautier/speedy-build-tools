@@ -27,7 +27,7 @@ gulp.task("changelog", () => {
 	return gulp.src(`${config.doc}/CHANGELOG.md`)
 		.pipe($.conventionalChangelog({
 			preset: "angular",
-			releaseCount: 0,
+			releaseCount: 1,
 		}))
 		.pipe(gulp.dest(`${config.doc}/`));
 });
