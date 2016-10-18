@@ -34,7 +34,6 @@ module.exports = {
 			"git-guppy",
 			"run-sequence",
 			"del",
-			"conventional-changelog",
 			"merge2",
 			"karma",
 			"path",
