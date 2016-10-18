@@ -24,10 +24,10 @@ gulp.task("bump-version", () => {
 });
 
 gulp.task("changelog", () => {
-	var fs = require("fs");
-	return $.conventionalChangelog({
-		preset: "angular",
-		releaseCount: 0
-	})
-		.pipe(fs.createWriteStream(`${config.doc}/CHANGELOG.md`));
+	return gulp.src(`${config.doc}/CHANGELOG.md`)
+		.pipe($.conventionalChangelog({
+			preset: "angular",
+			releaseCount: 0,
+		}))
+		.pipe(gulp.dest(`${config.doc}/`));
 });
