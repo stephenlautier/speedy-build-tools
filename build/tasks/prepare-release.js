@@ -1,7 +1,7 @@
+var args = require("../args");
 var config = require("../config");
 var gulp = require("gulp");
 var $ = require("gulp-load-plugins")(config.loadPluginsOptions);
-var args = require("../args");
 
 gulp.task("prepare-release", (cb) => {
 	args.isRelease = true;
@@ -13,6 +13,7 @@ gulp.task("prepare-release", (cb) => {
 		"bump-version",
 		// todo: find a solution for the docs
 		// "doc",
+		"tag-release",
 		"changelog",
 		cb);
 });
@@ -27,7 +28,23 @@ gulp.task("changelog", () => {
 	return gulp.src(`${config.doc}/CHANGELOG.md`)
 		.pipe($.conventionalChangelog({
 			preset: "angular",
-			releaseCount: 1,
+			releaseCount: 0
 		}))
 		.pipe(gulp.dest(config.doc));
+});
+
+gulp.task("tag-release", ["tag-release:create"], () => {
+	return $.git.push("origin", "develop", { args: " --tags" });
+});
+
+gulp.task("tag-release:create", () => {
+	const fs = require("fs");
+	const pkg = JSON.parse(fs.readFileSync("./package.json", "utf-8"));
+
+	return $.git.tag(pkg.version, "", (err) => {
+		if (err) {
+			$.util.log($.util.colors.red(err));
+			return process.exit(1);
+		}
+	});
 });
