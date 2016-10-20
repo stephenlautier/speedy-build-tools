@@ -33,18 +33,8 @@ gulp.task("changelog", () => {
 		.pipe(gulp.dest(config.doc));
 });
 
-gulp.task("tag-release", ["tag-release:create"], () => {
-	return $.git.push("origin", "develop", { args: " --tags" });
-});
-
-gulp.task("tag-release:create", () => {
-	const fs = require("fs");
-	const pkg = JSON.parse(fs.readFileSync("./package.json", "utf-8"));
-
-	return $.git.tag(pkg.version, "", (err) => {
-		if (err) {
-			$.util.log($.util.colors.red(err));
-			return process.exit(1);
-		}
-	});
+gulp.task("tag-release", () => {
+	return gulp.src("./package.json")
+		.pipe($.tagVersion())
+		.pipe($.gitPush());
 });
