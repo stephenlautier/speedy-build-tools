@@ -13,8 +13,8 @@ gulp.task("prepare-release", (cb) => {
 		"bump-version",
 		// todo: find a solution for the docs
 		// "doc",
-		"tag-release",
 		"changelog",
+		"tag-release",
 		cb);
 });
 
@@ -34,7 +34,7 @@ gulp.task("changelog", () => {
 });
 
 gulp.task("tag-release", ["tag-release:create"], () => {
-	return $.git.push("origin", "develop", { args: " --tags" });
+	return $.git.push("origin", "HEAD", { args: " --follow-tags" });
 });
 
 gulp.task("tag-release:create", () => {
