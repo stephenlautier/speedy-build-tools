@@ -29,5 +29,5 @@ gulp.task("changelog", () => {
 			preset: "angular",
 			releaseCount: 1,
 		}))
-		.pipe(gulp.dest(`${config.doc}/`));
+		.pipe(gulp.dest(config.doc));
 });
