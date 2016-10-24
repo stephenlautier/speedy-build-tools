@@ -38,7 +38,7 @@ SystemJS.config({
 		"moment": "npm:moment/min",
 		"cachefactory": "npm:cachefactory/dist",
 		"raven-js": "npm:raven-js/dist",
-		"ng2-translate": "npm:ng2-translate"
+		"ng2-translate": "npm:ng2-translate/bundles/index.js",
 
 		// vendors - package vendors here...
 
@@ -50,7 +50,6 @@ SystemJS.config({
 		"cachefactory": { main: "cachefactory.js", defaultExtension: "js" },
 		"rxjs": { main: "Rx.js", defaultExtension: "js" },
 		"raven-js": { main: "raven.min.js", defaultExtension: "js" },
-		"ng2-translate": { main: "ng2-translate.js", defaultExtension: "js" }
 
 		// obg
 
