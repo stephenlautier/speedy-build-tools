@@ -3,17 +3,21 @@
 		"module": "amd",
 		"target": "es5",
 		"moduleResolution": "node",
+		"sourceMap": true,
+		"removeComments": true,
+		"allowUnreachableCode": false,
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
 		"declaration": true,
 		"noImplicitReturns": true,
 		"noImplicitAny": true,
-		"noFallthroughCasesInSwitch": true,
-		"noEmitOnError": true
+		"noFallthroughCasesInSwitch": true
 	},
+	"files": [
+		"./index.ts"
+	],
 	"exclude": [
 		"node_modules",
-		"dist",
-		"_artifact"
+		"dist"
 	]
 }

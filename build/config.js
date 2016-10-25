@@ -16,7 +16,9 @@ module.exports = {
 	},
 	artifact: {
 		root: artifactRoot,
-		amd: `${artifactRoot}/amd`
+		amd: `${artifactRoot}/amd`,
+		amd: `${artifactRoot}/amd`,
+		es2015: `${artifactRoot}/es2015`
 	},
 	test: {
 		files: `${srcRoot}/**/*.spec.{ts,d.ts}`,
