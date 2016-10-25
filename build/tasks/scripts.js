@@ -45,8 +45,7 @@ function compileTsAndRunNgc(dest, target, moduleType, deleteTypings, callback) {
 				var filesToDelete = [
 					`${dest}/**/*.json`,
 					`${dest}/node_modules`,
-					`${dest}/**/*.ts`,
-					`${dest}/**/*.html`
+					`${dest}/**/*.ts`
 				]
 
 				if (!deleteTypings) {
