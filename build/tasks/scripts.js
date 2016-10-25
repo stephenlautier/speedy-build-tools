@@ -65,7 +65,7 @@ function compileTsAndRunNgc(dest, target, moduleType, deleteTypings, callback) {
 
 function createTempTsConfig(target, moduleType, path) {
 	const fs = require("fs");
-	const config = JSON.parse(fs.readFileSync("./tsconfig.json", "utf-8"));
+	const config = require("../../tsconfig.json", "utf-8");
 
 	config.compilerOptions = Object.assign(
 		{},
