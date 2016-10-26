@@ -42,6 +42,7 @@ function runTests(singleRun, cb) {
 
 function getTscOptions() {
 	return $.typescript.createProject("tsconfig.json", {
-		typescript: require("typescript")
+		typescript: require("typescript"),
+		inlineSources: false
 	});
 }
