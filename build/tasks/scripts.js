@@ -19,7 +19,7 @@ gulp.task("generate:es2015", (cb) => {
 	compileTsAndRunNgc(config.artifact.es2015, "es5", "es2015", false, cb);
 });
 
-gulp.task("copy:scripts", (cb) => {
+gulp.task("copy:scripts", () => {
 	return gulp.src([config.src.ts, `!${config.test.files}`])
 		.pipe($.inlineNg2Template({
 			useRelativePaths: true,
