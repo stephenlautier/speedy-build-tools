@@ -13,9 +13,8 @@
 		"noImplicitAny": true,
 		"noFallthroughCasesInSwitch": true
 	},
-	"exclude": [
-		"node_modules",
-		"dist",
-		"_artifact"
+	"include": [
+		"src/**/*.ts",
+		"typings/**/*.ts"
 	]
 }

@@ -78,6 +78,7 @@ function createTempTsConfig(target, moduleType, path) {
 
 	config.include = [
 		path,
+		"./index.ts",
 		"../../typings/index.d.ts"
 	];
 
