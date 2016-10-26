@@ -6,13 +6,13 @@ var args = require("../args");
 gulp.task("scripts", (cb) => {
 	return $.runSequence(
 		"copy:scripts", [
-			"generate:amd",
+			"generate:umd",
 			"generate:es2015"
 		], cb);
 });
 
-gulp.task("generate:amd", (cb) => {
-	compileTsAndRunNgc(config.artifact.amd, "es5", "amd", true, cb);
+gulp.task("generate:umd", (cb) => {
+	compileTsAndRunNgc(config.artifact.umd, "es5", "umd", true, cb);
 });
 
 gulp.task("generate:es2015", (cb) => {
@@ -21,7 +21,7 @@ gulp.task("generate:es2015", (cb) => {
 
 gulp.task("copy:scripts", () => {
 	return gulp.src([config.src.ts, `!${config.test.files}`])
-		.pipe(gulp.dest(config.artifact.amd))
+		.pipe(gulp.dest(config.artifact.umd))
 		.pipe(gulp.dest(config.artifact.es2015));
 });
 

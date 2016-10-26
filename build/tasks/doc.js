@@ -5,7 +5,7 @@ var $ = require("gulp-load-plugins")(config.loadPluginsOptions);
 gulp.task("doc", () => {
 	return gulp.src([config.src.typings, config.src.ts, `!${config.test.files}`])
 		.pipe($.typedoc({
-			module: "amd",
+			module: "umd",
 			target: "es5",
 			includeDeclarations: true,
 			excludeExternals: true,

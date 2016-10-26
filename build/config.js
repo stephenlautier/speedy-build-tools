@@ -16,7 +16,7 @@ module.exports = {
 	},
 	artifact: {
 		root: artifactRoot,
-		amd: `${artifactRoot}/amd`,
+		umd: `${artifactRoot}/umd`,
 		es2015: `${artifactRoot}/es2015`
 	},
 	test: {
