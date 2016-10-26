@@ -21,46 +21,9 @@ gulp.task("generate:es2015", (cb) => {
 
 gulp.task("copy:scripts", () => {
 	return gulp.src([config.src.ts, `!${config.test.files}`])
-		.pipe($.inlineNg2Template({
-			useRelativePaths: true,
-			target: "es5",
-			removeLineBreaks: true,
-			templateProcessor: (ext, file, callback) => {
-				injectHtml({
-					ext: ext,
-					file: file,
-					callback: callback
-				});
-			}
-		}))
 		.pipe(gulp.dest(config.artifact.amd))
 		.pipe(gulp.dest(config.artifact.es2015));
 });
-
-
-function injectHtml(options) {
-	if (options.ext.input.indexOf(".html") < 0) {
-		return;
-	}
-
-	new Promise((resolve) => {
-		var result = $.htmlMinifier.minify(options.file, {
-			collapseWhitespace: true,
-			collapseBooleanAttributes: true,
-			caseSensitive: true,
-			removeComments: true,
-			sortClassName: true,
-			removeRedundantAttributes: true
-		});
-
-		resolve(result);
-	}).then((result) => {
-		options.callback(null, result);
-	}).catch((error) => {
-		console.error(error);
-		process.exit(1);
-	});
-}
 
 function runNgc(configPath, callback) {
 	const exec = require("child_process").exec;
