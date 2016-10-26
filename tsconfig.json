@@ -13,11 +13,9 @@
 		"noImplicitAny": true,
 		"noFallthroughCasesInSwitch": true
 	},
-	"files": [
-		"./index.ts"
-	],
 	"exclude": [
 		"node_modules",
-		"dist"
+		"dist",
+		"_artifact"
 	]
 }
