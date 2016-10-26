@@ -4,10 +4,11 @@ var $ = require("gulp-load-plugins")(config.loadPluginsOptions);
 var args = require("../args");
 
 gulp.task("scripts", (cb) => {
-	return $.runSequence([
-		"generate:amd",
-		"generate:es2015"
-	], cb);
+	return $.runSequence(
+		"copy:scripts", [
+			"generate:amd",
+			"generate:es2015"
+		], cb);
 });
 
 gulp.task("generate:amd", (cb) => {
@@ -18,6 +19,49 @@ gulp.task("generate:es2015", (cb) => {
 	compileTsAndRunNgc(config.artifact.es2015, "es5", "es2015", false, cb);
 });
 
+gulp.task("copy:scripts", (cb) => {
+	return gulp.src([config.src.ts, `!${config.test.files}`])
+		.pipe($.inlineNg2Template({
+			useRelativePaths: true,
+			target: "es5",
+			removeLineBreaks: true,
+			templateProcessor: (ext, file, callback) => {
+				injectHtml({
+					ext: ext,
+					file: file,
+					callback: callback
+				});
+			}
+		}))
+		.pipe(gulp.dest(config.artifact.amd))
+		.pipe(gulp.dest(config.artifact.es2015));
+});
+
+
+function injectHtml(options) {
+	if (options.ext.input.indexOf(".html") < 0) {
+		return;
+	}
+
+	new Promise((resolve) => {
+		var result = $.htmlMinifier.minify(options.file, {
+			collapseWhitespace: true,
+			collapseBooleanAttributes: true,
+			caseSensitive: true,
+			removeComments: true,
+			sortClassName: true,
+			removeRedundantAttributes: true
+		});
+
+		resolve(result);
+	}).then((result) => {
+		options.callback(null, result);
+	}).catch((error) => {
+		console.error(error);
+		process.exit(1);
+	});
+}
+
 function runNgc(configPath, callback) {
 	const exec = require("child_process").exec;
 
@@ -26,44 +70,36 @@ function runNgc(configPath, callback) {
 	});
 }
 
-function copySourceToDest(src) {
-	return gulp.src([config.src.ts, `!${config.test.files}`])
-		.pipe(gulp.dest(src));
-}
-
 function compileTsAndRunNgc(dest, target, moduleType, deleteTypings, callback) {
-	copySourceToDest(dest)
-		.on("end", () => {
-			createTempTsConfig(target, moduleType, dest);
+	createTempTsConfig(dest, target, moduleType);
 
-			runNgc(`${dest}/tsconfig.json`, (error) => {
-				if (error) {
-					callback(error);
-					return;
-				}
+	runNgc(`${dest}/tsconfig.json`, (error) => {
+		if (error) {
+			callback(error);
+			return;
+		}
 
-				var filesToDelete = [
-					`${dest}/**/*.json`,
-					`${dest}/node_modules`,
-					`${dest}/**/*.ts`
-				]
+		var filesToDelete = [
+			`${dest}/**/*.json`,
+			`${dest}/node_modules`,
+			`${dest}/**/*.ts`
+		]
 
-				if (!deleteTypings) {
-					filesToDelete = [
-						...filesToDelete,
-						`!${dest}/**/*.d.ts`,
-						`!${dest}/**/*.metadata.json`
-					];
-				}
+		if (!deleteTypings) {
+			filesToDelete = [
+				...filesToDelete,
+				`!${dest}/**/*.d.ts`,
+				`!${dest}/**/*.metadata.json`
+			];
+		}
 
-				return $.del(filesToDelete).then(() => {
-					callback();
-				})
-			});
-		});
+		return $.del(filesToDelete).then(() => {
+			callback();
+		})
+	});
 }
 
-function createTempTsConfig(target, moduleType, path) {
+function createTempTsConfig(path, target, moduleType) {
 	const fs = require("fs");
 	const config = require("../../tsconfig.json", "utf-8");
 
