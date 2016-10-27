@@ -75,11 +75,7 @@ function createTempTsConfig(path, target, moduleType) {
 		}
 	);
 
-	config.include = [
-		path,
-		"./index.ts",
-		"../../typings/index.d.ts"
-	];
+	config.include = ["./index.ts"];
 
 	fs.writeFileSync(`${path}/tsconfig.json`, JSON.stringify(config, null, 2));
 }
