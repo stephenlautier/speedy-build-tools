@@ -3,6 +3,10 @@
 		"module": "umd",
 		"target": "es5",
 		"moduleResolution": "node",
+		"lib": [
+			"dom",
+			"es2015"
+		],
 		"inlineSources": true,
 		"inlineSourceMap": true,
 		"removeComments": true,
