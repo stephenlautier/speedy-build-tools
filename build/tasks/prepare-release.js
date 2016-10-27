@@ -34,7 +34,7 @@ gulp.task("changelog", () => {
 });
 
 gulp.task("tag-release", ["tag-release:create"], () => {
-	return $.git.push("origin", "HEAD", { args: " --follow-tags" });
+	return $.git.push("origin", "HEAD", { args: " --follow-tags -u develop" });
 });
 
 gulp.task("tag-release:create", () => {
