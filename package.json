@@ -39,6 +39,7 @@
     "@angular/platform-browser-dynamic": "2.0.0",
     "@angular/platform-server": "2.0.0",
     "@obg/fe.tools.tslint": "^0.3.0",
+    "@types/jasmine": "^2.5.36",
     "codelyzer": "0.0.28",
     "del": "^2.2.0",
     "git-guppy": "^1.2.1",
