@@ -37,7 +37,6 @@ SystemJS.config({
 		"lodash": "npm:lodash",
 		"moment": "npm:moment/min",
 		"cachefactory": "npm:cachefactory/dist",
-		"raven-js": "npm:raven-js/dist",
 		"ng2-translate": "npm:ng2-translate/bundles/index.js",
 
 		// vendors - package vendors here...
@@ -48,8 +47,7 @@ SystemJS.config({
 		"lodash": { main: "index.js", defaultExtension: "js" },
 		"moment": { main: "moment-with-locales.js", defaultExtension: "js" },
 		"cachefactory": { main: "cachefactory.js", defaultExtension: "js" },
-		"rxjs": { main: "Rx.js", defaultExtension: "js" },
-		"raven-js": { main: "raven.min.js", defaultExtension: "js" },
+		"rxjs": { main: "Rx.js", defaultExtension: "js" }
 
 		// obg
 
