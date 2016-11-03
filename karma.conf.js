@@ -3,7 +3,7 @@ var conf = require("./build/config");
 module.exports = function (config) {
 	config.set({
 		basePath: "",
-		frameworks: ["jasmine"],
+		frameworks: ["jasmine", "es6-shim"],
 
 		files: [
 			// systemjs
