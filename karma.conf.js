@@ -10,7 +10,6 @@ module.exports = function (config) {
 			"node_modules/systemjs/dist/system.src.js",
 
 			// polyfills
-			"node_modules/core-js/client/shim.js",
 			"node_modules/reflect-metadata/Reflect.js",
 			"node_modules/zone.js/dist/zone.js",
 			"node_modules/zone.js/dist/long-stack-trace-zone.js",
