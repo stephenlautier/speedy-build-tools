@@ -12,11 +12,21 @@ gulp.task("scripts", (cb) => {
 });
 
 gulp.task("generate:umd", (cb) => {
-	compileTsAndRunNgc(config.artifact.umd, "es5", "umd", true, cb);
+	compileTsAndRunNgc({
+		dest: config.artifact.umd,
+		target: "es5",
+		moduleType:"umd",
+		deleteTypings: false
+	}, cb);
 });
 
 gulp.task("generate:es2015", (cb) => {
-	compileTsAndRunNgc(config.artifact.es2015, "es5", "es2015", false, cb);
+	compileTsAndRunNgc({
+		dest: config.artifact.es2015,
+		target: "es5",
+		moduleType:"es2015",
+		deleteTypings: false
+	}, cb);
 });
 
 gulp.task("copy:scripts", () => {
@@ -28,27 +38,28 @@ gulp.task("copy:scripts", () => {
 function runNgc(configPath, callback) {
 	const exec = require("child_process").exec;
 
-	exec(`"node_modules/.bin/ngc" -p ${configPath}`, (err) => {
-		callback(err);
+	exec(`"node_modules/.bin/ngc" -p ${configPath}`, (error) => {
+		if (error) {
+			console.error(error);
+			process.exit(1);
+		}
+
+		callback();
 	});
 }
 
-function compileTsAndRunNgc(dest, target, moduleType, deleteTypings, callback) {
-	createTempTsConfig(dest, target, moduleType);
+function compileTsAndRunNgc(options, callback) {
+	const dest = options.dest;
+	createTempTsConfig(dest, options.target, options.moduleType);
 
-	runNgc(`${dest}/tsconfig.json`, (error) => {
-		if (error) {
-			callback(error);
-			return;
-		}
-
+	runNgc(`${dest}/tsconfig.json`, () => {
 		var filesToDelete = [
 			`${dest}/**/*.json`,
 			`${dest}/node_modules`,
 			`${dest}/**/*.ts`
 		]
 
-		if (!deleteTypings) {
+		if (!options.deleteTypings) {
 			filesToDelete = [
 				...filesToDelete,
 				`!${dest}/**/*.d.ts`,
