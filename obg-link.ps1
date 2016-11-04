@@ -11,7 +11,3 @@ Write-Host ""
 Write-Host "NPM linking..." -ForegroundColor Magenta
 npm link $fullName
 Write-Host ""
-
-Write-Host "Typings install..." -ForegroundColor Magenta
-typings i npm:${fullName}
-Write-Host ""
