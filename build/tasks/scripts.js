@@ -16,7 +16,7 @@ gulp.task("generate:umd", (cb) => {
 		dest: config.artifact.umd,
 		target: "es5",
 		moduleType:"umd",
-		deleteTypings: false
+		deleteTypings: true
 	}, cb);
 });
 
@@ -24,8 +24,7 @@ gulp.task("generate:es2015", (cb) => {
 	compileTsAndRunNgc({
 		dest: config.artifact.es2015,
 		target: "es5",
-		moduleType:"es2015",
-		deleteTypings: false
+		moduleType:"es2015"
 	}, cb);
 });
 
