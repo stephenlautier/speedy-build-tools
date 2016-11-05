@@ -1,11 +1,14 @@
 {
 	"compilerOptions": {
-		"module": "umd",
+		"module": "commonjs",
 		"target": "es5",
 		"moduleResolution": "node",
 		"lib": [
 			"dom",
 			"es2015"
+		],
+		"types": [
+			"node"
 		],
 		"inlineSources": true,
 		"inlineSourceMap": true,
@@ -18,7 +21,10 @@
 		"noImplicitAny": true,
 		"noFallthroughCasesInSwitch": true
 	},
+	"exclude": [
+		"node_modules"
+	],
 	"include": [
-		"src/**/*.ts"
+		"**/*.ts"
 	]
 }

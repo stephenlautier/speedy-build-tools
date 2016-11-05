@@ -9,7 +9,10 @@ gulp.task("clean", (cb) => {
 });
 
 gulp.task("clean:dist", () => {
-	return $.del(config.output.root)
+	return $.del([
+		`${config.output.root}/**`,
+		`!${config.output.root}`,
+	])
 });
 
 gulp.task("clean:artifact", () => {
