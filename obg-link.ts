@@ -3,6 +3,9 @@ import * as rimraf from "rimraf";
 import { mkdirSync, symlinkSync, constants, existsSync } from "fs";
 import { argv } from "yargs";
 import { join } from "path";
+/* tslint:disable */
+import { cyan, red } from "colors";
+/* tslint:enable */
 
 const prefix = "@obg/";
 const packageNameUnPrefixed = argv._[0];
@@ -15,25 +18,31 @@ if (!packageNameUnPrefixed) {
 }
 
 function enableLinking() {
-	exec("gulp rebuild --rel && npm link", (error: Error, stdout: NodeBuffer) => {
-		console.log(stdout);
+	console.log("Started rebuilding and enabling link ...".cyan);
 
+	exec("gulp rebuild --rel && npm link", (error: Error) => {
 		if (error) {
-			console.error(error);
+			console.log(error.name.red);
+			console.error(error.stack);
+
 			process.exit(0);
 		}
 
-		console.log("Enabled linking");
+		console.log("Finished rebuilding and enabling link");
 	});
 }
 
 function createLink() {
+	const packageName = `${prefix}${packageNameUnPrefixed}`;
+
+	console.log(`Started linking: ${packageName} ...`.cyan);
+
 	exec("npm config get prefix", (error: Error, stdout: NodeBuffer) => {
 		let path = stdout.toString().replace("\n", "");
 
 		if (!path.toUpperCase().indexOf("APPDATA")) {
 			// ios
-			path = join(path, "/lib/");
+			path = join(path, "lib");
 		}
 
 		const modulePrefixPath = join("node_modules", prefix);
@@ -50,7 +59,7 @@ function createLink() {
 			symlinkSync(join(nodeLinkPath, "dist"), join(modulePackagePath, "dist"), "dir");
 			symlinkSync(join(nodeLinkPath, "package.json"), join(modulePackagePath, "package.json"));
 
-			console.log(`Linked: ${prefix}${packageNameUnPrefixed}`);
+			console.log(`Finished linking: ${packageName}`.cyan);
 		});
 	});
 }
