@@ -112,7 +112,7 @@ gulp tdd
 npm run obg-link 
 ```
 
-With `-w` or `--watch` flag it will listen for changes and rebuild
+With `-w` or `--watch` flag creates a watch that listens for changes and rebuilds the library.
 
 #### Consume the link
 Consume the link from another library
