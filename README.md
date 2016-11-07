@@ -106,10 +106,18 @@ Spawns test runner and keep watching for changes.
 gulp tdd
 ```
 
-### Link package
-*NPM Link + Typings install*
-```bash
-npm run obg-link ng2.common
+### Linking Package
+#### Enable link
+```
+npm run obg-link 
+```
+
+With `-w` or `--watch` flag it will listen for changes and rebuild
+
+#### Consume the link
+Consume the link from another library
+```
+npm run obg-link ion2.ui.skeleton
 ```
 
 
