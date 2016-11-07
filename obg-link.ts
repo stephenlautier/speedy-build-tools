@@ -56,7 +56,7 @@ function createLink() {
 			const nodeLinkPath = join(path, modulePackagePath);
 
 			if (!existsSync(nodeLinkPath)) {
-				console.log(red(`Error: Cannot find the ${packageName} module. Did you enable linking?`));
+				console.log(red(`Error: Cannot find package '${packageName}'. Did you enable linking?`));
 				process.exit(1);
 			}
 
