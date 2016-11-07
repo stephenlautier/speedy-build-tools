@@ -1,12 +1,12 @@
 import * as process from "process";
 import * as rimraf from "rimraf";
+import * as yargs from "yargs";
 import { mkdirSync, symlinkSync, constants, existsSync } from "fs";
-import { argv } from "yargs";
 import { join } from "path";
 import { cyan, red } from "colors";
 
 const prefix = "@obg/";
-const packageNameUnPrefixed = argv._[0];
+const packageNameUnPrefixed = yargs.argv._[0];
 const exec = require("child_process").exec;
 
 if (!packageNameUnPrefixed) {
@@ -16,17 +16,19 @@ if (!packageNameUnPrefixed) {
 }
 
 function enableLinking() {
-	console.log(cyan("Started rebuilding and enabling link ..."));
+	console.log(cyan("Started enabling link ..."));
 
-	exec("gulp rebuild --rel && npm link", (error: Error) => {
-		if (error) {
-			console.log(red(error.name));
-			console.error(error.stack);
+	exec("npm link", (error: Error) => {
+		exitOnError(error);
 
-			process.exit(0);
-		}
 
-		console.log(cyan("Finished rebuilding and enabling link"));
+		console.log(cyan("Started building ..."));
+		exec("gulp rebuild --rel", (err: Error) => {
+			exitOnError(err);
+			console.log(cyan("Finished building"));
+		});
+
+		console.log(cyan("Finished enabling link"));
 	});
 }
 
@@ -47,6 +49,14 @@ function createLink() {
 		const modulePackagePath = join(modulePrefixPath, packageNameUnPrefixed);
 		const nodeLinkPath = join(path, modulePackagePath);
 
+		if (!existsSync(nodeLinkPath)) {
+			exitOnError({
+				name: "Error: Cannot find the linked module. Did you enable linking?",
+				message: "",
+				stack: ""
+			});
+		}
+
 		if (!existsSync(modulePrefixPath)) {
 			mkdirSync(modulePrefixPath, constants.S_IRWXO);
 		}
@@ -60,4 +70,14 @@ function createLink() {
 			console.log(cyan(`Finished linking: ${packageName}`));
 		});
 	});
+}
+
+function exitOnError(error: Error) {
+	if (error) {
+		console.log(red(error.name));
+		console.error(error.stack);
+		console.error(error.message);
+
+		process.exit(0);
+	}
 }
