@@ -117,7 +117,7 @@ With `-w` or `--watch` flag creates a watch that listens for changes and rebuild
 #### Consume the link
 Consume the link from another library
 ```
-npm run obg-link ion2.ui.skeleton
+npm run obg-link <library-name>
 ```
 
 
