@@ -107,6 +107,8 @@ gulp tdd
 ```
 
 ### Linking Package
+Instead of NPM link use the following
+
 #### Enable link
 ```
 npm run obg-link 
