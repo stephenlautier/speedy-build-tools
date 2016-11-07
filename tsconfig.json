@@ -8,7 +8,8 @@
 			"es2015"
 		],
 		"types": [
-			"node"
+			"node",
+			"jasmine"
 		],
 		"inlineSources": true,
 		"inlineSourceMap": true,

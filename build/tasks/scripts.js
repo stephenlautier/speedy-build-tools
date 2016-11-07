@@ -35,13 +35,17 @@ gulp.task("copy:scripts", () => {
 });
 
 function runNgc(configPath, callback) {
-	const exec = require("child_process").exec;
-
-	$.crossSpawnPromise("node_modules/.bin/ngc", ["-p", configPath])
+	return $.crossSpawnPromise("node_modules/.bin/ngc", ["-p", configPath])
 		.then(() => callback())
 		.catch((error) => {
+			console.error($.util.colors.red("NGC failed"));
 			console.error($.util.colors.red(error.stderr.toString()));
-			process.exit(1);
+
+			if (!args.continueOnError) {
+				process.exit(1);
+			}
+
+			callback();
 		});
 }
 

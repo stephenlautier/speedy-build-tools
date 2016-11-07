@@ -18,23 +18,22 @@ if (!packageNameUnPrefixed) {
 function enableLinking() {
 	console.log(cyan("Starting enabling link ..."));
 
-	spawn("npm", ["link"])
+	return spawn("npm", ["link"])
 		.then(() => {
 			console.log(cyan("Finished enabling link"));
 			console.log(cyan("Starting building ..."));
 
-			spawn("gulp", ["rebuild", "--rel"])
-				.then(() => {
-					console.log(cyan("Finished building ..."));
+			return spawn("gulp", ["rebuild", "--rel"]);
+		}).then(() => {
+			console.log(cyan("Finished building ..."));
 
-					if (isWatch()) {
-						spawn("gulp", ["watch", "--rel"], { stdio: "inherit" });
-					}
-				})
-				.catch((error: any) => {
-					console.log(red(error.stderr.toString()));
-					process.exit(1);
-				});
+			if (isWatch()) {
+				return spawn("gulp", ["watch", "--rel"], { stdio: "inherit" });
+			}
+		})
+		.catch((error: any) => {
+			console.log(red(error.stderr.toString()));
+			process.exit(1);
 		});
 }
 
@@ -43,7 +42,7 @@ function createLink() {
 
 	console.log(cyan(`Starting linking: ${packageName} ...`));
 
-	spawn("npm", ["config", "get", "prefix"])
+	return spawn("npm", ["config", "get", "prefix"])
 		.then((stdout: NodeBuffer) => {
 			let path = stdout.toString().replace("\n", "");
 
@@ -57,7 +56,7 @@ function createLink() {
 			const nodeLinkPath = join(path, modulePackagePath);
 
 			if (!existsSync(nodeLinkPath)) {
-				console.log(red("Error: Cannot find the linked module. Did you enable linking?"));
+				console.log(red(`Error: Cannot find the ${packageName} module. Did you enable linking?`));
 				process.exit(1);
 			}
 
