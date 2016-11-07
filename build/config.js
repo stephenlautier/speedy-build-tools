@@ -33,6 +33,7 @@ module.exports = {
 			"gulp-*",
 			"gulp.*",
 			"git-guppy",
+			"cross-spawn-promise",
 			"run-sequence",
 			"del",
 			"merge2",

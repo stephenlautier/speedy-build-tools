@@ -46,6 +46,7 @@
     "@types/yargs": "^6.3.0",
     "codelyzer": "0.0.28",
     "colors": "^1.1.2",
+    "cross-spawn-promise": "^0.8.0",
     "del": "^2.2.0",
     "git-guppy": "^1.2.1",
     "gulp": "^3.9.1",

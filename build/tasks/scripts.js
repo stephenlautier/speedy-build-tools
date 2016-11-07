@@ -15,7 +15,7 @@ gulp.task("generate:umd", (cb) => {
 	compileTsAndRunNgc({
 		dest: config.artifact.umd,
 		target: "es5",
-		moduleType:"umd",
+		moduleType: "umd",
 		deleteTypings: true
 	}, cb);
 });
@@ -23,8 +23,8 @@ gulp.task("generate:umd", (cb) => {
 gulp.task("generate:es2015", (cb) => {
 	compileTsAndRunNgc({
 		dest: config.artifact.es2015,
-		target: "es5",
-		moduleType:"es2015"
+		target: "es2015",
+		moduleType: "es2015"
 	}, cb);
 });
 
@@ -37,14 +37,12 @@ gulp.task("copy:scripts", () => {
 function runNgc(configPath, callback) {
 	const exec = require("child_process").exec;
 
-	exec(`"node_modules/.bin/ngc" -p ${configPath}`, (error) => {
-		if (error) {
-			console.error(error);
+	$.crossSpawnPromise("node_modules/.bin/ngc", ["-p", configPath])
+		.then(() => callback())
+		.catch((error) => {
+			console.error($.util.colors.red(error.stderr.toString()));
 			process.exit(1);
-		}
-
-		callback();
-	});
+		});
 }
 
 function compileTsAndRunNgc(options, callback) {
