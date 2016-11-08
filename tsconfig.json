@@ -26,6 +26,9 @@
 		"node_modules"
 	],
 	"include": [
-		"**/*.ts"
+		"./src/**/*.ts",
+		"./test/**/*.ts",
+		"./build/**/*.ts",
+		"*.ts"
 	]
 }
