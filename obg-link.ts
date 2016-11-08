@@ -9,6 +9,15 @@ const spawn = require("cross-spawn-promise");
 const prefix = "@obg/";
 const packageNameUnPrefixed = yargs.argv._[0];
 
+const argv = yargs(JSON.parse(process.env.npm_config_argv).original)
+	.alias("watch", "w")
+	.default("watch", false)
+	.argv;
+
+const args = {
+	isWatch: argv.watch
+};
+
 if (!packageNameUnPrefixed) {
 	enableLinking();
 } else {
@@ -27,7 +36,7 @@ function enableLinking() {
 		}).then(() => {
 			console.log(cyan("Finished building ..."));
 
-			if (isWatch()) {
+			if (args.isWatch) {
 				return spawn("gulp", ["watch", "--rel"], { stdio: "inherit" });
 			}
 		})
@@ -77,26 +86,4 @@ function createLink() {
 			console.log(red(error.stderr.toString()));
 			process.exit(1);
 		});
-}
-
-function isWatch(): boolean {
-	const fullName = "--watch";
-	const shortName = "-w";
-	const npmRunArgs = JSON.parse(process.env.npm_config_argv);
-
-	if (!npmRunArgs.original) {
-		return null;
-	}
-
-	const processArgv = npmRunArgs.original;
-
-	for (let i = 2; i < processArgv.length; i++) {
-		const arg = processArgv[i];
-
-		if (arg === fullName || (shortName && arg === shortName)) {
-			return true;
-		}
-	}
-
-	return false;
 }
