@@ -17,4 +17,4 @@ karma-test-shim.js
 tsconfig.json
 tslint.json
 typings.json
-obg-link.ps1
+obg-link.ts
