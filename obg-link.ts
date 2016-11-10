@@ -25,14 +25,16 @@ function enableLinking() {
 	return spawn("npm", ["link"])
 		.then(() => {
 			console.log(cyan("Finished enabling link"));
-			console.log(cyan("Starting building ..."));
 
-			return spawn("gulp", ["rebuild", "--rel"]);
+			if (!argv.watch) {
+				console.log(cyan("Starting building ..."));
+				return spawn("gulp", ["rebuild", "--rel"]);
+			}
 		}).then(() => {
-			console.log(cyan("Finished building ..."));
-
 			if (argv.watch) {
 				return spawn("gulp", ["watch", "--rel"], { stdio: "inherit" });
+			} else {
+				console.log(cyan("Finished building ..."));
 			}
 		})
 		.catch((error: any) => {
