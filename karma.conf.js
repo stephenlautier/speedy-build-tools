@@ -3,13 +3,14 @@ var conf = require("./build/config");
 module.exports = function (config) {
 	config.set({
 		basePath: "",
-		frameworks: ["jasmine", "es6-shim"],
+		frameworks: ["jasmine"],
 
 		files: [
 			// systemjs
 			"node_modules/systemjs/dist/system.src.js",
 
 			// polyfills
+			"node_modules/core-js/client/shim.js",
 			"node_modules/reflect-metadata/Reflect.js",
 			"node_modules/zone.js/dist/zone.js",
 			"node_modules/zone.js/dist/long-stack-trace-zone.js",

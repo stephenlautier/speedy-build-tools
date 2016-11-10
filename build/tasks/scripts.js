@@ -23,7 +23,7 @@ gulp.task("generate:umd", (cb) => {
 gulp.task("generate:es2015", (cb) => {
 	compileTsAndRunNgc({
 		dest: config.artifact.es2015,
-		target: "es2015",
+		target: "es5",
 		moduleType: "es2015"
 	}, cb);
 });
