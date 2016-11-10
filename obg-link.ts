@@ -13,6 +13,15 @@ const argv = yargs(JSON.parse(process.env.npm_config_argv).original)
 	.default("watch", false)
 	.argv;
 
+const argv = yargs(JSON.parse(process.env.npm_config_argv).original)
+	.alias("watch", "w")
+	.default("watch", false)
+	.argv;
+
+const args = {
+	isWatch: argv.watch
+};
+
 if (!packageNameUnPrefixed) {
 	enableLinking();
 } else {
