@@ -1,4 +1,4 @@
-var conf = require("./build/config");
+var conf = require("./tools/build/config");
 
 module.exports = function (config) {
 	config.set({

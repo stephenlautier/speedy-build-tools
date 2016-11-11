@@ -1,1 +1,1 @@
-require("./build/main")
+require("./tools/build/main")

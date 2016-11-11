@@ -8,7 +8,6 @@
 			"es2015"
 		],
 		"types": [
-			"node",
 			"jasmine"
 		],
 		"inlineSources": true,
@@ -27,8 +26,6 @@
 	],
 	"include": [
 		"./src/**/*.ts",
-		"./test/**/*.ts",
-		"./build/**/*.ts",
-		"*.ts"
+		"./test/**/*.ts"
 	]
 }

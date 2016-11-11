@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "gulp test",
-    "obg-link": "ts-node ./obg-link"
+    "obg-link": "ts-node -P tools ./tools/obg-link"
   },
   "repository": {
     "type": "git",

@@ -2,7 +2,7 @@ jspm_packages
 bower_components
 node_modules
 /.idea
-/build
+/tools
 /_artifact
 /typings
 /test
@@ -17,4 +17,3 @@ karma-test-shim.js
 tsconfig.json
 tslint.json
 typings.json
-obg-link.ts
