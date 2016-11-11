@@ -3,7 +3,7 @@ var fs = require("fs");
 var pkg = JSON.parse(fs.readFileSync("./package.json", "utf-8"));
 var srcRoot = "src";
 var artifactRoot = "_artifact";
-const typings = "../typings/index.d.ts";
+const typings = "./typings/index.d.ts";
 
 module.exports = {
 	output: {
