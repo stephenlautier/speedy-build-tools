@@ -2,7 +2,6 @@ var config = require("../config");
 var gulp = require("gulp");
 var $ = require("gulp-load-plugins")(config.loadPluginsOptions);
 var args = require("../args");
-var ts = require("typescript");
 
 gulp.task("scripts", (cb) => {
 	return $.runSequence(
