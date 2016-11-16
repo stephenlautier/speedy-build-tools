@@ -106,10 +106,20 @@ Spawns test runner and keep watching for changes.
 gulp tdd
 ```
 
-### Link package
-*NPM Link + Typings install*
-```bash
-npm run obg-link ng2.common
+### Linking Package
+Instead of NPM link use the following
+
+#### Enable link
+```
+npm run obg-link 
+```
+
+With `-w` or `--watch` flag creates a watch that listens for changes and rebuilds the library.
+
+#### Consume the link
+Consume the link from another library
+```
+npm run obg-link <library-name>
 ```
 
 

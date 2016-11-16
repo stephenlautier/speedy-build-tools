@@ -1,4 +1,4 @@
-var conf = require("./build/config");
+var conf = require("./tools/build/config");
 
 module.exports = function (config) {
 	config.set({
@@ -33,8 +33,7 @@ module.exports = function (config) {
 			{ pattern: "node_modules/@angular/**/*.js.map", included: false, watched: false, served: true },
 
 			// obg
-			{ pattern: "node_modules/@obg/*/dist/**/*.js", included: false, watched: false, served: true },
-			{ pattern: "node_modules/@obg/*/dist/**/*.js.map", included: false, watched: false, served: true },
+			{ pattern: "node_modules/@obg/*/dist/umd/**/*.js", included: false, watched: false, served: true },
 
 			// vendors - package vendors here...
 

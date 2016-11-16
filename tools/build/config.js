@@ -3,7 +3,7 @@ var fs = require("fs");
 var pkg = JSON.parse(fs.readFileSync("./package.json", "utf-8"));
 var srcRoot = "src";
 var artifactRoot = "_artifact";
-const typings = "typings/index.d.ts";
+const typings = "./typings/index.d.ts";
 
 module.exports = {
 	output: {
@@ -16,12 +16,13 @@ module.exports = {
 	},
 	artifact: {
 		root: artifactRoot,
-		amd: `${artifactRoot}/amd`
+		umd: `${artifactRoot}/umd`,
+		es2015: `${artifactRoot}/es2015`
 	},
 	test: {
 		files: `${srcRoot}/**/*.spec.{ts,d.ts}`,
 		setup: "test/test-setup.ts",
-		karmaConfig: "karma.conf.js",
+		karmaConfig: "../karma.conf.js",
 		reporters: ["nyan"],
 		browsers: ["Chrome"]
 	},
@@ -32,6 +33,7 @@ module.exports = {
 			"gulp-*",
 			"gulp.*",
 			"git-guppy",
+			"cross-spawn-promise",
 			"run-sequence",
 			"del",
 			"merge2",
