@@ -2,6 +2,7 @@ var config = require("../config");
 var gulp = require("gulp");
 var $ = require("gulp-load-plugins")(config.loadPluginsOptions);
 var args = require("../args");
+var ts = require("typescript");
 
 gulp.task("scripts", (cb) => {
 	return $.runSequence(
@@ -51,7 +52,7 @@ function runNgc(configPath, callback) {
 }
 
 function runTsc(configPath, callback) {
-	return $.crossSpawnPromise("tsc", ["-p", configPath])
+	return $.crossSpawnPromise("node_modules/.bin/tsc", ["-p", configPath])
 		.then(() => callback())
 		.catch((error) => {
 			console.error($.util.colors.red("TSC failed"));
