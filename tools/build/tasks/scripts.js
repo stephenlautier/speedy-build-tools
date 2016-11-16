@@ -12,7 +12,7 @@ gulp.task("scripts", (cb) => {
 });
 
 gulp.task("generate:umd", (cb) => {
-	compileTsAndRunNgc({
+	compileTs({
 		dest: config.artifact.umd,
 		target: "es5",
 		moduleType: "umd",
@@ -21,7 +21,8 @@ gulp.task("generate:umd", (cb) => {
 });
 
 gulp.task("generate:es2015", (cb) => {
-	compileTsAndRunNgc({
+	compileTs({
+		useNgc: true,
 		dest: config.artifact.es2015,
 		target: "es5",
 		moduleType: "es2015"
@@ -49,29 +50,57 @@ function runNgc(configPath, callback) {
 		});
 }
 
-function compileTsAndRunNgc(options, callback) {
+function runTsc(configPath, callback) {
+	return $.crossSpawnPromise("tsc", ["-p", configPath])
+		.then(() => callback())
+		.catch((error) => {
+			console.error($.util.colors.red("TSC failed"));
+			console.error($.util.colors.red(error.stderr.toString()));
+
+			if (!args.continueOnError) {
+				process.exit(1);
+			}
+
+			callback();
+		});
+}
+
+function compileTs(options, callback) {
 	const dest = options.dest;
 	createTempTsConfig(dest, options.target, options.moduleType);
+	const tsConfig = `${dest}/tsconfig.json`;
 
-	runNgc(`${dest}/tsconfig.json`, () => {
-		var filesToDelete = [
-			`${dest}/**/*.json`,
-			`${dest}/node_modules`,
-			`${dest}/**/*.ts`
-		]
+	const cb = () => {
+		deleteFiles(options, callback)
+	};
 
-		if (!options.deleteTypings) {
-			filesToDelete = [
-				...filesToDelete,
-				`!${dest}/**/*.d.ts`,
-				`!${dest}/**/*.metadata.json`
-			];
-		}
+	if (options.useNgc) {
+		return runNgc(tsConfig, cb);
+	}
 
-		return $.del(filesToDelete).then(() => {
-			callback();
-		})
-	});
+	return runTsc(tsConfig, cb);
+}
+
+function deleteFiles(options, callback) {
+	const dest = options.dest;
+
+	var filesToDelete = [
+		`${dest}/**/*.json`,
+		`${dest}/node_modules`,
+		`${dest}/**/*.ts`
+	]
+
+	if (!options.deleteTypings) {
+		filesToDelete = [
+			...filesToDelete,
+			`!${dest}/**/*.d.ts`,
+			`!${dest}/**/*.metadata.json`
+		];
+	}
+
+	return $.del(filesToDelete).then(() => {
+		callback();
+	})
 }
 
 function createTempTsConfig(path, target, moduleType) {
