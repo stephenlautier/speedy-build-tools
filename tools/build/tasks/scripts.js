@@ -53,17 +53,7 @@ function runNgc(configPath, callback) {
 
 function runTsc(configPath, callback) {
 	return $.crossSpawnPromise("node_modules/.bin/tsc", ["-p", configPath])
-		.then(() => callback())
-		.catch((error) => {
-			console.error($.util.colors.red("TSC failed"));
-			console.error($.util.colors.red(error.stderr.toString()));
-
-			if (!args.continueOnError) {
-				process.exit(1);
-			}
-
-			callback();
-		});
+		.then(() => callback());
 }
 
 function compileTs(options, callback) {
