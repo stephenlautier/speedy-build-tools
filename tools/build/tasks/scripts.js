@@ -55,25 +55,23 @@ function compileTs(options, callback) {
 	const tsConfig = `${dest}/tsconfig.json`;
 
 	return runNgc(tsConfig, () => {
-		deleteFiles(options, () => {
-			var filesToDelete = [
-				`${dest}/**/*.json`,
-				`${dest}/node_modules`,
-				`${dest}/**/*.ts`
-			]
+		var filesToDelete = [
+			`${dest}/**/*.json`,
+			`${dest}/node_modules`,
+			`${dest}/**/*.ts`
+		]
 
-			if (!options.deleteTypings) {
-				filesToDelete = [
-					...filesToDelete,
-					`!${dest}/**/*.d.ts`,
-					`!${dest}/**/*.metadata.json`
-				];
-			}
+		if (!options.deleteTypings) {
+			filesToDelete = [
+				...filesToDelete,
+				`!${dest}/**/*.d.ts`,
+				`!${dest}/**/*.metadata.json`
+			];
+		}
 
-			return $.del(filesToDelete).then(() => {
-				callback();
-			})
-		});
+		return $.del(filesToDelete).then(() => {
+			callback();
+		})
 	});
 }
 
