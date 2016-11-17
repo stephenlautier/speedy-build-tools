@@ -22,7 +22,6 @@ gulp.task("generate:umd", (cb) => {
 
 gulp.task("generate:es2015", (cb) => {
 	compileTs({
-		useNgc: true,
 		dest: config.artifact.es2015,
 		target: "es5",
 		moduleType: "es2015"
@@ -50,47 +49,32 @@ function runNgc(configPath, callback) {
 		});
 }
 
-function runTsc(configPath, callback) {
-	return $.crossSpawnPromise("node_modules/.bin/tsc", ["-p", configPath])
-		.then(() => callback());
-}
-
 function compileTs(options, callback) {
 	const dest = options.dest;
 	createTempTsConfig(dest, options.target, options.moduleType);
 	const tsConfig = `${dest}/tsconfig.json`;
 
-	const cb = () => {
-		deleteFiles(options, callback)
-	};
+	return runNgc(tsConfig, () => {
+		deleteFiles(options, () => {
+			var filesToDelete = [
+				`${dest}/**/*.json`,
+				`${dest}/node_modules`,
+				`${dest}/**/*.ts`
+			]
 
-	if (options.useNgc) {
-		return runNgc(tsConfig, cb);
-	}
+			if (!options.deleteTypings) {
+				filesToDelete = [
+					...filesToDelete,
+					`!${dest}/**/*.d.ts`,
+					`!${dest}/**/*.metadata.json`
+				];
+			}
 
-	return runTsc(tsConfig, cb);
-}
-
-function deleteFiles(options, callback) {
-	const dest = options.dest;
-
-	var filesToDelete = [
-		`${dest}/**/*.json`,
-		`${dest}/node_modules`,
-		`${dest}/**/*.ts`
-	]
-
-	if (!options.deleteTypings) {
-		filesToDelete = [
-			...filesToDelete,
-			`!${dest}/**/*.d.ts`,
-			`!${dest}/**/*.metadata.json`
-		];
-	}
-
-	return $.del(filesToDelete).then(() => {
-		callback();
-	})
+			return $.del(filesToDelete).then(() => {
+				callback();
+			})
+		});
+	});
 }
 
 function createTempTsConfig(path, target, moduleType) {
