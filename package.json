@@ -1,7 +1,7 @@
 {
-  "name": "@obg/ng2.sdk.skeleton",
-  "version": "0.0.0",
-  "description": "OBG angular2 skeleton setup for sdk global, utils, services, providers and client",
+  "name": "@obg/build-tools",
+  "version": "0.1.0",
+  "description": "OBG build tools",
   "main": "dist/umd/index.js",
   "module": "dist/es2015/index.js",
   "directories": {
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://bitbucketsson.betsson.local/scm/wf/obg.ng2.sdk.skeleton.git"
+    "url": "https://bitbucketsson.betsson.local/scm/wf/obg.build-tools.git"
   },
   "keywords": [
     "angular",
