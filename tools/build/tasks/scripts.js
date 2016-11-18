@@ -34,11 +34,11 @@ gulp.task("copy:scripts", () => {
 		.pipe(gulp.dest(config.artifact.es2015));
 });
 
-function runNgc(configPath, callback) {
-	return $.crossSpawnPromise("node_modules/.bin/ngc", ["-p", configPath])
+function runTsc(configPath, callback) {
+	return $.crossSpawnPromise("node_modules/.bin/tsc", ["-p", configPath])
 		.then(() => callback())
 		.catch((error) => {
-			console.error($.util.colors.red("NGC failed"));
+			console.error($.util.colors.red("tsc failed"));
 			console.error($.util.colors.red(error.stderr.toString()));
 
 			if (!args.continueOnError) {
@@ -54,7 +54,7 @@ function compileTs(options, callback) {
 	createTempTsConfig(dest, options.target, options.moduleType);
 	const tsConfig = `${dest}/tsconfig.json`;
 
-	return runNgc(tsConfig, () => {
+	return runTsc(tsConfig, () => {
 		var filesToDelete = [
 			`${dest}/**/*.json`,
 			`${dest}/node_modules`,
