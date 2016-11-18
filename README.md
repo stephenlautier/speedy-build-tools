@@ -1,14 +1,13 @@
-[projectUri]: https://bitbucketsson.betsson.local/projects/WF/repos/obg.ng2.sdk.skeleton
-[projectGit]: https://bitbucketsson.betsson.local/scm/wf/obg.ng2.sdk.skeleton.git
+[projectUri]: https://bitbucketsson.betsson.local/projects/WF/repos/obg.build-tools
+[projectGit]: https://bitbucketsson.betsson.local/scm/wf/obg.build-tools.git
 [changeLog]: ./doc/CHANGELOG.md
 
 [contribWiki]: https://wikisson.betsson.local/display/SG/Contribution+Guidelines
 [releaseWorkflowWiki]: https://wikisson.betsson.local/display/SG/Prepare+new+Release+for+Library
 [setupMachineWiki]: https://wikisson.betsson.local/display/SG/Setup+Machine+for+Development+-+Libraries
 
-# obg.ng2.sdk.skeleton
-OBG angular2 skeleton setup for sdk global, utils, services, providers and client
-
+# obg.build-tools
+OBG build tools 
 
 **Quick links**
 
@@ -19,39 +18,19 @@ OBG angular2 skeleton setup for sdk global, utils, services, providers and clien
 ## Installation
 
 ```
-npm install @obg/ng2.sdk.skeleton --save
+npm install @obg/build-tools --save
 ```
 
 # Usage
 
 ## Register module
 
-```ts
-import { SkeletonModule } from "@obg/ng2.sdk.skeleton";
+```js
+var buildTools = require("@obg/build-tools");
 
-@NgModule({
-	imports: [SkeletonModule]
-})
-export class AppModule {
+buildTools.enableLinking();
 
-}
-```
-
-## Consuming
-```ts
-import { SkeletonService } from "@obg/ng2.sdk.skeleton";
-
-@Injectable()
-constructor(
-	private skeletonService: SkeletonService
-) {
-}
-
-// get
-skeletonService.get("http://xxx/:id", {
-	id: "lobby"
-});
-
+buildTools.createLink("@obg", "ng2.common");
 ```
 
 # Contributing to the project
@@ -84,42 +63,12 @@ gulp build
 ```
 In order to view all other tasks invoke `gulp` or check the gulp tasks directly.
 
-## Running the tests
-
-```
-gulp test
-```
-
-
 ## Development utils
 
 ### Trigger gulp watch
 Handles compiling of changes.
 ```
 gulp watch
-```
-
-
-### Running Continuous Tests
-Spawns test runner and keep watching for changes.
-```
-gulp tdd
-```
-
-### Linking Package
-Instead of NPM link use the following
-
-#### Enable link
-```
-npm run obg-link 
-```
-
-With `-w` or `--watch` flag creates a watch that listens for changes and rebuilds the library.
-
-#### Consume the link
-Consume the link from another library
-```
-npm run obg-link <library-name>
 ```
 
 
