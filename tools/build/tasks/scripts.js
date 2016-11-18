@@ -6,18 +6,8 @@ var args = require("../args");
 gulp.task("scripts", (cb) => {
 	return $.runSequence(
 		"copy:scripts", [
-			"generate:umd",
 			"generate:es2015"
 		], cb);
-});
-
-gulp.task("generate:umd", (cb) => {
-	compileTs({
-		dest: config.artifact.umd,
-		target: "es5",
-		moduleType: "umd",
-		deleteTypings: true
-	}, cb);
 });
 
 gulp.task("generate:es2015", (cb) => {
@@ -30,7 +20,6 @@ gulp.task("generate:es2015", (cb) => {
 
 gulp.task("copy:scripts", () => {
 	return gulp.src([config.src.ts, `!${config.test.files}`])
-		.pipe(gulp.dest(config.artifact.umd))
 		.pipe(gulp.dest(config.artifact.es2015));
 });
 
