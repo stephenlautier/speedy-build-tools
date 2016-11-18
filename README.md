@@ -23,7 +23,7 @@ npm install @obg/build-tools --save
 
 # Usage
 
-## Register module
+## Using linking function
 
 ```js
 var buildTools = require("@obg/build-tools");
