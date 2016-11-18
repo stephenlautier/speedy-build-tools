@@ -3,13 +3,8 @@
   "version": "0.1.0",
   "description": "OBG build tools",
   "main": "dist/umd/index.js",
-  "module": "dist/es2015/index.js",
   "directories": {
     "doc": "doc"
-  },
-  "scripts": {
-    "test": "gulp test",
-    "obg-link": "ts-node -P tools ./tools/obg-link"
   },
   "repository": {
     "type": "git",
@@ -25,17 +20,9 @@
   "author": "One Betsson Group Frontend",
   "license": "MIT",
   "dependencies": {
-    "@obg/fe.tools.tslint": "^0.3.0",
-    "@types/colors": "^0.6.33",
-    "@types/node": "^6.0.46",
-    "@types/rimraf": "0.0.28",
-    "@types/yargs": "^6.3.0",
-    "codelyzer": "^1.0.0-beta.0",
     "colors": "^1.1.2",
-    "core-js": "^2.4.1",
     "cross-spawn-promise": "^0.8.0",
     "del": "^2.2.0",
-    "git-guppy": "^1.2.1",
     "gulp": "^3.9.1",
     "gulp-bump": "^2.1.0",
     "gulp-conventional-changelog": "^1.1.0",
@@ -47,16 +34,24 @@
     "gulp-tslint-stylish": "^1.1.1",
     "gulp-typescript": "^3.0.1",
     "gulp-util": "^3.0.7",
-    "guppy-pre-commit": "^0.4.0",
     "merge2": "^1.0.2",
     "path": "^0.12.7",
     "require-dir": "^0.3.0",
     "rimraf": "^2.5.4",
     "run-sequence": "^1.2.0",
-    "ts-node": "^1.6.1",
-    "tslint": "^3.10.2",
     "typescript": "2.0.8",
     "yargs": "^5.0.0"
+  },
+  "devDependencies": {
+    "@obg/fe.tools.tslint": "^0.3.0",
+    "@types/colors": "^0.6.33",
+    "@types/node": "^6.0.46",
+    "@types/rimraf": "0.0.28",
+    "@types/yargs": "^6.3.0",
+    "codelyzer": "^1.0.0-beta.0",
+    "git-guppy": "^1.2.1",
+    "guppy-pre-commit": "^0.4.0",
+    "tslint": "^3.10.2"
   },
   "typings": "dist/es2015/index.d.ts"
 }
