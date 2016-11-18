@@ -6,7 +6,7 @@ import { cyan, red } from "colors";
 
 const spawn = require("cross-spawn-promise");
 
-export function enableLinking(watch: boolean) {
+export function enableLinking(watch = false) {
 	console.log(cyan("Starting enabling link ..."));
 
 	return spawn("npm", ["link"])
@@ -31,7 +31,7 @@ export function enableLinking(watch: boolean) {
 }
 
 export function createLink(prefix: string, packageNameUnPrefixed: string) {
-	const packageName = `${prefix}${packageNameUnPrefixed}`;
+	const packageName = `${prefix}/${packageNameUnPrefixed}`;
 
 	console.log(cyan(`Starting linking: ${packageName} ...`));
 
