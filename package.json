@@ -2,7 +2,7 @@
   "name": "@obg/build-tools",
   "version": "0.1.0",
   "description": "OBG build tools",
-  "main": "dist/es2015/index.js",
+  "main": "dist/commonjs/index.js",
   "directories": {
     "doc": "doc"
   },
@@ -53,5 +53,5 @@
     "tslint": "^3.10.2",
     "typescript": "2.0.8"
   },
-  "typings": "dist/es2015/index.d.ts"
+  "typings": "dist/commonjs/index.d.ts"
 }

@@ -6,21 +6,19 @@ var args = require("../args");
 gulp.task("scripts", (cb) => {
 	return $.runSequence(
 		"copy:scripts", [
-			"generate:es2015"
+			"generate:commonjs"
 		], cb);
 });
 
-gulp.task("generate:es2015", (cb) => {
+gulp.task("generate:commonjs", (cb) => {
 	compileTs({
-		dest: config.artifact.es2015,
-		target: "es5",
-		moduleType: "commonjs"
+		dest: config.artifact.commonjs
 	}, cb);
 });
 
 gulp.task("copy:scripts", () => {
 	return gulp.src([config.src.ts, `!${config.test.files}`])
-		.pipe(gulp.dest(config.artifact.es2015));
+		.pipe(gulp.dest(config.artifact.commonjs));
 });
 
 function runTsc(configPath) {
@@ -76,10 +74,7 @@ function createTempTsConfig(path, target, moduleType) {
 	config.compilerOptions = Object.assign(
 		{},
 		config.compilerOptions, {
-			outDir: "",
-			module: moduleType,
-			target: target,
-			skipLibCheck: !args.isRelease // skipLibCheck for dev build so it transpiles faster
+			outDir: ""
 		}
 	);
 

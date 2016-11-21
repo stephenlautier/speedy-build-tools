@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"target": "es5",
+		"target": "es2015",
 		"module": "commonjs",
 		"moduleResolution": "node",
 		"emitDecoratorMetadata": true,
@@ -10,6 +10,8 @@
 		"noImplicitAny": true,
 		"noFallthroughCasesInSwitch": true,
 		"allowUnreachableCode": false,
+		"skipLibCheck": true,
+		"strictNullChecks": true,
 		"types": [
 			"node"
 		],
