@@ -12,10 +12,9 @@ gulp.task("scripts", (cb) => {
 
 gulp.task("generate:es2015", (cb) => {
 	compileTs({
-		useNgc: args.isRelease,
 		dest: config.artifact.es2015,
 		target: "es5",
-		moduleType: "es2015"
+		moduleType: "commonjs"
 	}, cb);
 });
 
