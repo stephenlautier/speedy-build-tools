@@ -12,6 +12,7 @@ gulp.task("scripts", (cb) => {
 
 gulp.task("generate:es2015", (cb) => {
 	compileTs({
+		useNgc: args.isRelease,
 		dest: config.artifact.es2015,
 		target: "es5",
 		moduleType: "es2015"
@@ -23,45 +24,51 @@ gulp.task("copy:scripts", () => {
 		.pipe(gulp.dest(config.artifact.es2015));
 });
 
-function runTsc(configPath, callback) {
-	return $.crossSpawnPromise("node_modules/.bin/tsc", ["-p", configPath])
-		.then(() => callback())
+function runTsc(configPath) {
+	return $.crossSpawnPromise("node_modules/.bin/tsc", ["-p", configPath], { stdio: "inherit" })
 		.catch((error) => {
-			console.error($.util.colors.red("tsc failed"));
-			console.error($.util.colors.red(error.stderr.toString()));
+			if (!error) {
+				return;
+			}
+
+			console.error($.util.colors.red("TSC failed"));
+			console.error($.util.colors.red(error.stderr ? error.stderr.toString() : error));
 
 			if (!args.continueOnError) {
 				process.exit(1);
 			}
-
-			callback();
 		});
 }
 
 function compileTs(options, callback) {
 	const dest = options.dest;
 	createTempTsConfig(dest, options.target, options.moduleType);
+
 	const tsConfig = `${dest}/tsconfig.json`;
+	const promise = options.useNgc ? runNgc(tsConfig): runTsc(tsConfig);
 
-	return runTsc(tsConfig, () => {
-		var filesToDelete = [
-			`${dest}/**/*.json`,
-			`${dest}/node_modules`,
-			`${dest}/**/*.ts`
-		]
+	return promise
+		.then(() => deleteFiles(options))
+		.then(() => callback());
+}
 
-		if (!options.deleteTypings) {
-			filesToDelete = [
-				...filesToDelete,
-				`!${dest}/**/*.d.ts`,
-				`!${dest}/**/*.metadata.json`
-			];
-		}
+function deleteFiles(options) {
+	const dest = options.dest;
+	var filesToDelete = [
+		`${dest}/**/*.json`,
+		`${dest}/node_modules`,
+		`${dest}/**/*.ts`
+	];
 
-		return $.del(filesToDelete).then(() => {
-			callback();
-		})
-	});
+	if (!options.deleteTypings) {
+		filesToDelete = [
+			...filesToDelete,
+			`!${dest}/**/*.d.ts`,
+			`!${dest}/**/*.metadata.json`
+		];
+	}
+
+	return $.del(filesToDelete);
 }
 
 function createTempTsConfig(path, target, moduleType) {
@@ -73,12 +80,14 @@ function createTempTsConfig(path, target, moduleType) {
 		config.compilerOptions, {
 			outDir: "",
 			module: moduleType,
-			target: target
+			target: target,
+			skipLibCheck: !args.isRelease // skipLibCheck for dev build so it transpiles faster
 		}
 	);
 
 	config.include = [
-		"./index.ts"
+		"./index.ts",
+		"./../../typings/**/*.d.ts"
 	];
 
 	fs.writeFileSync(`${path}/tsconfig.json`, JSON.stringify(config, null, 2));

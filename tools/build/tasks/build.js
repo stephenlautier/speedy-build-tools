@@ -4,17 +4,11 @@ var gulp = require("gulp");
 var $ = require("gulp-load-plugins")(config.loadPluginsOptions);
 
 gulp.task("build", (cb) => {
-	var tasksToRun = [
+	return $.runSequence([
 		"lint",
 		"scripts"
-	];
-
-	if (args.isRelease) {
-		return $.runSequence(tasksToRun,
-			"build:copy-dist",
-			cb);
-	}
-	return $.runSequence(tasksToRun,
+	],
+		"build:copy-dist",
 		cb);
 });
 

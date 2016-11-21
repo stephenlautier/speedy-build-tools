@@ -9,9 +9,6 @@ gulp.task("watch", () => {
 	args.continueOnError = true;
 
 	gulp.watch([config.src.ts, `!${config.test.files}`], () => {
-		if (!args.isRelease) {
-			return $.runSequence("scripts");
-		}
 		return $.runSequence(
 			"scripts",
 			"build:copy-dist"
