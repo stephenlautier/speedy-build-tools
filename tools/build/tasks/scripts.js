@@ -45,9 +45,8 @@ function compileTs(options, callback) {
 	createTempTsConfig(dest, options.target, options.moduleType);
 
 	const tsConfig = `${dest}/tsconfig.json`;
-	const promise = options.useNgc ? runNgc(tsConfig): runTsc(tsConfig);
 
-	return promise
+	return runTsc(tsConfig)
 		.then(() => deleteFiles(options))
 		.then(() => callback());
 }
