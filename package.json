@@ -2,7 +2,7 @@
   "name": "@obg/build-tools",
   "version": "0.1.0",
   "description": "OBG build tools",
-  "main": "dist/umd/index.js",
+  "main": "dist/es2015/index.js",
   "directories": {
     "doc": "doc"
   },
@@ -24,7 +24,6 @@
     "cross-spawn-promise": "^0.8.0",
     "gulp": "^3.9.1",
     "path": "^0.12.7",
-    "require-dir": "^0.3.0",
     "rimraf": "^2.5.4",
     "yargs": "^5.0.0"
   },
@@ -49,6 +48,7 @@
     "gulp-util": "^3.0.7",
     "guppy-pre-commit": "^0.4.0",
     "merge2": "^1.0.2",
+    "require-dir": "^0.3.0",
     "run-sequence": "^1.2.0",
     "tslint": "^3.10.2",
     "typescript": "2.0.8"
