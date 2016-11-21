@@ -1,3 +1,1 @@
-export * from "./skeleton/index";
-
-export * from "./module";
+export * from "./link";

@@ -16,8 +16,7 @@ module.exports = {
 	},
 	artifact: {
 		root: artifactRoot,
-		umd: `${artifactRoot}/umd`,
-		es2015: `${artifactRoot}/es2015`
+		commonjs: `${artifactRoot}/commonjs`
 	},
 	test: {
 		files: `${srcRoot}/**/*.spec.{ts,d.ts}`,

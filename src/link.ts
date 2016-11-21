@@ -1,41 +1,29 @@
 import * as process from "process";
 import * as rimraf from "rimraf";
-import * as yargs from "yargs";
 import { mkdirSync, symlinkSync, constants, existsSync } from "fs";
 import { join } from "path";
 import { cyan, red } from "colors";
 
 const spawn = require("cross-spawn-promise");
-const prefix = "@obg/";
-const packageNameUnPrefixed = yargs.argv._[0];
-const argv = yargs(JSON.parse(process.env.npm_config_argv).original)
-	.alias("watch", "w")
-	.default("watch", false)
-	.argv;
 
-if (!packageNameUnPrefixed) {
-	enableLinking();
-} else {
-	createLink();
-}
-
-function enableLinking() {
+export function enableLinking(watch = false) {
 	console.log(cyan("Starting enabling link ..."));
 
 	return spawn("npm", ["link"])
 		.then(() => {
-			console.log(cyan("Finished enabling link"));
+			if (!watch && !existsSync("dist")) {
+				mkdirSync("dist", constants.S_IRWXO);
+			}
 
-			if (!argv.watch) {
-				console.log(cyan("Starting building ..."));
-				return spawn("gulp", ["rebuild", "--rel"]);
+			console.log(cyan("Finished enabling link"));
+		})
+		.then(() => {
+			if (!watch) {
+				return;
 			}
-		}).then(() => {
-			if (argv.watch) {
-				return spawn("gulp", ["watch", "--rel"], { stdio: "inherit" });
-			} else {
-				console.log(cyan("Finished building ..."));
-			}
+
+			return spawn("gulp", ["clean"], { stdio: "inherit" })
+				.then(() => spawn("gulp", ["watch"], { stdio: "inherit" }));
 		})
 		.catch((error: any) => {
 			console.log(red(error.stderr.toString()));
@@ -43,8 +31,8 @@ function enableLinking() {
 		});
 }
 
-function createLink() {
-	const packageName = `${prefix}${packageNameUnPrefixed}`;
+export function createLink(prefix: string, packageNameUnPrefixed: string) {
+	const packageName = `${prefix}/${packageNameUnPrefixed}`;
 
 	console.log(cyan(`Starting linking: ${packageName} ...`));
 
@@ -73,11 +61,16 @@ function createLink() {
 			rimraf(modulePackagePath, err => {
 				mkdirSync(modulePackagePath, constants.S_IRWXO);
 
-				symlinkSync(join(nodeLinkPath, "dist"), join(modulePackagePath, "dist"), "dir");
+				symlinkSync(join(nodeLinkPath, "dist"), join(modulePackagePath, "dist"), "junction");
 				symlinkSync(join(nodeLinkPath, "package.json"), join(modulePackagePath, "package.json"));
-
-				console.log(cyan(`Finished linking: ${packageName}`));
 			});
+
+			console.log(cyan("Starting installing typings ..."));
+			return spawn("typings", ["install", `npm:${packageName}`, "--save"]);
+		})
+		.then(() => {
+			console.log(cyan("Finished installing typings"));
+			console.log(cyan(`Finished linking: ${packageName}`));
 		})
 		.catch((error: any) => {
 			console.log(red(error.stderr.toString()));

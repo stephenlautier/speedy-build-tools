@@ -6,73 +6,65 @@ var args = require("../args");
 gulp.task("scripts", (cb) => {
 	return $.runSequence(
 		"copy:scripts", [
-			"generate:umd",
-			"generate:es2015"
+			"generate:commonjs"
 		], cb);
 });
 
-gulp.task("generate:umd", (cb) => {
+gulp.task("generate:commonjs", (cb) => {
 	compileTs({
-		dest: config.artifact.umd,
-		target: "es5",
-		moduleType: "umd",
-		deleteTypings: true
-	}, cb);
-});
-
-gulp.task("generate:es2015", (cb) => {
-	compileTs({
-		dest: config.artifact.es2015,
-		target: "es5",
-		moduleType: "es2015"
+		dest: config.artifact.commonjs
 	}, cb);
 });
 
 gulp.task("copy:scripts", () => {
 	return gulp.src([config.src.ts, `!${config.test.files}`])
-		.pipe(gulp.dest(config.artifact.umd))
-		.pipe(gulp.dest(config.artifact.es2015));
+		.pipe(gulp.dest(config.artifact.commonjs));
 });
 
-function runNgc(configPath, callback) {
-	return $.crossSpawnPromise("node_modules/.bin/ngc", ["-p", configPath])
-		.then(() => callback())
+function runTsc(configPath) {
+	return $.crossSpawnPromise("node_modules/.bin/tsc", ["-p", configPath], { stdio: "inherit" })
 		.catch((error) => {
-			console.error($.util.colors.red("NGC failed"));
-			console.error($.util.colors.red(error.stderr.toString()));
+			if (!error) {
+				return;
+			}
+
+			console.error($.util.colors.red("TSC failed"));
+			console.error($.util.colors.red(error.stderr ? error.stderr.toString() : error));
 
 			if (!args.continueOnError) {
 				process.exit(1);
 			}
-
-			callback();
 		});
 }
 
 function compileTs(options, callback) {
 	const dest = options.dest;
 	createTempTsConfig(dest, options.target, options.moduleType);
+
 	const tsConfig = `${dest}/tsconfig.json`;
 
-	return runNgc(tsConfig, () => {
-		var filesToDelete = [
-			`${dest}/**/*.json`,
-			`${dest}/node_modules`,
-			`${dest}/**/*.ts`
-		]
+	return runTsc(tsConfig)
+		.then(() => deleteFiles(options))
+		.then(() => callback());
+}
 
-		if (!options.deleteTypings) {
-			filesToDelete = [
-				...filesToDelete,
-				`!${dest}/**/*.d.ts`,
-				`!${dest}/**/*.metadata.json`
-			];
-		}
+function deleteFiles(options) {
+	const dest = options.dest;
+	var filesToDelete = [
+		`${dest}/**/*.json`,
+		`${dest}/node_modules`,
+		`${dest}/**/*.ts`
+	];
 
-		return $.del(filesToDelete).then(() => {
-			callback();
-		})
-	});
+	if (!options.deleteTypings) {
+		filesToDelete = [
+			...filesToDelete,
+			`!${dest}/**/*.d.ts`,
+			`!${dest}/**/*.metadata.json`
+		];
+	}
+
+	return $.del(filesToDelete);
 }
 
 function createTempTsConfig(path, target, moduleType) {
@@ -82,9 +74,7 @@ function createTempTsConfig(path, target, moduleType) {
 	config.compilerOptions = Object.assign(
 		{},
 		config.compilerOptions, {
-			outDir: "",
-			module: moduleType,
-			target: target
+			outDir: ""
 		}
 	);
 
