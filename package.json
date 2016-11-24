@@ -50,6 +50,7 @@
     "merge2": "^1.0.2",
     "require-dir": "^0.3.0",
     "run-sequence": "^1.2.0",
+    "sorted-object": "^2.0.1",
     "tslint": "^3.10.2",
     "typescript": "2.0.8"
   },
