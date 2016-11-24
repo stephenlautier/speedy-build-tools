@@ -12,7 +12,7 @@ export function syncDependencies(packageJsonDirPath: string, sectionMap: Map<str
 		console.log(`Attempting to sync ${key} => ${value}`);
 
 		const syncDependencies = getSyncDependencies(key);
-		const mergedDependencies = mergeDependencies(syncDependencies, newPackageJsonContent[value]);
+		const mergedDependencies = Object.assign({}, newPackageJsonContent[value], syncDependencies);
 		newPackageJsonContent[value] = sortedObject(mergedDependencies);
 	}
 
@@ -39,8 +39,4 @@ function writeJsonFile(jsonContent: string, jsonPath: string): boolean {
 		}
 	});
 	return true;
-}
-
-function mergeDependencies(sourceDependencies: Dictionary<string>, targetDependencies: Dictionary<string>): Dictionary<string> {
-	return Object.assign({}, targetDependencies, sourceDependencies);
 }
