@@ -54,5 +54,7 @@
     "tslint": "^3.10.2",
     "typescript": "^2.1.0"
   },
+  "baseDependencies": [
+  ],
   "typings": "dist/commonjs/index.d.ts"
 }
