@@ -1,23 +1,22 @@
 import * as path from "path";
 import * as fs from "fs";
+import { cyan, red } from "colors";
 const sortedObject = require("sorted-object");
 
 type Dictionary<T> = { [key: string]: T };
 
-export function syncDependencies(packageJsonDirPath: string, sectionMap: Map<string, string>) {
+export function syncDependencies(packageJsonDirPath: string, sourceSection: string, targetSection: string) {
 	const packageJsonPath = path.join(packageJsonDirPath, "package.json");
 	const newPackageJsonContent = require(packageJsonPath);
 
-	for (let [key, value] of sectionMap) {
-		console.log(`Attempting to sync ${key} => ${value}`);
+	console.log(cyan(`Attempting to sync ${sourceSection} => ${targetSection}`));
 
-		const syncDependencies = getSyncDependencies(key);
-		const mergedDependencies = Object.assign({}, newPackageJsonContent[value], syncDependencies);
-		newPackageJsonContent[value] = sortedObject(mergedDependencies);
-	}
+	const syncDependencies = getSyncDependencies(sourceSection);
+	const mergedDependencies = Object.assign({}, newPackageJsonContent[targetSection], syncDependencies);
+	newPackageJsonContent[targetSection] = sortedObject(mergedDependencies);
 
 	if (writeJsonFile(newPackageJsonContent, path.join(packageJsonPath))) {
-		console.log(`Package.json synced successfully!`);
+		console.log(cyan(`Package.json synced successfully!`));
 	}
 }
 
@@ -33,9 +32,9 @@ function getSyncDependencies(section: string) {
 }
 
 function writeJsonFile(jsonContent: string, jsonPath: string): boolean {
-	fs.writeFile(jsonPath, JSON.stringify(jsonContent, null, 2) + "\n", "utf8", function (err: any) {
-		if (err) {
-			console.log(err);
+	fs.writeFile(jsonPath, JSON.stringify(jsonContent, null, 2) + "\n", "utf8", error => {
+		if (error) {
+			console.log(red(error.message));
 		}
 	});
 	return true;
