@@ -1,7 +1,6 @@
 import * as path from "path";
 import * as fs from "fs";
 import { cyan, red } from "colors";
-const sortedObject = require("sorted-object");
 
 type Dictionary<T> = { [key: string]: T };
 
@@ -19,6 +18,16 @@ export function syncDependencies(packageJsonDirPath: string, sourceSection: stri
 		console.log(cyan(`Package.json synced successfully!`));
 	}
 }
+
+function sortedObject(input: Dictionary<any>) {
+	const output: Dictionary<any> = {};
+
+	Object.keys(input).sort().forEach(function (key) {
+		output[key] = input[key];
+	});
+
+	return output;
+};
 
 function getSyncDependencies(section: string) {
 	const packageJsonPath = path.join(__dirname, "../../package.json");
