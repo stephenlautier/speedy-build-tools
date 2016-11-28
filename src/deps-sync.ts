@@ -5,7 +5,7 @@ import { cyan, red } from "colors";
 type Dictionary<T> = { [key: string]: T };
 
 export function syncDependencies(packageJsonDirPath: string, sourceSection: string, targetSection: string) {
-	const packageJsonPath = require("../../package.json")
+	const packageJsonPath = require("../../package.json");
 	const newPackageJsonContent = require(packageJsonPath);
 
 	console.log(cyan(`Attempting to sync ${sourceSection} => ${targetSection}`));
