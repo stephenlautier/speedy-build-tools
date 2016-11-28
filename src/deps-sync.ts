@@ -5,7 +5,7 @@ import { cyan, red } from "colors";
 type Dictionary<T> = { [key: string]: T };
 
 export function syncDependencies(packageJsonDirPath: string, sourceSection: string, targetSection: string) {
-	const packageJsonPath = path.join(packageJsonDirPath, "package.json");
+	const packageJsonPath = require("../../package.json")
 	const newPackageJsonContent = require(packageJsonPath);
 
 	console.log(cyan(`Attempting to sync ${sourceSection} => ${targetSection}`));
@@ -14,12 +14,10 @@ export function syncDependencies(packageJsonDirPath: string, sourceSection: stri
 	const mergedDependencies = Object.assign({}, newPackageJsonContent[targetSection], syncDependencies);
 	newPackageJsonContent[targetSection] = sortedObject(mergedDependencies);
 
-	if (writeJsonFile(newPackageJsonContent, path.join(packageJsonPath))) {
-		console.log(cyan(`Package.json synced successfully!`));
-	}
+	writeJsonFile(newPackageJsonContent, path.join(packageJsonPath));
 }
 
-function sortedObject(input: Dictionary<any>) {
+function sortedObject(input: Dictionary<any>): Dictionary<any> {
 	const output: Dictionary<any> = {};
 
 	Object.keys(input).sort().forEach(function (key) {
@@ -40,11 +38,12 @@ function getSyncDependencies(section: string) {
 	return packageJson[section];
 }
 
-function writeJsonFile(jsonContent: string, jsonPath: string): boolean {
+function writeJsonFile(jsonContent: string, jsonPath: string) {
 	fs.writeFile(jsonPath, JSON.stringify(jsonContent, null, 2) + "\n", "utf8", error => {
 		if (error) {
 			console.log(red(error.message));
+			return;
 		}
+		console.log(cyan(`Package.json synced successfully!`));
 	});
-	return true;
 }
