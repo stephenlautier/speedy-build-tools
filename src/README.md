@@ -20,7 +20,7 @@ Provides build tools for consumption from obg libraries.
 ```ts
 import * as process from "process";
 import * as yargs from "yargs";
-import { enableLinking, createLink } from "@obg/build-tools";
+import { enableLink, createLink } from "@obg/build-tools";
 
 const prefix = "@obg";
 const packageNameUnPrefixed = yargs.argv._[0];
@@ -30,7 +30,7 @@ const argv = yargs(JSON.parse(process.env.npm_config_argv).original)
 	.argv;
 
 if (!packageNameUnPrefixed) {
-	enableLinking(argv.watch);
+	enableLink(argv.watch);
 } else {
 	createLink(prefix, packageNameUnPrefixed);
 }
