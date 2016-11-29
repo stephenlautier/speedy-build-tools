@@ -1,21 +1,21 @@
 # Content
 Provides build tools for consumption from obg libraries.
+
 * Link
+
+	Provides functionality to:
+	+ Make the current library linkable.
+	+ Create a symbolic link to another library. This differs from `npm link *library*` by only linking parts of the directory contents.
+
 * Deps-sync
+
+	+ Pulls dependencies from `@obg/build-tools` package.json into the current library's package.json.
 
 **Quick links**
 
 [Change logs][changeLog] | [Project Repository][projectUri] | [Contribution guidelines][contribWiki]
 
 # Link
-
-## Description
-
-Provides functionality to:
-* Make the current library linkable.
-* Create a symbolic link to another library. This differs from `npm link *library*` by only linking parts of the directory contents.
-
-## Consuming
 
 ```ts
 import * as process from "process";
@@ -37,12 +37,6 @@ if (!packageNameUnPrefixed) {
 ```
 
 # Deps-sync
-
-## Description
-
-Pulls dependencies from `@obg/build-tools` package.json into the current library's package.json.
-
-## Consuming
 
 ```ts
 import * as path from "path";
