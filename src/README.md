@@ -7,7 +7,7 @@ Provides build tools for consumption from obg libraries.
 	+ Make the current library linkable.
 	+ Create a symbolic link to another library. This differs from `npm link *library*` by only linking parts of the directory contents.
 
-* Deps-sync
+* Sync Dependencies
 
 	+ Pulls dependencies from `@obg/build-tools` package.json into the current library's package.json.
 
@@ -36,12 +36,13 @@ if (!packageNameUnPrefixed) {
 }
 ```
 
-# Deps-sync
+# Sync Dependencies
 
 ```ts
 import * as path from "path";
 import { syncDependencies } from "@obg/build-tools";
 
-const packageJsonPath = path.join(__dirname, "../");
-syncDependencies(packageJsonPath, "baseDependencies", "devDependencies");
+syncDependencies("baseDependencies", "devDependencies");
 ```
+
+

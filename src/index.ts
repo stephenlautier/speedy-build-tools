@@ -1,2 +1,2 @@
 export * from "./link";
-export * from "./deps-sync";
+export * from "./sync-dependencies";
