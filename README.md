@@ -26,12 +26,35 @@ npm install @obg/build-tools --save
 ## Using linking functions
 
 ```js
-var buildTools = require("@obg/build-tools");
+import { enableLinking, createLink } from "@obg/build-tools";
 
-buildTools.enableLinking();
+enableLinking();
 
-buildTools.createLink("@obg", "ng2.common");
+createLink("@obg", "ng2.common");
 ```
+
+# npm Scripts
+
+Instead of depending on external task runners, Obg Build Tools can be configured to being executed from npm scripts.
+```
+"scripts": {
+    "link": "obg-build-tools link",
+    "sync": "obg-build-tools sync-dependencies"
+},
+````
+To run the build script found in the package.json scripts property, execute:
+
+```
+npm run sync
+```
+
+
+## Tasks
+
+| Task                | Description                                                                                         |
+|---------------------|-----------------------------------------------------------------------------------------------------|
+| `sync-dependencies` | Sync dependencies between projects                                                                  |
+| `link`              | Link to an OBG Library. Don’t provide the `@obg/` prefix.                                           |
 
 # Contributing to the project
 In order to contribute please read the [Contribution guidelines][contribWiki].

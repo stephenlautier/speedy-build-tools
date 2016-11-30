@@ -1,12 +1,28 @@
 import * as process from "process";
 import * as rimraf from "rimraf";
+import * as yargs from "yargs";
+import * as spawn from "cross-spawn-promise";
 import { mkdirSync, symlinkSync, constants, existsSync } from "fs";
 import { join } from "path";
 import { cyan, red } from "colors";
 
-const spawn = require("cross-spawn-promise");
+export function link(): Promise<any> {
+	const prefix = "@obg";
+	const packageNameUnPrefixed = yargs.argv._[1];
+	const argv = yargs(JSON.parse(process.env.npm_config_argv).original)
+		.alias("watch", "w")
+		.default("watch", false)
+		.argv;
 
-export function enableLinking(watch = false) {
+
+	if (!packageNameUnPrefixed) {
+		return enableLinking(argv.watch);
+	} else {
+		return createLink(prefix, packageNameUnPrefixed);
+	}
+}
+
+export function enableLinking(watch = false): Promise<any> {
 	console.log(cyan("Starting enabling link ..."));
 
 	return spawn("npm", ["link"])
@@ -31,7 +47,7 @@ export function enableLinking(watch = false) {
 		});
 }
 
-export function createLink(prefix: string, packageNameUnPrefixed: string) {
+export function createLink(prefix: string, packageNameUnPrefixed: string): Promise<any> {
 	const packageName = `${prefix}/${packageNameUnPrefixed}`;
 
 	console.log(cyan(`Starting linking: ${packageName} ...`));
