@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 var _ = require("lodash");
+process.title = "obg-build-tool";
 
 if (process.argv.length <= 2) {
-	console.error("Missing obg build tools task name");
+	console.error(`Missing ${process.title} task name`);
 	process.exit(1);
 }
 

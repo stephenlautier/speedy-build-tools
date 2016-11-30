@@ -3,7 +3,6 @@ import { writeFile } from "fs";
 import { cyan, red } from "colors";
 
 type Dictionary<T> = { [key: string]: T };
-type Nullable<T> = T | null;
 
 export function syncDependencies(sourceSection = "baseDependencies", targetSection = "devDependencies"): Promise<any> {
 	return new Promise((resolve, reject) => {
@@ -39,9 +38,8 @@ function sortedObject(input: Dictionary<string>): Dictionary<string> {
 	return output;
 };
 
-function getSyncDependencies(section: string): Nullable<Dictionary<string>> {
-	const packageJsonPath = join(__dirname, "../../package.json");
-	const packageJson = require(packageJsonPath);
+function getSyncDependencies(section: string): Dictionary<string> | null {
+	const packageJson = require(join(__dirname, "../../package.json"));
 
 	if (!packageJson) {
 		return null;
