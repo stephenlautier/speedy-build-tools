@@ -4,7 +4,10 @@ import * as yargs from "yargs";
 import * as spawn from "cross-spawn-promise";
 import { mkdirSync, symlinkSync, constants, existsSync } from "fs";
 import { join } from "path";
-import { cyan, red } from "colors";
+
+import { Logger } from "./utils/logger";
+
+const logger = new Logger("Link");
 
 export function link(): Promise<any> {
 	const prefix = "@obg";
@@ -14,7 +17,6 @@ export function link(): Promise<any> {
 		.default("watch", false)
 		.argv;
 
-
 	if (!packageNameUnPrefixed) {
 		return enableLinking(argv.watch);
 	} else {
@@ -23,7 +25,7 @@ export function link(): Promise<any> {
 }
 
 export function enableLinking(watch = false): Promise<any> {
-	console.log(cyan("Starting enabling link ..."));
+	logger.start();
 
 	return spawn("npm", ["link"])
 		.then(() => {
@@ -31,7 +33,7 @@ export function enableLinking(watch = false): Promise<any> {
 				mkdirSync("dist", constants.S_IRWXO);
 			}
 
-			console.log(cyan("Finished enabling link"));
+			logger.finish();
 		})
 		.then(() => {
 			if (!watch) {
@@ -42,7 +44,7 @@ export function enableLinking(watch = false): Promise<any> {
 				.then(() => spawn("gulp", ["watch"], { stdio: "inherit" }));
 		})
 		.catch((error: any) => {
-			console.log(red(error.stderr.toString()));
+			logger.error(error.stderr.toString());
 			process.exit(1);
 		});
 }
@@ -50,7 +52,7 @@ export function enableLinking(watch = false): Promise<any> {
 export function createLink(prefix: string, packageNameUnPrefixed: string): Promise<any> {
 	const packageName = `${prefix}/${packageNameUnPrefixed}`;
 
-	console.log(cyan(`Starting linking: ${packageName} ...`));
+	logger.start();
 
 	return spawn("npm", ["config", "get", "prefix"])
 		.then((stdout: NodeBuffer) => {
@@ -66,7 +68,7 @@ export function createLink(prefix: string, packageNameUnPrefixed: string): Promi
 			const nodeLinkPath = join(path, modulePackagePath);
 
 			if (!existsSync(nodeLinkPath)) {
-				console.log(red(`Error: Cannot find package '${packageName}'. Did you enable linking?`));
+				logger.error(`Error: Cannot find package '${packageName}'. Did you enable linking?`);
 				process.exit(1);
 			}
 
@@ -81,15 +83,14 @@ export function createLink(prefix: string, packageNameUnPrefixed: string): Promi
 				symlinkSync(join(nodeLinkPath, "package.json"), join(modulePackagePath, "package.json"));
 			});
 
-			console.log(cyan("Starting installing typings ..."));
+			logger.log("Installing typings ...");
 			return spawn("typings", ["install", `npm:${packageName}`, "--save"]);
 		})
 		.then(() => {
-			console.log(cyan("Finished installing typings"));
-			console.log(cyan(`Finished linking: ${packageName}`));
+			logger.finish();
 		})
 		.catch((error: any) => {
-			console.log(red(error.stderr.toString()));
+			logger.error(error.stderr.toString());
 			process.exit(1);
 		});
 }
