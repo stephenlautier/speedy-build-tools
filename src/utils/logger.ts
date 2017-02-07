@@ -19,6 +19,7 @@ export class Logger {
 	}
 
 	debug(message: string) {
+		// todo: this should be printed only when env is debug mode.
 		console.log(green(message));
 	}
 
