@@ -9,28 +9,28 @@ export class Logger {
 	}
 
 	log(message: string) {
-		console.log(white(this.getFullMessage(message)));
+		console.log(white(this.getTransformedMessage(message)));
 	}
 
 	debug(message: string) {
 		// todo: this should be printed only when env is debug mode.
-		console.log(green(this.getFullMessage(message)));
+		console.log(green(this.getTransformedMessage(message)));
 	}
 
 	warn(message: string) {
-		console.log(yellow(this.getFullMessage(message)));
+		console.log(yellow(this.getTransformedMessage(message)));
 	}
 
 	error(message: string, error?: Error) {
-		console.error(red(this.getFullMessage(error ? `${message}, error: ${error}` : message)));
+		console.error(red(this.getTransformedMessage(error ? `${message}, error: ${error}` : message)));
 	}
 
-	private getFullMessage(message: string): string {
+	private getTransformedMessage(message: string): string {
 		const date = new Date();
-		const time = `${this.padTime(date.getHours())}:${this.padTime(date.getMinutes())}:${this.padTime(date.getSeconds())}`;
-		const taskName = `${this.scope!}:`;
+		const time = gray(`${this.padTime(date.getHours())}:${this.padTime(date.getMinutes())}:${this.padTime(date.getSeconds())}`);
+		const taskName = cyan(`${this.scope!}:`);
 
-		return `[${gray(time)}] ${cyan(taskName)} ${message}`;
+		return `${white("[" + time + "]")} ${taskName} ${message}`;
 	}
 
 	private padTime(timeUnit: number): string {
