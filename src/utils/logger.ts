@@ -1,6 +1,7 @@
 import { cyan, red, yellow, green, gray, white } from "colors";
 import { padStart } from "lodash";
 
+const padTimeUnit = (unit: number) => padStart(unit.toString(), 2, "0");
 export class Logger {
 
 	constructor(
@@ -9,32 +10,27 @@ export class Logger {
 	}
 
 	log(message: string) {
-		console.log(white(this.getTransformedMessage(message)));
+		console.log(white(this.formatMessage(message)));
 	}
 
 	debug(message: string) {
 		// todo: this should be printed only when env is debug mode.
-		console.log(green(this.getTransformedMessage(message)));
+		console.log(green(this.formatMessage(message)));
 	}
 
 	warn(message: string) {
-		console.log(yellow(this.getTransformedMessage(message)));
+		console.log(yellow(this.formatMessage(message)));
 	}
 
 	error(message: string, error?: Error) {
-		console.error(red(this.getTransformedMessage(error ? `${message}, error: ${error}` : message)));
+		console.error(red(this.formatMessage(error ? `${message}, error: ${error}` : message)));
 	}
 
-	private getTransformedMessage(message: string): string {
+	private formatMessage(message: string): string {
 		const date = new Date();
-		const time = gray(`${this.padTimeUnit(date.getHours())}:${this.padTimeUnit(date.getMinutes())}:${this.padTimeUnit(date.getSeconds())}`);
-		const taskName = cyan(`${this.scope!}:`);
+		const time = gray(`${padTimeUnit(date.getHours())}:${padTimeUnit(date.getMinutes())}:${padTimeUnit(date.getSeconds())}`);
 
-		return `${white("[" + time + "]")} ${taskName} ${message}`;
-	}
-
-	private padTimeUnit(unit: number): string {
-		return padStart(unit.toString(), 2, "0");
+		return `${white("[" + time + "]")} ${cyan(`${this.scope}:`)} ${message}`;
 	}
 
 }
