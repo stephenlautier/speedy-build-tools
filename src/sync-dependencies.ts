@@ -2,15 +2,17 @@ import { join } from "path";
 import { writeFile } from "fs";
 
 import { Logger } from "./utils/logger";
+import { Timer } from "./utils/timer";
 
 type Dictionary<T> = { [key: string]: T };
 
-const logger = new Logger("Sync Dependencies");
+const logger = new Logger("Dependencies");
+const timer = new Timer(logger);
 
 export function syncDependencies(sourceSection = "baseDependencies", targetSection = "devDependencies"): Promise<any> {
 	return new Promise((resolve, reject) => {
 		try {
-			logger.start();
+			timer.start();
 
 			const jsonPath = "../../package.json";
 			const packageJson = require(jsonPath);
@@ -26,7 +28,7 @@ export function syncDependencies(sourceSection = "baseDependencies", targetSecti
 			writeJsonFile(newPackageJsonContent, jsonPath);
 
 			resolve();
-			logger.finish();
+			timer.finish();
 
 		} catch (error) {
 			reject(error);

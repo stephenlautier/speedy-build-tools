@@ -1,43 +1,40 @@
-import { cyan, red, yellow, green } from "colors";
+import { cyan, red, yellow, green, gray, white } from "colors";
+import { padStart } from "lodash";
 
 export class Logger {
 
-	private startTime: number;
-
 	constructor(
-		private task?: string
+		private scope?: string
 	) {
 	}
 
-	start() {
-		this.startTime = Date.now();
-		this.log(`${this.task} started ...`);
-	}
-
 	log(message: string) {
-		console.log(cyan(message));
+		console.log(white(this.getFullMessage(message)));
 	}
 
 	debug(message: string) {
 		// todo: this should be printed only when env is debug mode.
-		console.log(green(message));
+		console.log(green(this.getFullMessage(message)));
 	}
 
 	warn(message: string) {
-		console.warn(yellow(message));
+		console.log(yellow(this.getFullMessage(message)));
 	}
 
 	error(message: string, error?: Error) {
-		console.error(red(error ? `${message}, error: ${error}` : message));
+		console.error(red(this.getFullMessage(error ? `${message}, error: ${error}` : message)));
 	}
 
-	finish() {
-		const duration = Date.now() - this.startTime;
-		const time = duration > 1000 ?
-			`${(duration / 1000).toFixed(2)} s` :
-			`${duration.toFixed(3)} ms`;
+	private getFullMessage(message: string): string {
+		const date = new Date();
+		const time = `${this.padTime(date.getHours())}:${this.padTime(date.getMinutes())}:${this.padTime(date.getSeconds())}`;
+		const taskName = `${this.scope!}:`;
 
-		this.log(`${this.task} finished in ${time}`);
+		return `[${gray(time)}] ${cyan(taskName)} ${message}`;
+	}
+
+	private padTime(timeUnit: number): string {
+		return padStart(timeUnit.toString(), 2, "0");
 	}
 
 }

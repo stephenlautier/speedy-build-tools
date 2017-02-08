@@ -6,8 +6,10 @@ import { mkdirSync, symlinkSync, constants, existsSync } from "fs";
 import { join } from "path";
 
 import { Logger } from "./utils/logger";
+import { Timer } from "./utils/timer";
 
 const logger = new Logger("Link");
+const timer = new Timer(logger);
 
 export function link(): Promise<any> {
 	const prefix = "@obg";
@@ -25,7 +27,7 @@ export function link(): Promise<any> {
 }
 
 export function enableLinking(watch = false): Promise<any> {
-	logger.start();
+	timer.start();
 
 	return spawn("npm", ["link"])
 		.then(() => {
@@ -33,7 +35,7 @@ export function enableLinking(watch = false): Promise<any> {
 				mkdirSync("dist", constants.S_IRWXO);
 			}
 
-			logger.finish();
+			timer.finish();
 		})
 		.then(() => {
 			if (!watch) {
@@ -52,7 +54,7 @@ export function enableLinking(watch = false): Promise<any> {
 export function createLink(prefix: string, packageNameUnPrefixed: string): Promise<any> {
 	const packageName = `${prefix}/${packageNameUnPrefixed}`;
 
-	logger.start();
+	timer.start();
 
 	return spawn("npm", ["config", "get", "prefix"])
 		.then((stdout: NodeBuffer) => {
@@ -83,11 +85,11 @@ export function createLink(prefix: string, packageNameUnPrefixed: string): Promi
 				symlinkSync(join(nodeLinkPath, "package.json"), join(modulePackagePath, "package.json"));
 			});
 
-			logger.log("Installing typings ...");
+			logger.log("Installing typings...");
 			return spawn("typings", ["install", `npm:${packageName}`, "--save"]);
 		})
 		.then(() => {
-			logger.finish();
+			timer.finish();
 		})
 		.catch((error: any) => {
 			logger.error(error.stderr.toString());
