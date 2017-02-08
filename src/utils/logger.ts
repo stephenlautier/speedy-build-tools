@@ -27,14 +27,14 @@ export class Logger {
 
 	private getTransformedMessage(message: string): string {
 		const date = new Date();
-		const time = gray(`${this.padTime(date.getHours())}:${this.padTime(date.getMinutes())}:${this.padTime(date.getSeconds())}`);
+		const time = gray(`${this.padTimeUnit(date.getHours())}:${this.padTimeUnit(date.getMinutes())}:${this.padTimeUnit(date.getSeconds())}`);
 		const taskName = cyan(`${this.scope!}:`);
 
 		return `${white("[" + time + "]")} ${taskName} ${message}`;
 	}
 
-	private padTime(timeUnit: number): string {
-		return padStart(timeUnit.toString(), 2, "0");
+	private padTimeUnit(unit: number): string {
+		return padStart(unit.toString(), 2, "0");
 	}
 
 }
