@@ -30,7 +30,7 @@ export class Logger {
 		const date = new Date();
 		const time = gray(`${padTimeUnit(date.getHours())}:${padTimeUnit(date.getMinutes())}:${padTimeUnit(date.getSeconds())}`);
 
-		return `${white("[" + time + "]")} ${cyan(`${this.scope}:`)} ${message}`;
+		return `${white(`[${time}]`)} ${cyan(`${this.scope}:`)} ${message}`;
 	}
 
 }
