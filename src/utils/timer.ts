@@ -11,14 +11,14 @@ export class Timer {
 
 	start() {
 		this.startTime = Date.now();
-		this.logger.log("Started...");
+		this.logger.info("Started...");
 	}
 
 	finish() {
 		const duration = Date.now() - this.startTime;
 		const time = duration > 1000 ? `${(duration / 1000).toFixed(2)} s` : `${duration.toFixed(3)} ms`;
 
-		this.logger.log(`Finished in ${time}`);
+		this.logger.info(`Finished in ${time}`);
 	}
 
 }

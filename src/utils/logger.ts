@@ -9,7 +9,7 @@ export class Logger {
 	) {
 	}
 
-	log(message: string) {
+	info(message: string) {
 		console.log(white(this.formatMessage(message)));
 	}
 
@@ -23,7 +23,7 @@ export class Logger {
 	}
 
 	error(message: string, error?: Error) {
-		console.error(red(this.formatMessage(error ? `${message}, error: ${error}` : message)));
+		console.error(red(this.formatMessage(`Error: ${error ? `${message}, ${error}` : message}`)));
 	}
 
 	private formatMessage(message: string): string {

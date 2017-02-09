@@ -18,7 +18,7 @@ export function syncDependencies(sourceSection = "baseDependencies", targetSecti
 			const packageJson = require(jsonPath);
 			const newPackageJsonContent = packageJson;
 
-			logger.log(`Attempting to sync ${sourceSection} => ${targetSection}`);
+			logger.info(`Attempting to sync ${sourceSection} => ${targetSection}`);
 
 			const syncDependencies = getSyncDependencies(sourceSection);
 			const mergedDependencies = Object.assign({}, newPackageJsonContent[targetSection], syncDependencies);
@@ -63,6 +63,6 @@ function writeJsonFile(jsonContent: string, jsonPath: string) {
 			return;
 		}
 
-		logger.log(`Package.json synced successfully!`);
+		logger.info(`Package.json synced successfully!`);
 	});
 }

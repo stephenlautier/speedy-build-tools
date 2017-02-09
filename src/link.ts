@@ -70,7 +70,7 @@ export function createLink(prefix: string, packageNameUnPrefixed: string): Promi
 			const nodeLinkPath = join(path, modulePackagePath);
 
 			if (!existsSync(nodeLinkPath)) {
-				logger.error(`Error: Cannot find package '${packageName}'. Did you enable linking?`);
+				logger.error(`Cannot find package '${packageName}'. Did you enable linking?`);
 				process.exit(1);
 			}
 
@@ -85,7 +85,7 @@ export function createLink(prefix: string, packageNameUnPrefixed: string): Promi
 				symlinkSync(join(nodeLinkPath, "package.json"), join(modulePackagePath, "package.json"));
 			});
 
-			logger.log("Installing typings...");
+			logger.info("Installing typings...");
 			return spawn("typings", ["install", `npm:${packageName}`, "--save"]);
 		})
 		.then(() => {
