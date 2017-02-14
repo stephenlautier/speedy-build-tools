@@ -10,7 +10,7 @@ export class Logger {
 	}
 
 	info(message: string) {
-		console.log(white(this.formatMessage(message)));
+		console.info(white(this.formatMessage(message)));
 	}
 
 	debug(message: string) {
@@ -19,11 +19,11 @@ export class Logger {
 	}
 
 	warn(message: string) {
-		console.log(yellow(this.formatMessage(message)));
+		console.warn(yellow(this.formatMessage(message)));
 	}
 
-	error(message: string, error?: Error) {
-		console.error(red(this.formatMessage(`Error: ${error ? `${message}, ${error}` : message}`)));
+	error(message: string | null, error?: Error) {
+		console.error(red(this.formatMessage(this.formatErrorMessage(message, error))));
 	}
 
 	private formatMessage(message: string): string {
@@ -33,4 +33,12 @@ export class Logger {
 		return `${white(`[${time}]`)} ${cyan(`${this.scope}:`)} ${message}`;
 	}
 
+	private formatErrorMessage(message: string | null, error?: Error): string {
+		if (error) {
+			const errorMsg = error.message ? error.message : JSON.stringify(error);
+			return `Error: ${message ? `${message}, ${errorMsg}` : errorMsg}`;
+		}
+
+		return `Error: ${message}`;
+	}
 }
