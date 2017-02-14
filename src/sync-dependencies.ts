@@ -1,17 +1,24 @@
 import { join } from "path";
 import { writeFile } from "fs";
-import { cyan, red } from "colors";
+
+import { Logger } from "./utils/logger";
+import { Timer } from "./utils/timer";
 
 type Dictionary<T> = { [key: string]: T };
+
+const logger = new Logger("Dependencies");
+const timer = new Timer(logger);
 
 export function syncDependencies(sourceSection = "baseDependencies", targetSection = "devDependencies"): Promise<any> {
 	return new Promise((resolve, reject) => {
 		try {
+			timer.start();
+
 			const jsonPath = "../../package.json";
 			const packageJson = require(jsonPath);
 			const newPackageJsonContent = packageJson;
 
-			console.log(cyan(`Attempting to sync ${sourceSection} => ${targetSection}`));
+			logger.info(`Attempting to sync ${sourceSection} => ${targetSection}`);
 
 			const syncDependencies = getSyncDependencies(sourceSection);
 			const mergedDependencies = Object.assign({}, newPackageJsonContent[targetSection], syncDependencies);
@@ -21,6 +28,7 @@ export function syncDependencies(sourceSection = "baseDependencies", targetSecti
 			writeJsonFile(newPackageJsonContent, jsonPath);
 
 			resolve();
+			timer.finish();
 
 		} catch (error) {
 			reject(error);
@@ -51,9 +59,10 @@ function getSyncDependencies(section: string): Dictionary<string> | null {
 function writeJsonFile(jsonContent: string, jsonPath: string) {
 	writeFile(jsonPath, JSON.stringify(jsonContent, null, 2) + "\n", "utf8", error => {
 		if (error) {
-			console.log(red(error.message));
+			logger.error(error.message);
 			return;
 		}
-		console.log(cyan(`Package.json synced successfully!`));
+
+		logger.info(`Package.json synced successfully!`);
 	});
 }
