@@ -20,6 +20,10 @@
   "bin": {
     "obg-build-tools": "./bin/obg-build-tools.js"
   },
+  "scripts": {
+    "build": "gulp build --rel",
+    "test": "gulp test"
+  },
   "author": "One Betsson Group Frontend",
   "license": "MIT",
   "dependencies": {
