@@ -7,13 +7,8 @@ import { join } from "path";
 
 import {
 	Logger,
-	Worker,
 	Timer,
-	readFileAsync,
-	globArray,
-	toArray,
 	Args,
-	getConfigFilePath,
 	mergeArgsWithOptions
 } from "./utils";
 
@@ -92,7 +87,7 @@ export async function createLink(prefix: string, packageNameUnPrefixed: string):
 			mkdirSync(modulePrefixPath, constants.S_IRWXO);
 		}
 
-		rimraf(modulePackagePath, err => {
+		rimraf(modulePackagePath, () => {
 			mkdirSync(modulePackagePath, constants.S_IRWXO);
 
 			symlinkSync(join(nodeLinkPath, "dist"), join(modulePackagePath, "dist"), "junction");

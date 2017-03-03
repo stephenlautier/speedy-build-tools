@@ -6,8 +6,6 @@ import { join, sep, normalize } from "path";
 import { Args } from "./args/args";
 import { Arguments } from "./args/args.model";
 
-import { Logger } from "./logger";
-
 export function readFileAsync(path: string): Promise<string> {
 	return new Promise((resolve, reject) => {
 		readFile(path, "utf-8", (error, data) => {
