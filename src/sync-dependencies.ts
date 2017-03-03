@@ -1,8 +1,7 @@
 import { join } from "path";
 import { writeFile } from "fs";
 
-import { Logger } from "./utils/logger";
-import { Timer } from "./utils/timer";
+import { Timer, Logger } from "./utils";
 
 type Dictionary<T> = { [key: string]: T };
 
@@ -21,7 +20,7 @@ export function syncDependencies(sourceSection = "baseDependencies", targetSecti
 			logger.info(`Attempting to sync ${sourceSection} => ${targetSection}`);
 
 			const syncDependencies = getSyncDependencies(sourceSection);
-			const mergedDependencies = Object.assign({}, newPackageJsonContent[targetSection], syncDependencies);
+			const mergedDependencies = { ...newPackageJsonContent[targetSection], ...syncDependencies };
 			newPackageJsonContent[targetSection] = sortedObject(mergedDependencies);
 
 			delete newPackageJsonContent[sourceSection];

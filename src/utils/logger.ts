@@ -1,6 +1,8 @@
 import { cyan, red, yellow, green, gray, white } from "colors";
 import { padStart } from "lodash";
 
+import { Args } from "./args/args";
+
 const padTimeUnit = (unit: number) => padStart(unit.toString(), 2, "0");
 export class Logger {
 
@@ -14,7 +16,10 @@ export class Logger {
 	}
 
 	debug(message: string) {
-		// todo: this should be printed only when env is debug mode.
+		if (Args.env.debug) {
+			return;
+		}
+
 		console.log(green(this.formatMessage(message)));
 	}
 
