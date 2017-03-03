@@ -6,3 +6,4 @@ _artifact
 .vscode
 dist/
 *.log
+test
