@@ -1,6 +1,6 @@
+import * as _ from "lodash";
 import { readFile, statSync } from "fs";
 import { IOptions, sync } from "glob";
-import { pullAll, isArray, lastIndexOf } from "lodash";
 import { join, sep, normalize } from "path";
 
 import { Args } from "./args/args";
@@ -27,14 +27,14 @@ export function globArray(patterns: string[], options: IOptions = {}): string[] 
 
 	for (let pattern of patterns) {
 		const patternMatches = sync(pattern, options);
-		fileMatches = pattern.startsWith("!") ? pullAll(fileMatches, patternMatches) : [...fileMatches, ...patternMatches];
+		fileMatches = pattern.startsWith("!") ? _.pullAll(fileMatches, patternMatches) : [...fileMatches, ...patternMatches];
 	}
 
 	return fileMatches;
 }
 
 export function toArray<T>(pattern: T | T[]): T[] {
-	if (!isArray(pattern)) {
+	if (!_.isArray(pattern)) {
 		return [pattern];
 	}
 
@@ -52,7 +52,7 @@ export function findRoot(fileName?: string, filePath?: string): string | null {
 		// do nothing
 	}
 
-	let position = lastIndexOf(filePath, sep);
+	let position = _.lastIndexOf(filePath, sep);
 	if (position < 0) {
 		return null;
 	}
