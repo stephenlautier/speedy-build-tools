@@ -6,4 +6,5 @@ _artifact
 .vscode
 dist/
 *.log
+npm-debug.*
 test
