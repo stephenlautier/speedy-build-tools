@@ -16,7 +16,7 @@ process.on("message", async (message: WorkerMessage) => {
 	}
 });
 
-function sendMessage(message: WorkerMessage, messageExt: Partial<WorkerMessage>) {
+function sendMessage(message: WorkerMessage, messageOverrides: Partial<WorkerMessage>) {
 	logger.debug("sendMessage", `task: ${message.task}, pid: ${process.pid}`);
-	process.send!({ ...message, ...messageExt });
+	process.send!({ ...message, ...messageOverrides });
 }
