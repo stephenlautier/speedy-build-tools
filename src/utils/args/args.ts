@@ -5,11 +5,13 @@ import { Arguments } from "./args.model";
 export namespace Args {
 
 	if (process.env.npm_config_argv) {
-		yargs.parse([
+		yargs.parse(_.uniq([
 			...JSON.parse(process.env.npm_config_argv).original,
 			...process.argv
-		]);
+		]));
 	}
+
+	console.log(yargs.argv);
 
 	yargs.global("debug");
 	setBoolean("debug", false);
