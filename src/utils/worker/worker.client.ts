@@ -29,7 +29,7 @@ export namespace Worker {
 					kill(worker.pid);
 				})
 				.on("error", error => logger.error(`task: ${task}, pid: ${worker.pid}`, error))
-				.on("exit", () => logger.debug(`Exited, task: ${task}, pid: ${worker.pid}`))
+				.on("exit", () => logger.debug("Exited", `task: ${task}, pid: ${worker.pid}`))
 				.send({
 					task,
 					modulePath,
@@ -38,7 +38,7 @@ export namespace Worker {
 		});
 	}
 
-	function create(task: string): ChildProcess | null {
+	function create(task: string): ChildProcess {
 		try {
 			const childProcess = fork(join(__dirname, "worker.process.js"), process.argv);
 
@@ -47,14 +47,13 @@ export namespace Worker {
 				process: childProcess
 			});
 
-			logger.debug(`Succesfully created task: ${task}, pid: ${childProcess.pid}`);
+			logger.debug("Succesfully created", `task: ${task}, pid: ${childProcess.pid}`);
 
 			return childProcess;
 		} catch (error) {
 			logger.error(`Unable to 'create' worker task: ${task}`, error);
+			throw error;
 		}
-
-		return null;
 	}
 
 	function kill(pid: Number) {
@@ -68,7 +67,7 @@ export namespace Worker {
 
 		try {
 			worker.process.kill("SIGTERM");
-			logger.debug(`Killed worker task: ${worker.task}, pid: ${pid}`);
+			logger.debug("Killed worker", `task: ${worker.task}, pid: ${pid}`);
 		} catch (error) {
 			logger.error(`Unable to 'kill' worker task: ${worker.task}, pid: ${pid}`, error);
 		} finally {

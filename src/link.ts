@@ -51,11 +51,11 @@ export async function enableLinking(options: LinkOptions): Promise<any> {
 			await spawn("gulp", ["clean"], { stdio: "inherit" });
 			await spawn("gulp", ["watch"], { stdio: "inherit" });
 		}
-
-		timer.finish();
 	} catch (error) {
 		logger.error(error.stderr.toString());
 		process.exit(1);
+	} finally {
+		timer.finish();
 	}
 }
 
@@ -97,11 +97,11 @@ export async function createLink(prefix: string, packageNameUnPrefixed: string):
 		logger.info("Installing typings...");
 		await spawn("typings", ["install", `npm:${packageName}`, "--save"]);
 
-		timer.finish();
-
 	} catch (error) {
 		logger.error(error.stderr.toString());
 		process.exit(1);
+	} finally {
+		timer.finish();
 	}
 }
 

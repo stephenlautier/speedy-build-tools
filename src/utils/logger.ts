@@ -15,12 +15,12 @@ export class Logger {
 		console.info(white(this.formatMessage(message)));
 	}
 
-	debug(message: string) {
+	debug(method: string, message: string) {
 		if (Args.env.debug) {
 			return;
 		}
 
-		console.log(green(this.formatMessage(message)));
+		console.log(green(`${method}, ${this.formatMessage(message)}`));
 	}
 
 	warn(message: string) {

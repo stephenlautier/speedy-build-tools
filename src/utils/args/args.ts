@@ -5,12 +5,12 @@ import { Arguments } from "./args.model";
 
 export namespace Args {
 
-	yargs.parse(_.uniq([...JSON.parse(process.env.npm_config_argv).original, ...process.argv]));
+	yargs.parse([...JSON.parse(process.env.npm_config_argv).original, ...process.argv]);
 	yargs.global("debug");
 
 	setBoolean("debug", false);
 
-	export function setArray<T>(key: string, values: Array<T>, defaultValue?: T, alias?: string) {
+	export function setArray<T>(key: string, values: T[], defaultValue?: T, alias?: string) {
 		set<T>(key, defaultValue, alias);
 
 		if (values) {
