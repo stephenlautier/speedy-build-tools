@@ -12,30 +12,30 @@ export class Logger {
 	}
 
 	info(message: string) {
-		console.info(white(this.formatMessage(message)));
+		console.info(white(this.formatMessage(null, message)));
 	}
 
 	debug(method: string, message: string) {
-		if (Args.env.debug) {
+		if (!Args.env.debug) {
 			return;
 		}
 
-		console.log(green(`${method}, ${this.formatMessage(message)}`));
+		console.log(green(this.formatMessage(method, message)));
 	}
 
 	warn(message: string) {
-		console.warn(yellow(this.formatMessage(message)));
+		console.warn(yellow(this.formatMessage(null, message)));
 	}
 
 	error(message?: string, error?: Error) {
-		console.error(red(this.formatMessage(this.formatErrorMessage(message, error))));
+		console.error(red(this.formatMessage(null, this.formatErrorMessage(message, error))));
 	}
 
-	private formatMessage(message: string): string {
+	private formatMessage(method: string | null, message: string): string {
 		const date = new Date();
 		const time = gray(`${padTimeUnit(date.getHours())}:${padTimeUnit(date.getMinutes())}:${padTimeUnit(date.getSeconds())}`);
 
-		return `${white(`[${time}]`)} ${cyan(`${this.scope}:`)} ${message}`;
+		return `${white(`[${time}]`)} ${cyan(`${this.scope}:`)}${method ? ` ${method}` : ""} ${message}`;
 	}
 
 	private formatErrorMessage(message?: string, error?: Error): string {
