@@ -12,7 +12,7 @@ export class Logger {
 	}
 
 	info(message: string) {
-		console.info(white(this.formatMessage(null, message)));
+		console.info(white(this.formatMessage(message)));
 	}
 
 	debug(method: string, message: string) {
@@ -20,18 +20,18 @@ export class Logger {
 			return;
 		}
 
-		console.log(green(this.formatMessage(method, message)));
+		console.log(green(this.formatMessage(message, method)));
 	}
 
 	warn(message: string) {
-		console.warn(yellow(this.formatMessage(null, message)));
+		console.warn(yellow(this.formatMessage(message)));
 	}
 
 	error(message?: string, error?: Error) {
-		console.error(red(this.formatMessage(null, this.formatErrorMessage(message, error))));
+		console.error(red(this.formatMessage(this.formatErrorMessage(message, error))));
 	}
 
-	private formatMessage(method: string | null, message: string): string {
+	private formatMessage(message: string, method?: string): string {
 		const date = new Date();
 		const time = gray(`${padTimeUnit(date.getHours())}:${padTimeUnit(date.getMinutes())}:${padTimeUnit(date.getSeconds())}`);
 
