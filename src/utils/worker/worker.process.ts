@@ -5,7 +5,7 @@ const logger = new Logger("Worker Process");
 
 process.on("message", async (message: WorkerMessage) => {
 	try {
-		const task = (require(message.modulePath)[message.task] as (...params: any[]) => Promise<any>);
+		const task = require(message.modulePath)[message.task] as (...params: any[]) => Promise<any>;
 		const result = await task.apply(null, message.parameters) as Promise<any>;
 
 		sendMessage(message, { resolved: result });
