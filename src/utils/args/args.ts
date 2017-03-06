@@ -11,6 +11,8 @@ export namespace Args {
 		]));
 	}
 
+	console.log(yargs.argv);
+
 	yargs.global("debug");
 	setBoolean("debug", false);
 
