@@ -5,94 +5,112 @@ import * as spawn from "cross-spawn-promise";
 import { mkdirSync, symlinkSync, constants, existsSync } from "fs";
 import { join } from "path";
 
-import { Logger } from "./utils/logger";
-import { Timer } from "./utils/timer";
+import {
+	Logger,
+	Timer,
+	Args,
+	mergeArgsWithOptions
+} from "./utils";
 
 const logger = new Logger("Link");
 const timer = new Timer(logger);
 
-export function link(): Promise<any> {
+export interface LinkOptions {
+	watch?: boolean;
+}
+
+const DEFAULT_VALUES: LinkOptions = {
+	watch: false
+};
+
+export function link(options?: LinkOptions): Promise<any> {
 	const prefix = "@obg";
-	const packageNameUnPrefixed = yargs.argv._[1];
-	const argv = yargs(JSON.parse(process.env.npm_config_argv).original)
-		.alias("watch", "w")
-		.default("watch", false)
-		.argv;
+	const packageNameUnPrefixed = process.argv[3];
+	const mergedOptions = mergeArgsWithOptions(DEFAULT_VALUES, options);
 
 	if (!packageNameUnPrefixed) {
-		return enableLinking(argv.watch);
+		return enableLinking(mergedOptions);
 	} else {
 		return createLink(prefix, packageNameUnPrefixed);
 	}
 }
 
-export function enableLinking(watch = false): Promise<any> {
+export async function enableLinking(options: LinkOptions): Promise<any> {
 	timer.start();
 
-	return spawn("npm", ["link"])
-		.then(() => {
-			if (!watch && !existsSync("dist")) {
-				mkdirSync("dist", constants.S_IRWXO);
-			}
+	const watch = options.watch;
 
-			timer.finish();
-		})
-		.then(() => {
-			if (!watch) {
-				return;
-			}
+	try {
+		await spawn("npm", ["link"]);
 
-			return spawn("gulp", ["clean"], { stdio: "inherit" })
-				.then(() => spawn("gulp", ["watch"], { stdio: "inherit" }));
-		})
-		.catch((error: any) => {
-			logger.error(error.stderr.toString());
-			process.exit(1);
-		});
+		if (!watch && !existsSync("dist")) {
+			mkdirSync("dist", constants.S_IRWXO);
+		}
+
+		if (watch) {
+			await spawn("gulp", ["clean"], { stdio: "inherit" });
+			await spawn("gulp", ["watch"], { stdio: "inherit" });
+		}
+	} catch (error) {
+		logger.error(error.stderr.toString());
+		process.exit(1);
+	} finally {
+		timer.finish();
+	}
 }
 
-export function createLink(prefix: string, packageNameUnPrefixed: string): Promise<any> {
+export async function createLink(prefix: string, packageNameUnPrefixed: string): Promise<any> {
+	timer.start();
+
 	const packageName = `${prefix}/${packageNameUnPrefixed}`;
 
-	timer.start();
+	try {
+		const stdout = await spawn("npm", ["config", "get", "prefix"]) as NodeBuffer;
 
-	return spawn("npm", ["config", "get", "prefix"])
-		.then((stdout: NodeBuffer) => {
-			let path = stdout.toString().replace("\n", "");
+		let path = stdout.toString().replace("\n", "");
 
-			if (!path.toUpperCase().indexOf("APPDATA")) {
-				// ios
-				path = join(path, "lib");
-			}
+		if (!path.toUpperCase().indexOf("APPDATA")) {
+			// ios
+			path = join(path, "lib");
+		}
 
-			const modulePrefixPath = join("node_modules", prefix);
-			const modulePackagePath = join(modulePrefixPath, packageNameUnPrefixed);
-			const nodeLinkPath = join(path, modulePackagePath);
+		const modulePrefixPath = join("node_modules", prefix);
+		const modulePackagePath = join(modulePrefixPath, packageNameUnPrefixed);
+		const nodeLinkPath = join(path, modulePackagePath);
 
-			if (!existsSync(nodeLinkPath)) {
-				logger.error(`Cannot find package '${packageName}'. Did you enable linking?`);
-				process.exit(1);
-			}
-
-			if (!existsSync(modulePrefixPath)) {
-				mkdirSync(modulePrefixPath, constants.S_IRWXO);
-			}
-
-			rimraf(modulePackagePath, err => {
-				mkdirSync(modulePackagePath, constants.S_IRWXO);
-
-				symlinkSync(join(nodeLinkPath, "dist"), join(modulePackagePath, "dist"), "junction");
-				symlinkSync(join(nodeLinkPath, "package.json"), join(modulePackagePath, "package.json"));
-			});
-
-			logger.info("Installing typings...");
-			return spawn("typings", ["install", `npm:${packageName}`, "--save"]);
-		})
-		.then(() => {
-			timer.finish();
-		})
-		.catch((error: any) => {
-			logger.error(error.stderr.toString());
+		if (!existsSync(nodeLinkPath)) {
+			logger.error(`Cannot find package '${packageName}'. Did you enable linking?`);
 			process.exit(1);
+		}
+
+		if (!existsSync(modulePrefixPath)) {
+			mkdirSync(modulePrefixPath, constants.S_IRWXO);
+		}
+
+		rimraf(modulePackagePath, () => {
+			mkdirSync(modulePackagePath, constants.S_IRWXO);
+
+			symlinkSync(join(nodeLinkPath, "dist"), join(modulePackagePath, "dist"), "junction");
+			symlinkSync(join(nodeLinkPath, "package.json"), join(modulePackagePath, "package.json"));
 		});
+
+		logger.info("Installing typings...");
+		await spawn("typings", ["install", `npm:${packageName}`, "--save"]);
+
+	} catch (error) {
+		logger.error(error.stderr.toString());
+		process.exit(1);
+	} finally {
+		timer.finish();
+	}
 }
+
+export const linkModule: yargs.CommandModule = {
+	command: "link",
+	describe: "Link libraries",
+	handler: link,
+	builder: yargs => {
+		Args.setBoolean("watch", DEFAULT_VALUES.watch, "w");
+		return yargs;
+	}
+};

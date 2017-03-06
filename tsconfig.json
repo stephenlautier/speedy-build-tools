@@ -12,8 +12,14 @@
 		"allowUnreachableCode": false,
 		"skipLibCheck": true,
 		"strictNullChecks": true,
+		"outDir": "./dist",
+		"noEmitOnError": false,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noImplicitUseStrict": true,
 		"types": [
-			"node"
+			"node",
+			"jasmine"
 		],
 		"lib": [
 			"es2015"
@@ -23,6 +29,8 @@
 		"node_modules"
 	],
 	"include": [
-		"**/*.ts"
+		"typings/**/*.d.ts",
+		"src/index.ts",
+		"src/tasks.ts"
 	]
 }

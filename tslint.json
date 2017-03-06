@@ -24,11 +24,9 @@
 			true,
 			"@obg"
 		],
-		"import-destructuring-spacing": true,
 		"class-name": true,
 		"comment-format": [
 			true,
-			"check-lowercase",
 			"check-space"
 		],
 		"curly": true,
@@ -39,7 +37,6 @@
 			"tabs"
 		],
 		"label-position": true,
-		"label-undefined": true,
 		"max-line-length": [
 			true,
 			140
@@ -68,14 +65,12 @@
 		"no-bitwise": true,
 		"no-console": [
 			true,
-			"debug",
 			"time",
 			"timeEnd",
 			"trace"
 		],
 		"no-construct": true,
 		"no-debugger": true,
-		"no-duplicate-key": true,
 		"no-duplicate-variable": true,
 		"no-empty": true,
 		"no-eval": true,
@@ -84,9 +79,7 @@
 		"no-string-literal": true,
 		"no-switch-case-fall-through": false,
 		"no-trailing-whitespace": true,
-		"no-unreachable": true,
 		"no-unused-expression": true,
-		"no-unused-variable": true,
 		"no-use-before-declare": true,
 		"no-var-keyword": true,
 		"object-literal-sort-keys": false,
