@@ -4,9 +4,14 @@ import * as yargs from "yargs";
 import { Arguments } from "./args.model";
 export namespace Args {
 
-	yargs.parse([...JSON.parse(process.env.npm_config_argv).original, ...process.argv]);
-	yargs.global("debug");
+	if (process.env.npm_config_argv) {
+		yargs.parse([
+			...JSON.parse(process.env.npm_config_argv).original,
+			...process.argv
+		]);
+	}
 
+	yargs.global("debug");
 	setBoolean("debug", false);
 
 	export function setArray<T>(key: string, values: T[], defaultValue?: T, alias?: string) {
