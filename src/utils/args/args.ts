@@ -2,7 +2,6 @@ import * as  _ from "lodash";
 import * as yargs from "yargs";
 
 import { Arguments } from "./args.model";
-
 export namespace Args {
 
 	yargs.parse([...JSON.parse(process.env.npm_config_argv).original, ...process.argv]);

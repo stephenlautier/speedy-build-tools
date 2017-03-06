@@ -71,7 +71,7 @@ export function getConfigFilePath(fileName: string): string {
 	return join(filePath, fileName);
 }
 
-export function mergeArgsWithOptions<T extends Partial<Arguments>>(defaultOptions: T, options: T | undefined): T {
+export function mergeArgsWithOptions<T extends Partial<Arguments>>(defaultOptions: T, options?: T): T {
 	// todo: add generic type when issue is solved
 	// https://github.com/Microsoft/TypeScript/issues/10727
 	return Object.assign({}, defaultOptions, Args.getAll(), options);
