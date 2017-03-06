@@ -22,7 +22,7 @@ export async function readJsonFileAsync<T>(path: string): Promise<T> {
 	return JSON.parse(await readFileAsync(path));
 }
 
-export function globArray(patterns: string[], options: IOptions = {}): string[] {
+export function globArray(patterns: string[], options?: IOptions): string[] {
 	let fileMatches: string[] = [];
 
 	for (let pattern of patterns) {
