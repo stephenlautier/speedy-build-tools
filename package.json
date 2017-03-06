@@ -30,14 +30,9 @@
     "colors": "^1.1.2",
     "cross-spawn-promise": "^0.8.0",
     "glob": "^7.1.1",
-    "gulp": "^3.9.1",
-    "htmlhint": "^0.9.13",
     "lodash": "^4.17.4",
     "path": "^0.12.7",
     "rimraf": "^2.5.4",
-    "stylelint": "^7.9.0",
-    "stylelint-scss": "^1.4.3",
-    "tslint": "^4.4.2",
     "yargs": "^6.6.0"
   },
   "devDependencies": {
