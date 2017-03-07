@@ -102,15 +102,15 @@ describe("utilsSpec", () => {
 	});
 
 	describe("transformArgsToOptions", () => {
-		const args: Argument[] = [
+		const args: ArgumentOptions[] = [
 			{
-				name: "watch",
-				defaultValue: true,
+				key: "watch",
+				default: true,
 				description: ""
 			},
 			{
-				name: "files",
-				defaultValue: "**/**.ts",
+				key: "files",
+				default: "**/**.ts",
 				description: ""
 			}
 		];
