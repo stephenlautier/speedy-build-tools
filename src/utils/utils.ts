@@ -79,6 +79,6 @@ export function mergeArgsWithOptions<T extends Partial<Arguments>>(defaultArgs: 
 
 export function transformArgsToOptions<T>(args: ArgumentOptions[]): T {
 	const object = {};
-	args.map(x => _.set(object, x.key, x.default));
+	args.forEach(x => _.set(object, x.key, x.default));
 	return object as T;
 }
