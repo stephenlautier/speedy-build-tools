@@ -71,13 +71,13 @@ export function getConfigFilePath(fileName: string): string {
 	return join(filePath, fileName);
 }
 
-export function mergeArgsWithOptions<T extends Partial<Arguments>>(defaultArgs: ArgumentOptions[], options?: T): T {
+export function mergeArgsWithOptions<T extends Partial<Arguments>>(defaultArgs: ArgumentOptions<T>[], options?: T): T {
 	// todo: add generic type when issue is solved
 	// https://github.com/Microsoft/TypeScript/issues/10727
-	return Object.assign({}, transformArgsToOptions<T>(defaultArgs), Args.getAll(), options);
+	return Object.assign({}, transformArgsToOptions(defaultArgs), Args.getAll(), options);
 };
 
-export function transformArgsToOptions<T>(args: ArgumentOptions[]): T {
+export function transformArgsToOptions<T>(args: ArgumentOptions<T>[]): T {
 	const object = {};
 	args.forEach(x => _.set(object, x.key, x.default));
 	return object as T;

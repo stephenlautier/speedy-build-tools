@@ -11,7 +11,7 @@ export namespace Args {
 		]));
 	}
 
-	set([{
+	set([<any>{
 		key: "debug",
 		description: "Show debug information",
 		boolean: true
@@ -23,7 +23,7 @@ export namespace Args {
 	 * @param {ArgumentOptions[]} args
 	 * @returns {yargs.Argv}
 	 */
-	export function set(args: ArgumentOptions[]): yargs.Argv {
+	export function set<T>(args: ArgumentOptions<T>[]): yargs.Argv {
 		for (let x of args) {
 			yargs.option(x.key, x);
 
