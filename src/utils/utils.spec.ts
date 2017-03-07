@@ -102,7 +102,7 @@ describe("utilsSpec", () => {
 	});
 
 	describe("transformArgsToOptions", () => {
-		const args: ArgumentOptions[] = [
+		const args: ArgumentOptions<any>[] = [
 			{
 				key: "watch",
 				default: true,
