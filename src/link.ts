@@ -9,6 +9,7 @@ import {
 	Logger,
 	Timer,
 	Args,
+	ArgumentOptions,
 	mergeArgsWithOptions
 } from "./utils";
 
@@ -19,14 +20,19 @@ export interface LinkOptions {
 	watch?: boolean;
 }
 
-const DEFAULT_VALUES: LinkOptions = {
-	watch: false
-};
+const ARGS: ArgumentOptions[] = [
+	{
+		key: "watch",
+		alias: "w",
+		description: "Watch input files and trigger recompilation on changes.",
+		default: false
+	}
+];
 
 export function link(options?: LinkOptions): Promise<any> {
 	const prefix = "@obg";
 	const packageNameUnPrefixed = process.argv[3];
-	const mergedOptions = mergeArgsWithOptions(DEFAULT_VALUES, options);
+	const mergedOptions = mergeArgsWithOptions(ARGS, options);
 
 	if (!packageNameUnPrefixed) {
 		return enableLinking(mergedOptions);
@@ -109,8 +115,5 @@ export const linkModule: yargs.CommandModule = {
 	command: "link",
 	describe: "Link libraries",
 	handler: link,
-	builder: yargs => {
-		Args.setBoolean("watch", DEFAULT_VALUES.watch, "w");
-		return yargs;
-	}
+	builder: () => Args.set(ARGS)
 };
