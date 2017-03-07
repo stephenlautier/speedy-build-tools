@@ -3,7 +3,7 @@ import * as mockFs from "mock-fs";
 import { normalize } from "path";
 
 import {
-	Argument,
+	ArgumentOptions,
 	toArray,
 	globArray,
 	findRoot,
