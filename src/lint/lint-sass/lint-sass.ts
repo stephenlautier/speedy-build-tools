@@ -56,7 +56,7 @@ export async function handleLintSass(options: LintSassOptions): Promise<LinterRe
 }
 
 async function lintFile(filePath: string, configData: JSON, options: LintSassOptions): Promise<LinterResult> {
-	const fileContent = await readFileAsync("x.x.x.");
+	const fileContent = await readFileAsync(filePath);
 
 	const lintOptions: LinterOptions = {
 		config: configData,
@@ -95,7 +95,7 @@ async function lintFile(filePath: string, configData: JSON, options: LintSassOpt
 /** @internal */
 export const lintSassModule = buildCommandModule({
 	command: "lint-sass",
-	describe: "Lint Sass files",
+	description: "Lint Sass files",
 	handler: lintSass,
 	args: ARGS
 });
