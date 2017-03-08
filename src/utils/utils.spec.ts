@@ -1,7 +1,14 @@
 import * as glob from "glob";
 import * as mockFs from "mock-fs";
 import { normalize } from "path";
-import { toArray, globArray, findRoot, readFileAsync, readJsonFileAsync } from "./utils";
+
+import {
+	toArray,
+	globArray,
+	findRoot,
+	readFileAsync,
+	readJsonFileAsync
+} from "./index";
 
 describe("utilsSpec", () => {
 

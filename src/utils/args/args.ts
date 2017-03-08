@@ -1,47 +1,51 @@
 import * as  _ from "lodash";
 import * as yargs from "yargs";
 
-import { Arguments } from "./args.model";
+import { Arguments, ArgumentOptions } from "./args.model";
 export namespace Args {
 
 	if (process.env.npm_config_argv) {
-		yargs.parse(_.uniq([
-			...JSON.parse(process.env.npm_config_argv).original,
-			...process.argv
-		]));
+		yargs.parse(JSON.parse(process.env.npm_config_argv).original);
 	}
 
-	yargs.global("debug");
-	setBoolean("debug", false);
+	set<Arguments>([{
+		key: "debug",
+		description: "Show debug information",
+		boolean: true
+	}]);
 
-	export function setArray<T>(key: string, values: T[], defaultValue?: T, alias?: string) {
-		set(key, defaultValue, alias);
+	/**
+	 * Register command arguments. When `default` value is specified the argument `type` will be inferred.
+	 * @export
+	 * @param {ArgumentOptions[]} args
+	 * @returns {yargs.Argv}
+	 */
+	export function set<T>(args: ArgumentOptions<T>[]): yargs.Argv {
+		for (let x of args) {
+			yargs.option(x.key, x);
 
-		if (values) {
-			yargs.choices(key, values);
+			if (_.isNil(x.default) || x.boolean || x.type || x.number || x.array || x.string) {
+				continue;
+			}
+
+			if (_.isNumber(x.default)) {
+				yargs.number(x.key);
+			}
+
+			if (_.isBoolean(x.default)) {
+				yargs.boolean(x.key);
+			}
+
+			if (_.isString(x.default)) {
+				yargs.string(x.key);
+			}
+
+			if (_.isArray(x.default)) {
+				yargs.array(x.key);
+			}
 		}
 
-		yargs.array(key);
-	}
-
-	export function setBoolean(key: string, defaultValue?: boolean, alias?: string) {
-		set(key, defaultValue, alias);
-		yargs.boolean(key);
-	}
-
-	export function setNumber(key: string, defaultValue?: number, alias?: string) {
-		set(key, defaultValue, alias);
-		yargs.number(key);
-	}
-
-	export function set<T>(key: string, defaultValue?: T, alias?: string) {
-		if (alias) {
-			yargs.alias(key, alias);
-		}
-
-		if (!_.isNil(defaultValue)) {
-			yargs.default(key, defaultValue);
-		}
+		return yargs.argv;
 	}
 
 	export const getAll = <T extends Arguments>() => yargs.argv as T;

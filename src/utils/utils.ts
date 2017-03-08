@@ -4,7 +4,7 @@ import { IOptions, sync } from "glob";
 import { join, sep, normalize } from "path";
 
 import { Args } from "./args/args";
-import { Arguments } from "./args/args.model";
+import { ArgumentOptions, Arguments } from "./args/args.model";
 
 export function readFileAsync(path: string): Promise<string> {
 	return new Promise((resolve, reject) => {
@@ -71,8 +71,9 @@ export function getConfigFilePath(fileName: string): string {
 	return join(filePath, fileName);
 }
 
-export function mergeArgsWithOptions<T extends Partial<Arguments>>(defaultOptions: T, options?: T): T {
+export function mergeArgsWithOptions<T extends Partial<Arguments>>(defaultArgs: ArgumentOptions<T>[], options?: T): T {
 	// todo: add generic type when issue is solved
 	// https://github.com/Microsoft/TypeScript/issues/10727
-	return Object.assign({}, defaultOptions, Args.getAll(), options);
+
+	return Object.assign({}, Args.set(defaultArgs), options) as T;
 };
