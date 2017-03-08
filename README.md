@@ -36,7 +36,7 @@ createLink("@obg", "ng2.common");
 # npm Scripts
 
 Instead of depending on external task runners, Obg Build Tools can be configured to being executed from npm scripts.
-```
+```json
 "scripts": {
     "link": "obg-build-tools link",
     "sync": "obg-build-tools sync-dependencies"
@@ -44,7 +44,7 @@ Instead of depending on external task runners, Obg Build Tools can be configured
 ````
 To run the build script found in the package.json scripts property, execute:
 
-```
+```cmd
 npm run sync
 ```
 
@@ -53,29 +53,29 @@ npm run sync
 
 | Task                | Description                                                                                            |
 |---------------------|--------------------------------------------------------------------------------------------------------|
-| `sync-dependencies` | Sync dependencies between projects                                                                     |
-| `link`              | Link to an OBG Library. Don’t provide the `@obg/` prefix.                                              |
-| `lint-sass`         | Lint Sass files.                                                                                       |
+| sync-dependencies   | Sync dependencies between projects                                                                     |
+| link                | Link to an OBG Library. Don’t provide the @obg/ prefix.                                                |
+| lint-sass           | Lint Sass files.                                                                                       |
 
 ### Lint Sass
-```
+```bash
 ogb-build-tools lint-sass
 ```
 
 | Option              | Description                                              | Default Value                   | Type         |
 |---------------------|----------------------------------------------------------|---------------------------------|--------------|
-| `--config, -c`      | Lint rules file path                                     | .stylelintrc from process.cwd() | string       |
-| `--files, -f`       | An array or string of globs to lint                      | ./src/**/*.*(scss|sass)         | Array|string |
-| `--formatter`       | The formatter to use to format the results of the linter | verbose                         | string       |
-| `--fix`             | Automatically fix some linting issues                    | false                           | boolean      |
-| `--continueOnError` | Don't exit with a non-zero status code on lint errors    | false                           | boolean      |
+| --config, -c        | Lint rules file path                                     | .stylelintrc from process.cwd() | string       |
+| --files, -f         | An array or string of globs to lint                      | ./src/**/*.*(scss|sass)         | Array|string |
+| --formatter         | The formatter to use to format the results of the linter | verbose                         | string       |
+| --fix`              | Automatically fix some linting issues                    | false                           | boolean      |
+| --continueOnError   | Don't exit with a non-zero status code on lint errors    | false                           | boolean      |
 
 ## Global Options
 | Option          | Description            |
 |-----------------|------------------------|
-| `--debug`       | Show debug information |
-| `--help, -h`    | Show help              |
-| `--version, -v` | Show version number    |
+| --debug         | Show debug information |
+| --help, -h      | Show help              |
+| --version, -v   | Show version number    |
 
 Display general help
 ```
