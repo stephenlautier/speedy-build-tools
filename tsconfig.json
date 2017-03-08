@@ -15,6 +15,7 @@
 		"noEmitOnError": false,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
+		"stripInternal": true,
 		"noImplicitUseStrict": true,
 		"types": [
 			"node",

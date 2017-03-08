@@ -111,6 +111,7 @@ export async function createLink(prefix: string, packageNameUnPrefixed: string):
 	}
 }
 
+/** @internal */
 export const linkModule: yargs.CommandModule = {
 	command: "link",
 	describe: "Link libraries",

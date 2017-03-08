@@ -102,6 +102,7 @@ async function lintFile(filePath: string, configData: JSON, options: LintSassOpt
 	}
 }
 
+/** @internal */
 export const lintSassModule: CommandModule = {
 	command: "lint-sass",
 	describe: "Lint Sass files",
