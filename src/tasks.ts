@@ -12,5 +12,5 @@ yargs
 
 	.version()
 	.alias("version", "v")
-	.wrap(yargs.terminalWidth() - 5)
+	.wrap(yargs.terminalWidth() - 1) // - 1 is required to fit in screen
 	.argv;
