@@ -12,7 +12,6 @@
 		"allowUnreachableCode": false,
 		"skipLibCheck": true,
 		"strictNullChecks": true,
-		"outDir": "./dist",
 		"noEmitOnError": false,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
@@ -30,7 +29,6 @@
 	],
 	"include": [
 		"typings/**/*.d.ts",
-		"src/index.ts",
-		"src/tasks.ts"
+		"src/**/*.ts"
 	]
 }

@@ -20,7 +20,7 @@ export interface LinkOptions {
 	watch?: boolean;
 }
 
-const ARGS: ArgumentOptions[] = [
+const ARGS: ArgumentOptions<LinkOptions>[] = [
 	{
 		key: "watch",
 		alias: "w",

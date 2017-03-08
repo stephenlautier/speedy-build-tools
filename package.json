@@ -17,11 +17,11 @@
   },
   "scripts": {
     "prebuild": "npm run lint & npm run clean",
-    "build": "tsc",
+    "build": "tsc -p tsconfig.build.json",
     "test": "npm run clean && tsc -p tsconfig.test.json && jasmine JASMINE_CONFIG_PATH=jasmine.json",
     "clean": "rimraf ./dist & rimraf ./test",
     "lint": "tslint -c tslint.json ./src/**/*.ts --format stylish",
-    "watch": "npm run clean && tsc -w"
+    "watch": "npm run clean && tsc -p tsconfig.build.json -w"
   },
   "author": "One Betsson Group Frontend",
   "license": "MIT",
@@ -33,7 +33,11 @@
     "glob": "^7.1.1",
     "lodash": "^4.17.4",
     "path": "^0.12.7",
+    "postcss": "^5.2.15",
     "rimraf": "^2.5.4",
+    "stylefmt": "^5.1.2",
+    "stylelint": "^7.9.0",
+    "stylelint-scss": "^1.4.3",
     "tslint": "^4.5.1",
     "yargs": "^7.0.1"
   },

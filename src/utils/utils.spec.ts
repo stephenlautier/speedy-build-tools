@@ -3,13 +3,11 @@ import * as mockFs from "mock-fs";
 import { normalize } from "path";
 
 import {
-	ArgumentOptions,
 	toArray,
 	globArray,
 	findRoot,
 	readFileAsync,
-	readJsonFileAsync,
-	transformArgsToOptions
+	readJsonFileAsync
 } from "./index";
 
 describe("utilsSpec", () => {
@@ -98,28 +96,6 @@ describe("utilsSpec", () => {
 
 		it("must return files excluding negative pattern", () => {
 			expect(globArray(["*.ts", "!*.spec.ts"])).toEqual(srcFiles);
-		});
-	});
-
-	describe("transformArgsToOptions", () => {
-		const args: Argument[] = [
-			{
-				name: "watch",
-				defaultValue: true,
-				description: ""
-			},
-			{
-				name: "files",
-				defaultValue: "**/**.ts",
-				description: ""
-			}
-		];
-
-		it("must return transformed args to default options object", () => {
-			expect(transformArgsToOptions(args)).toEqual({
-				watch: true,
-				files: "**/**.ts"
-			});
 		});
 	});
 

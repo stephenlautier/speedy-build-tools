@@ -5,13 +5,10 @@ import { Arguments, ArgumentOptions } from "./args.model";
 export namespace Args {
 
 	if (process.env.npm_config_argv) {
-		yargs.parse(_.uniq([
-			...JSON.parse(process.env.npm_config_argv).original,
-			...process.argv
-		]));
+		yargs.parse(JSON.parse(process.env.npm_config_argv).original);
 	}
 
-	set([{
+	set<Arguments>([{
 		key: "debug",
 		description: "Show debug information",
 		boolean: true
@@ -23,7 +20,7 @@ export namespace Args {
 	 * @param {ArgumentOptions[]} args
 	 * @returns {yargs.Argv}
 	 */
-	export function set(args: ArgumentOptions[]): yargs.Argv {
+	export function set<T>(args: ArgumentOptions<T>[]): yargs.Argv {
 		for (let x of args) {
 			yargs.option(x.key, x);
 
@@ -48,7 +45,7 @@ export namespace Args {
 			}
 		}
 
-		return yargs;
+		return yargs.argv;
 	}
 
 	export const getAll = <T extends Arguments>() => yargs.argv as T;
