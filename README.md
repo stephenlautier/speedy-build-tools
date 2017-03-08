@@ -59,7 +59,7 @@ npm run sync
 
 ### Lint Sass
 ```bash
-ogb-build-tools lint-sass
+obg-build-tools lint-sass
 ```
 
 | Option              | Description                                              | Default Value                   | Type         |
@@ -79,12 +79,12 @@ ogb-build-tools lint-sass
 
 Display general help
 ```
-ogb-build-tools --help
+obg-build-tools --help
 ```
 
 Display help specific to a task:
 ```
-ogb-build-tools lint-sass --help
+obg-build-tools lint-sass --help
 ```
 
 To display help when running the task from a mapped npm script you should omit the `--`;
