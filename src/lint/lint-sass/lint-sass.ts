@@ -35,6 +35,7 @@ export async function lintSass(options?: LintSassOptions): Promise<LinterResult[
 	}
 }
 
+/** @internal */
 export async function handleLintSass(options: LintSassOptions): Promise<LinterResult[]> {
 	try {
 		const mergedOptions = mergeArgsWithOptions(ARGS, options);
