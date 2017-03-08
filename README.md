@@ -65,7 +65,7 @@ ogb-build-tools lint-sass
 | Option              | Description                                              | Default Value                   | Type         |
 |---------------------|----------------------------------------------------------|---------------------------------|--------------|
 | --config, -c        | Lint rules file path                                     | .stylelintrc from process.cwd() | string       |
-| --files, -f         | An array or string of globs to lint                      | ./src/**/*.*(scss|sass)         | Array|string |
+| --files, -f         | An array or string of globs to lint                      | ./src/\*\*/\*.\*(scss\|sass)    | Array|string |
 | --formatter         | The formatter to use to format the results of the linter | verbose                         | string       |
 | --fix`              | Automatically fix some linting issues                    | false                           | boolean      |
 | --continueOnError   | Don't exit with a non-zero status code on lint errors    | false                           | boolean      |
