@@ -76,4 +76,4 @@ export function mergeArgsWithOptions<T extends Partial<Arguments>>(defaultArgs: 
 	// https://github.com/Microsoft/TypeScript/issues/10727
 
 	return Object.assign({}, Args.set(defaultArgs), options) as T;
-};
+}

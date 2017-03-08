@@ -11,7 +11,13 @@ process.on("message", async (message: WorkerMessage) => {
 		sendMessage(message, { resolved: result });
 	} catch (error) {
 		logger.error("onMessage", error);
-		sendMessage(message, { error });
+		sendMessage(message, {
+			error: {
+				message: error.message,
+				name: error.name,
+				stack: error.stack
+			}
+		});
 		process.exit(1);
 	}
 });
