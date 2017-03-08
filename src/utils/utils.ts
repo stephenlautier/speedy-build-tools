@@ -33,14 +33,6 @@ export function globArray(patterns: string[], options?: IOptions): string[] {
 	return fileMatches;
 }
 
-export function toArray<T>(pattern: T | T[]): T[] {
-	if (!_.isArray(pattern)) {
-		return [pattern];
-	}
-
-	return pattern;
-}
-
 export function findRoot(fileName?: string, filePath?: string): string | null {
 	filePath = normalize(filePath || process.cwd());
 
