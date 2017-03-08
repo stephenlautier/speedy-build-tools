@@ -1,4 +1,3 @@
-import * as _ from "lodash";
 import * as stylefmt from "stylefmt";
 import * as postcss from "postcss";
 import { writeFileSync } from "fs";
@@ -10,6 +9,7 @@ import {
 	Timer,
 	mergeArgsWithOptions,
 	globArray,
+	toArray,
 	readJsonFileAsync,
 	readFileAsync,
 	buildCommandModule
@@ -41,7 +41,7 @@ export async function handleLintSass(options: LintSassOptions): Promise<LinterRe
 
 	const failures = (
 		await Promise.all(
-			globArray(_.toArray(mergedOptions.files!)).map(x => lintFile(x, configData, mergedOptions))
+			globArray(toArray(mergedOptions.files!)).map(x => lintFile(x, configData, mergedOptions))
 		)
 	)
 		.filter(x => x.errored);
