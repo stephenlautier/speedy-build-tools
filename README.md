@@ -51,10 +51,46 @@ npm run sync
 
 ## Tasks
 
-| Task                | Description                                                                                         |
-|---------------------|-----------------------------------------------------------------------------------------------------|
-| `sync-dependencies` | Sync dependencies between projects                                                                  |
-| `link`              | Link to an OBG Library. Don’t provide the `@obg/` prefix.                                           |
+| Task                | Description                                                                                            |
+|---------------------|--------------------------------------------------------------------------------------------------------|
+| `sync-dependencies` | Sync dependencies between projects                                                                     |
+| `link`              | Link to an OBG Library. Don’t provide the `@obg/` prefix.                                              |
+| `lint-sass`         | Lint Sass files.                                                                                       |
+
+### Lint Sass
+```
+ogb-build-tools lint-sass
+```
+
+| Option            | Description                                              | Default Value                   | Type         |
+|-------------------|----------------------------------------------------------|---------------------------------|--------------|
+| `--config, -c`      | Lint rules file path                                     | .stylelintrc from process.cwd() | string       |
+| `--files. -f`       | An array or string of globs to lint                      | ./src/**/*.*(scss|sass)         | Array|string |
+| `--formatter`       | The formatter to use to format the results of the linter | verbose                         | string       |
+| `--fix`             | Automatically fix some linting issues                    | false                           | boolean      |
+| `--continueOnError` | Don'texit with a non-zero status code on lint errors     | false                           | boolean      |
+
+## Global Options
+| Option        | Description            |
+|---------------|------------------------|
+| `--debug`       | Show debug information |
+| `--help, -h`     | Show help              |
+| `--version, -v` | Show version number    |
+
+Display general help
+```
+ogb-build-tools --help
+```
+
+Display help specific to a task:
+```
+ogb-build-tools lint-sass --help
+```
+
+To display help when running the task from a mapped npm script you should omit the `--`;
+```
+npm run lint-sass help
+```
 
 # Contributing to the project
 In order to contribute please read the [Contribution guidelines][contribWiki].
@@ -82,22 +118,16 @@ npm install
 ## Building the code
 
 ```
-gulp build
+npm run build
 ```
-In order to view all other tasks invoke `gulp` or check the gulp tasks directly.
 
 ## Development utils
 
-### Trigger gulp watch
+### Trigger watch
 Handles compiling of changes.
 ```
-gulp watch
+npm run watch
 ```
 
 
-## Preparation for Release
-
-```
-gulp prepare-release --bump major|minor|patch|prerelease (default: patch) --version-suffix beta (default: rc - only applies to prerelease)
-```
 Check out the [release workflow guide][releaseWorkflowWiki] in order to guide you creating a release and distributing it.
