@@ -36,6 +36,7 @@ createLink("@obg", "ng2.common");
 # npm Scripts
 
 Instead of depending on external task runners, Obg Build Tools can be configured to being executed from npm scripts.
+
 ```json
 "scripts": {
     "link": "obg-build-tools link",
@@ -62,13 +63,13 @@ npm run sync
 obg-build-tools lint-sass
 ```
 
-| Option                | Description                                              | Default Value                       | Type         |
-|-----------------------|----------------------------------------------------------|-------------------------------------|--------------|
-| `--config, -c`        | Lint rules file path                                     | `.stylelintrc` from `process.cwd()` | string       |
-| `--files, -f`         | An array or string of globs to lint                      | `./src/**/.*(scss\|sass)`           | Array|string |
-| `--formatter`         | The formatter to use to format the results of the linter | `verbose`                           | string       |
-| `--fix`               | Automatically fix some linting issues                    | `false`                             | boolean      |
-| `--continueOnError`   | Don't exit with a non-zero status code on lint errors    | `false`                             | boolean      |
+| Option                | Description                                                          | Default Value                       | Type         |
+|-----------------------|----------------------------------------------------------------------|-------------------------------------|--------------|
+| `--config, -c`        | Lint rules file path                                                 | `.stylelintrc` from `process.cwd()` | string       |
+| `--files, -f`         | Files to be linted - Supports glob patterns                          | `./src/**/.*(scss\|sass)`           | Array|string |
+| `--formatter`         | Formatter to use to format the linter results                        | `verbose`                           | string       |
+| `--fix`               | Determines whether to auto fix lint issues (which support fixing)    | `false`                             | boolean      |
+| `--continueOnError`   | Don't exit with a non-zero status code on lint errors                | `false`                             | boolean      |
 
 ## Global Options
 | Option            | Description            |
