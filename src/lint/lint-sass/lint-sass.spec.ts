@@ -61,8 +61,6 @@ describe("lintSassSpec", () => {
 				fix: true
 			});
 
-			console.log(result);
-
 			expect(result.length).toBeFalsy();
 			done();
 		});
