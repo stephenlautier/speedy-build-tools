@@ -1,11 +1,12 @@
 import * as yargs from "yargs";
 
 import { linkModule } from "./link";
-import { lintSassModule } from "./lint";
+import { lintSassModule, lintTsModule } from "./lint";
 
 yargs
 	.command(linkModule)
 	.command(lintSassModule)
+	.command(lintTsModule)
 
 	.help()
 	.alias("help", "h")
