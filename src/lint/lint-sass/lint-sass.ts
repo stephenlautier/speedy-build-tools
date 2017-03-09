@@ -19,9 +19,10 @@ import { LintSassOptions } from "./lint-sass.model";
 import { ARGS } from "./lint-sass.args";
 
 const logger = new Logger("Lint SASS");
-const timer = new Timer(logger);
 
 export async function lintSass(options?: LintSassOptions): Promise<LinterResult[]> {
+	const timer = new Timer(logger);
+
 	try {
 		timer.start();
 		return await Worker.run<LinterResult[]>(__filename, handleLintSass.name, options);
