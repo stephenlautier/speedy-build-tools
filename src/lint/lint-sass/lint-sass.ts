@@ -12,7 +12,8 @@ import {
 	toArray,
 	readJsonFileAsync,
 	readFileAsync,
-	buildCommandModule
+	buildCommandModule,
+	getConfigFilePath
 } from "../../utils";
 
 import { LintSassOptions } from "./lint-sass.model";
@@ -37,7 +38,7 @@ export async function lintSass(options?: LintSassOptions): Promise<LinterResult[
 /** @internal */
 export async function handleLintSass(options: LintSassOptions): Promise<LinterResult[]> {
 	const mergedOptions = Args.mergeWithOptions(ARGS, options);
-	const configData = await readJsonFileAsync<JSON>(mergedOptions.config!);
+	const configData = await readJsonFileAsync<JSON>(getConfigFilePath(mergedOptions.config!));
 
 	const failures = (
 		await Promise.all(

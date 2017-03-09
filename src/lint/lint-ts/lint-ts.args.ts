@@ -1,6 +1,6 @@
 import * as _ from "lodash";
 
-import { getConfigFilePath, ArgumentOptions } from "../../utils";
+import { ArgumentOptions } from "../../utils";
 import { LintTsOptions, LINT_TS_FORMATTERS } from "./lint-ts.model";
 
 export const ARGS: ArgumentOptions<LintTsOptions>[] = [
@@ -8,13 +8,13 @@ export const ARGS: ArgumentOptions<LintTsOptions>[] = [
 		key: "config",
 		alias: "c",
 		description: "Lint rules file path",
-		default: getConfigFilePath("tslint.json")
+		default: "tslint.json"
 	},
 	{
 		key: "files",
 		alias: "f",
 		description: "An array or string of globs to lint",
-		default: "./src/**/*.ts",
+		default: "src/**/*.ts",
 		array: true
 	},
 	{

@@ -8,7 +8,8 @@ import {
 	globArray,
 	toArray,
 	buildCommandModule,
-	Args
+	Args,
+	getConfigFilePath
 } from "../../utils";
 
 import { LintTsOptions } from "./lint-ts.model";
@@ -34,7 +35,7 @@ export async function lintTs(options?: LintTsOptions): Promise<LintResult[]> {
 export async function handlelintTs(options: LintTsOptions): Promise<LintResult[]> {
 	const mergedOptions = Args.mergeWithOptions(ARGS, options);
 	const files = mergedOptions.files!;
-	const configData = Configuration.findConfiguration(null, mergedOptions.config!).results!;
+	const configData = Configuration.findConfiguration(null, getConfigFilePath(mergedOptions.config!)).results!;
 
 	const failures = (
 		await Promise.all(

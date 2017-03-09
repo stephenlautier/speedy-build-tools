@@ -1,7 +1,7 @@
 import * as _ from "lodash";
 import { readFile, statSync } from "fs";
 import { IOptions, sync } from "fast-glob";
-import { join, sep, normalize } from "path";
+import { join, sep, normalize, isAbsolute } from "path";
 
 let rootPath: string | null;
 export function getRootPath(): string {
@@ -72,12 +72,16 @@ export function findRoot(fileName?: string, filePath?: string): string | null {
 	return findRoot(fileName, truncatedPath);
 }
 
-export function getConfigFilePath(fileName: string): string {
-	let filePath = findRoot(fileName);
-
-	if (!filePath) {
-		filePath = join(__dirname, "../../");
+export function getConfigFilePath(filePath: string): string {
+	if (isAbsolute(filePath)) {
+		return filePath;
 	}
 
-	return join(filePath, fileName);
+	let path = findRoot(filePath);
+
+	if (!path) {
+		path = join(__dirname, "../../");
+	}
+
+	return join(path, filePath);
 }
