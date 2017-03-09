@@ -30,7 +30,7 @@ export const ARGS: ArgumentOptions<LintSassOptions>[] = [
 	},
 	{
 		key: "continueOnError",
-		description: "Don't exit with a non-zero status code on lint errors",
+		description: "Determines whether to exit with a non-zero status code on lint errors",
 		default: false
 	}
 ];
