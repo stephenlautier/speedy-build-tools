@@ -22,9 +22,8 @@ const logger = new Logger("Lint SASS");
 const timer = new Timer(logger);
 
 export async function lintSass(options?: LintSassOptions): Promise<LinterResult[]> {
-	timer.start();
-
 	try {
+		timer.start();
 		return await Worker.run<LinterResult[]>(__filename, handleLintSass.name, options);
 	} catch (error) {
 		logger.error("", error);
