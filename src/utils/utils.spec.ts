@@ -1,4 +1,4 @@
-import * as glob from "glob";
+import * as glob from "fast-glob";
 import * as mockFs from "mock-fs";
 import { normalize } from "path";
 

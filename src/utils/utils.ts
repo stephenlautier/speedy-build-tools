@@ -1,6 +1,6 @@
 import * as _ from "lodash";
 import { readFile, statSync } from "fs";
-import { IOptions, sync } from "glob";
+import { IOptions, sync } from "fast-glob";
 import { join, sep, normalize } from "path";
 
 import { Args } from "./args/args";
