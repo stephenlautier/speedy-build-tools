@@ -7,7 +7,7 @@ import {
 	Logger,
 	Worker,
 	Timer,
-	mergeArgsWithOptions,
+	Args,
 	globArray,
 	toArray,
 	readJsonFileAsync,
@@ -36,7 +36,7 @@ export async function lintSass(options?: LintSassOptions): Promise<LinterResult[
 
 /** @internal */
 export async function handleLintSass(options: LintSassOptions): Promise<LinterResult[]> {
-	const mergedOptions = mergeArgsWithOptions(ARGS, options);
+	const mergedOptions = Args.mergeWithOptions(ARGS, options);
 	const configData = await readJsonFileAsync<JSON>(mergedOptions.config!);
 
 	const failures = (

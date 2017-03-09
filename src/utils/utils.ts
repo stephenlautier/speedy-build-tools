@@ -3,8 +3,19 @@ import { readFile, statSync } from "fs";
 import { IOptions, sync } from "fast-glob";
 import { join, sep, normalize } from "path";
 
-import { Args } from "./args/args";
-import { ArgumentOptions, Arguments } from "./args/args.model";
+let rootPath: string | null;
+export function getRootPath(): string {
+	if (!_.isNil(rootPath)) {
+		return rootPath;
+	}
+
+	rootPath = findRoot();
+	if (!rootPath) {
+		rootPath = "";
+	}
+
+	return rootPath;
+}
 
 export function readFileAsync(path: string): Promise<string> {
 	return new Promise((resolve, reject) => {
@@ -26,11 +37,11 @@ export function globArray(patterns: string[], options?: IOptions): string[] {
 	let fileMatches: string[] = [];
 
 	for (let pattern of patterns) {
-		const patternMatches = sync(pattern, options);
+		const patternMatches = sync(pattern, { cwd: getRootPath(), ...options } as IOptions);
 		fileMatches = pattern.startsWith("!") ? _.pullAll(fileMatches, patternMatches) : [...fileMatches, ...patternMatches];
 	}
 
-	return fileMatches;
+	return fileMatches.map(x => join(getRootPath(), x));
 }
 
 export function toArray<T>(pattern: T | T[]): T[] {
@@ -42,7 +53,7 @@ export function toArray<T>(pattern: T | T[]): T[] {
 }
 
 export function findRoot(fileName?: string, filePath?: string): string | null {
-	filePath = normalize(filePath || process.cwd());
+	filePath = normalize(filePath || rootPath || process.cwd());
 
 	try {
 		const directory = join(filePath, sep);
@@ -69,11 +80,4 @@ export function getConfigFilePath(fileName: string): string {
 	}
 
 	return join(filePath, fileName);
-}
-
-export function mergeArgsWithOptions<T extends Partial<Arguments>>(defaultArgs: ArgumentOptions<T>[], options?: T): T {
-	// todo: add generic type when issue is solved
-	// https://github.com/Microsoft/TypeScript/issues/10727
-
-	return Object.assign({}, Args.set(defaultArgs), options) as T;
 }

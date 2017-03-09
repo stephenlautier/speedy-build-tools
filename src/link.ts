@@ -9,7 +9,7 @@ import {
 	Timer,
 	buildCommandModule,
 	ArgumentOptions,
-	mergeArgsWithOptions
+	Args
 } from "./utils";
 
 const logger = new Logger("Link");
@@ -31,7 +31,7 @@ const ARGS: ArgumentOptions<LinkOptions>[] = [
 export function link(options?: LinkOptions): Promise<any> {
 	const prefix = "@obg";
 	const packageNameUnPrefixed = process.argv[3];
-	const mergedOptions = mergeArgsWithOptions(ARGS, options);
+	const mergedOptions = Args.mergeWithOptions(ARGS, options);
 
 	if (!packageNameUnPrefixed) {
 		return enableLinking(mergedOptions);
