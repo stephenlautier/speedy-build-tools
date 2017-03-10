@@ -21,7 +21,7 @@ import { ARGS } from "./lint-sass.args";
 
 const logger = new Logger("Lint SASS");
 
-export async function lintSass(options?: LintSassOptions): Promise<LinterResult[]> {
+export async function lintSass(options?: Partial<LintSassOptions>): Promise<LinterResult[]> {
 	const timer = new Timer(logger);
 
 	try {
@@ -36,9 +36,9 @@ export async function lintSass(options?: LintSassOptions): Promise<LinterResult[
 }
 
 /** @internal */
-export async function handleLintSass(options: LintSassOptions): Promise<LinterResult[]> {
+export async function handleLintSass(options: Partial<LintSassOptions>): Promise<LinterResult[]> {
 	const mergedOptions = Args.mergeWithOptions(ARGS, options);
-	const configData = await readJsonFileAsync<JSON>(getConfigFilePath(mergedOptions.config!));
+	const configData = await readJsonFileAsync<JSON>(getConfigFilePath(mergedOptions.config));
 
 	const failures = (
 		await Promise.all(

@@ -17,7 +17,7 @@ import { ARGS } from "./lint-ts.args";
 
 const logger = new Logger("Lint TS");
 
-export async function lintTs(options?: LintTsOptions): Promise<LintResult[]> {
+export async function lintTs(options?: Partial<LintTsOptions>): Promise<LintResult[]> {
 	const timer = new Timer(logger);
 
 	try {
@@ -32,16 +32,24 @@ export async function lintTs(options?: LintTsOptions): Promise<LintResult[]> {
 }
 
 /** @internal */
-export async function handlelintTs(options: LintTsOptions): Promise<LintResult[]> {
+export async function handlelintTs(options: Partial<LintTsOptions>): Promise<LintResult[]> {
 	const mergedOptions = Args.mergeWithOptions(ARGS, options);
-	const configData = Configuration.findConfiguration(null, getConfigFilePath(mergedOptions.config!)).results!;
+	const configData = Configuration.findConfiguration(null, getConfigFilePath(mergedOptions.config)).results;
+
+	if (!configData) {
+		throw new Error(`Cannot retrieve 'config' data, path: ${mergedOptions.config}`);
+	}
+
+	const linter = new Linter({
+		fix: mergedOptions.fix,
+		formatter: mergedOptions.formatter
+	});
 
 	const failures = (
 		await Promise.all(
-			globArray(toArray(mergedOptions.files!)).map(x => lintFile(x, configData, mergedOptions))
+			globArray(toArray(mergedOptions.files)).map(x => lintFile(x, configData, linter))
 		)
-	)
-		.filter(x => x.failureCount > 0);
+	).filter(x => x.failureCount > 0);
 
 	failures.forEach(x => logger.info(x.output));
 
@@ -52,10 +60,8 @@ export async function handlelintTs(options: LintTsOptions): Promise<LintResult[]
 	return failures;
 }
 
-async function lintFile(filePath: string, configData: Configuration.IConfigurationLoadResult, options: LintTsOptions): Promise<LintResult> {
+async function lintFile(filePath: string, configData: Configuration.IConfigurationLoadResult, linter: Linter): Promise<LintResult> {
 	logger.debug("lintFile", `filePath: ${filePath}`);
-
-	const linter = new Linter(options as ILinterOptions);
 	linter.lint(filePath, await readFileAsync(filePath), configData);
 
 	return linter.getResult();

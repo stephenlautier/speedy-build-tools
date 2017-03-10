@@ -1,9 +1,9 @@
 export interface LintTsOptions {
-	files?: string | string[];
-	config?: string;
-	formatter?: LintTsFormatters;
-	continueOnError?: boolean;
-	fix?: boolean;
+	files: string | string[];
+	config: string;
+	formatter: LintTsFormatters;
+	continueOnError: boolean;
+	fix: boolean;
 }
 
 export type LintTsFormatters = "vso"

@@ -49,7 +49,7 @@ export namespace Args {
 		return yargs.argv;
 	}
 
-	export function mergeWithOptions<T extends Partial<Arguments>>(defaultArgs: ArgumentOptions<T>[], options?: T): T {
+	export function mergeWithOptions<T extends Partial<Arguments>>(defaultArgs: ArgumentOptions<T>[], options?: Partial<T>): T {
 		// todo: add generic type when issue is solved
 		// https://github.com/Microsoft/TypeScript/issues/10727
 

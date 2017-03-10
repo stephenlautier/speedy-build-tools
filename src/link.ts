@@ -16,7 +16,7 @@ const logger = new Logger("Link");
 const timer = new Timer(logger);
 
 export interface LinkOptions {
-	watch?: boolean;
+	watch: boolean;
 }
 
 const ARGS: ArgumentOptions<LinkOptions>[] = [
@@ -28,7 +28,7 @@ const ARGS: ArgumentOptions<LinkOptions>[] = [
 	}
 ];
 
-export function link(options?: LinkOptions): Promise<any> {
+export function link(options?: Partial<LinkOptions>): Promise<any> {
 	const prefix = "@obg";
 	const packageNameUnPrefixed = process.argv[3];
 	const mergedOptions = Args.mergeWithOptions(ARGS, options);
@@ -40,7 +40,7 @@ export function link(options?: LinkOptions): Promise<any> {
 	}
 }
 
-export async function enableLinking(options: LinkOptions): Promise<any> {
+export async function enableLinking(options: Partial<LinkOptions>): Promise<any> {
 	timer.start();
 
 	const watch = options.watch;
