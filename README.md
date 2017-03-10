@@ -99,7 +99,6 @@ By default, it will try to locate the `tslint.json` file in the root of your pro
 
 ___
 
-
 ## Global Options
 | Option            | Description            |
 |-------------------|------------------------|
@@ -123,7 +122,6 @@ To display help when running the task from a mapped npm script you should omit t
 ```
 npm run lint-sass help
 ```
-
 
 # Contributing to the project
 In order to contribute please read the [Contribution guidelines][contribWiki].
