@@ -3,18 +3,18 @@ import { readFile, statSync } from "fs";
 import { IOptions, sync } from "fast-glob";
 import { join, sep, normalize, isAbsolute } from "path";
 
-let rootPath: string | null;
+let _rootPath: string | null;
 export function getRootPath(): string {
-	if (!_.isNil(rootPath)) {
-		return rootPath;
+	if (!_.isNil(_rootPath)) {
+		return _rootPath;
 	}
 
-	rootPath = findRoot();
-	if (!rootPath) {
-		rootPath = "";
+	_rootPath = findRoot();
+	if (!_rootPath) {
+		_rootPath = "";
 	}
 
-	return rootPath;
+	return _rootPath;
 }
 
 export function readFileAsync(path: string): Promise<string> {
@@ -34,14 +34,17 @@ export async function readJsonFileAsync<T>(path: string): Promise<T> {
 }
 
 export function globArray(patterns: string[], options?: IOptions): string[] {
+	const rootPath = getRootPath();
+	const mergedOptions = { cwd: rootPath, ...options } as IOptions;
+
 	let fileMatches: string[] = [];
 
 	for (let pattern of patterns) {
-		const patternMatches = sync(pattern, { cwd: getRootPath(), ...options } as IOptions);
+		const patternMatches = sync(pattern, mergedOptions);
 		fileMatches = pattern.startsWith("!") ? _.pullAll(fileMatches, patternMatches) : [...fileMatches, ...patternMatches];
 	}
 
-	return fileMatches.map(x => join(getRootPath(), x));
+	return fileMatches.map(x => join(rootPath, x));
 }
 
 export function toArray<T>(pattern: T | T[]): T[] {
@@ -53,7 +56,7 @@ export function toArray<T>(pattern: T | T[]): T[] {
 }
 
 export function findRoot(fileName?: string, filePath?: string): string | null {
-	filePath = normalize(filePath || rootPath || process.cwd());
+	filePath = normalize(filePath || _rootPath || process.cwd());
 
 	try {
 		const directory = join(filePath, sep);
