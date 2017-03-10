@@ -14,14 +14,14 @@ export namespace Args {
 		boolean: true
 	}]);
 
-/**
- * Register command arguments. When `default` value is specified the argument `type` will be inferred.
- * @export
- * @template T
- * @param {ArgumentOptions<T>[]} args
- * @returns {yargs.Argv}
- */
-	export function set<T>(args: ArgumentOptions<T>[]): yargs.Argv {
+	/**
+	 * Register command arguments. When `default` value is specified the argument `type` will be inferred.
+	 * @export
+	 * @template T
+	 * @param {ArgumentOptions<T>[]} args
+	 * @returns {yargs.Argv}
+	 */
+	export function set<T>(args: ArgumentOptions<T>[]): T {
 		for (let x of args) {
 			yargs.option(x.key, x);
 
@@ -49,7 +49,7 @@ export namespace Args {
 		return yargs.argv;
 	}
 
-	export function mergeWithOptions<T extends Partial<Arguments>>(defaultArgs: ArgumentOptions<T>[], options?: Partial<T>): Partial<T> {
+	export function mergeWithOptions<T extends Partial<Arguments>>(defaultArgs: ArgumentOptions<T>[], options?: Partial<T>): T {
 		// todo: add generic type when issue is solved
 		// https://github.com/Microsoft/TypeScript/issues/10727
 
