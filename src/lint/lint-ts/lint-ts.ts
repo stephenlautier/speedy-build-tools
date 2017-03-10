@@ -34,12 +34,11 @@ export async function lintTs(options?: LintTsOptions): Promise<LintResult[]> {
 /** @internal */
 export async function handlelintTs(options: LintTsOptions): Promise<LintResult[]> {
 	const mergedOptions = Args.mergeWithOptions(ARGS, options);
-	const files = mergedOptions.files!;
 	const configData = Configuration.findConfiguration(null, getConfigFilePath(mergedOptions.config!)).results!;
 
 	const failures = (
 		await Promise.all(
-			globArray(toArray(files)).map(x => lintFile(x, configData, mergedOptions))
+			globArray(toArray(mergedOptions.files!)).map(x => lintFile(x, configData, mergedOptions))
 		)
 	)
 		.filter(x => x.failureCount > 0);
