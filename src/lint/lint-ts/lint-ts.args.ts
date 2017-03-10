@@ -13,24 +13,24 @@ export const ARGS: ArgumentOptions<LintTsOptions>[] = [
 	{
 		key: "files",
 		alias: "f",
-		description: "An array or string of globs to lint",
+		description: "Files to be linted - Supports glob patterns",
 		default: "src/**/*.ts",
 		array: true
 	},
 	{
 		key: "formatter",
-		description: "The formatter to use to format the results of the linter",
+		description: "Formatter to use to format the linter results",
 		default: LINT_TS_FORMATTERS.stylish,
 		choices: _.keysIn(LINT_TS_FORMATTERS)
 	},
 	{
 		key: "fix",
-		description: "Automatically fix some linting issues",
+		description: "Determines whether to auto fix lint issues (which support fixing)",
 		default: false
 	},
 	{
 		key: "continueOnError",
-		description: "Don't exit with a non-zero status code on lint errors",
+		description: "Determines whether to exit with a non-zero status code on lint errors",
 		default: false
 	}
 ];

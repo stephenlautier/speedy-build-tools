@@ -56,6 +56,7 @@ npm run sync
 | `sync-dependencies`   | Sync dependencies between projects                                                                     |
 | `link`                | Link to an OBG Library. Don’t provide the @obg/ prefix.                                                |
 | `lint-sass`           | Lint Sass files.                                                                                       |
+| `lint-ts`             | Lint Typescipt files.                                                                                  |
 
 ### Lint Sass
 ```bash
@@ -69,6 +70,19 @@ obg-build-tools lint-sass
 | `--formatter`         | The formatter to use to format the results of the linter | `verbose`                           | string       |
 | `--fix`               | Automatically fix some linting issues                    | `false`                             | boolean      |
 | `--continueOnError`   | Don't exit with a non-zero status code on lint errors    | `false`                             | boolean      |
+
+### Lint Typescript
+```bash
+obg-build-tools lint-ts
+```
+
+| Option                | Description                                                             | Default Value                       | Type         |
+|-----------------------|-------------------------------------------------------------------------|-------------------------------------|--------------|
+| `--config, -c`        | Lint rules file path                                                    | `tslint.json`  from `process.cwd()` | string       |
+| `--files, -f`         | Files to be linted - Supports glob patterns                             | `src/**/*.ts`                       | Array|string |
+| `--formatter`         | Formatter to use to format the linter results                           | `stylish`                           | string       |
+| `--fix`               | Determines whether to auto fix lint issues (which support fixing)       | `false`                             | boolean      |
+| `--continueOnError`   | Determines whether to exit with a non-zero status code on lint errors   | `false`                             | boolean      |
 
 ## Global Options
 | Option            | Description            |
