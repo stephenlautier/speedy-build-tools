@@ -61,6 +61,7 @@ async function lintFile(filePath: string, configData: Configuration.IConfigurati
 
 	return linter.getResult();
 }
+
 /** @internal */
 export const lintTsModule = buildCommandModule({
 	command: "lint-ts",
