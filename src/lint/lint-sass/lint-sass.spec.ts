@@ -19,11 +19,11 @@ describe("lintSassSpec", () => {
 				"src/can-fix.scss": "div {width: 10.0em}",
 				"src/valid.scss": "a {color: #000}",
 				".stylelintrc": `{
-									"rules": {
-										"color-named": "never",
-										"number-no-trailing-zeros": true
-									}
-								}`
+					"rules": {
+						"color-named": "never",
+						"number-no-trailing-zeros": true
+					}
+				}`
 			});
 
 			spyOn(Logger.prototype, "info").and.stub();
