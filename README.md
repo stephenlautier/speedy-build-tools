@@ -43,6 +43,7 @@ Instead of depending on external task runners, Obg Build Tools can be configured
     "sync": "obg-build-tools sync-dependencies"
 },
 ````
+
 To run the build script found in the package.json scripts property, execute:
 
 ```
@@ -59,6 +60,7 @@ npm run sync
 | `lint-sass`           | Lint Sass files.                                                                                       |
 
 ### Lint Sass
+
 ```
 obg-build-tools lint-sass
 ```
@@ -79,6 +81,7 @@ obg-build-tools lint-sass
 | `--version`, `-v` | Show version number    |
 
 Display general help
+
 ```
 obg-build-tools --help
 ```
@@ -89,6 +92,7 @@ obg-build-tools lint-sass --help
 ```
 
 To display help when running the task from a mapped npm script you should omit the `--`;
+
 ```
 npm run lint-sass help
 ```
@@ -114,7 +118,6 @@ The following process need to be executed in order to get started.
 ```
 npm install
 ```
-
 
 ## Building the code
 
