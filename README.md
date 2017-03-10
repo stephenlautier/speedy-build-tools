@@ -45,7 +45,7 @@ Instead of depending on external task runners, Obg Build Tools can be configured
 ````
 To run the build script found in the package.json scripts property, execute:
 
-```cmd
+```
 npm run sync
 ```
 
@@ -59,7 +59,7 @@ npm run sync
 | `lint-sass`           | Lint Sass files.                                                                                       |
 
 ### Lint Sass
-```bash
+```
 obg-build-tools lint-sass
 ```
 
