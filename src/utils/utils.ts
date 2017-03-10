@@ -35,9 +35,10 @@ export async function readJsonFileAsync<T>(path: string): Promise<T> {
 
 export function globArray(patterns: string[], options?: IOptions): string[] {
 	let fileMatches: string[] = [];
+	const amendedOptions = { cwd: getRootPath(), ...options } as IOptions;
 
 	for (let pattern of patterns) {
-		const patternMatches = sync(pattern, { cwd: getRootPath(), ...options } as IOptions);
+		const patternMatches = sync(pattern, amendedOptions);
 		fileMatches = pattern.startsWith("!") ? _.pullAll(fileMatches, patternMatches) : [...fileMatches, ...patternMatches];
 	}
 
