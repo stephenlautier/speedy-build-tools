@@ -1,4 +1,4 @@
-import { cyan, red, yellow, green, gray, white } from "colors";
+import { cyan, red, yellow, green, gray, white } from "chalk";
 import { padStart } from "lodash";
 
 import { Args } from "./args/args";

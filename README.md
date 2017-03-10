@@ -36,12 +36,14 @@ createLink("@obg", "ng2.common");
 # npm Scripts
 
 Instead of depending on external task runners, Obg Build Tools can be configured to being executed from npm scripts.
-```
+
+```json
 "scripts": {
     "link": "obg-build-tools link",
     "sync": "obg-build-tools sync-dependencies"
 },
 ````
+
 To run the build script found in the package.json scripts property, execute:
 
 ```
@@ -51,10 +53,49 @@ npm run sync
 
 ## Tasks
 
-| Task                | Description                                                                                         |
-|---------------------|-----------------------------------------------------------------------------------------------------|
-| `sync-dependencies` | Sync dependencies between projects                                                                  |
-| `link`              | Link to an OBG Library. Don’t provide the `@obg/` prefix.                                           |
+| Task                  | Description                                                                                            |
+|-----------------------|--------------------------------------------------------------------------------------------------------|
+| `sync-dependencies`   | Sync dependencies between projects                                                                     |
+| `link`                | Link to an OBG Library. Don’t provide the @obg/ prefix.                                                |
+| `lint-sass`           | Lint Sass files.                                                                                       |
+
+### Lint Sass
+
+```
+obg-build-tools lint-sass
+```
+
+| Option              | Description                                                           | Default Value                       | Type    |
+|---------------------|-----------------------------------------------------------------------|-------------------------------------|---------|
+| `--config, -c`      | Lint rules file path                                                  | `.stylelintrc` from `process.cwd()` | string  |
+| `--files, -f`       | Files to be linted - Supports glob patterns                           | `./src/**/.*(scss\                  | sass)`  |
+| `--formatter`       | Formatter to use to format the linter results                         | `verbose`                           | string  |
+| `--fix`             | Determines whether to auto fix lint issues (which support fixing)     | `false`                             | boolean |
+| `--continueOnError` | Determines whether to exit with a non-zero status code on lint errors | `false`                             | boolean |
+
+## Global Options
+| Option            | Description            |
+|-------------------|------------------------|
+| `--debug`         | Show debug information |
+| `--help, -h`      | Show help              |
+| `--version`, `-v` | Show version number    |
+
+Display general help
+
+```
+obg-build-tools --help
+```
+
+Display help specific to a task:
+```
+obg-build-tools lint-sass --help
+```
+
+To display help when running the task from a mapped npm script you should omit the `--`;
+
+```
+npm run lint-sass help
+```
 
 # Contributing to the project
 In order to contribute please read the [Contribution guidelines][contribWiki].
@@ -78,26 +119,19 @@ The following process need to be executed in order to get started.
 npm install
 ```
 
-
 ## Building the code
 
 ```
-gulp build
+npm run build
 ```
-In order to view all other tasks invoke `gulp` or check the gulp tasks directly.
 
 ## Development utils
 
-### Trigger gulp watch
+### Trigger watch
 Handles compiling of changes.
 ```
-gulp watch
+npm run watch
 ```
 
 
-## Preparation for Release
-
-```
-gulp prepare-release --bump major|minor|patch|prerelease (default: patch) --version-suffix beta (default: rc - only applies to prerelease)
-```
 Check out the [release workflow guide][releaseWorkflowWiki] in order to guide you creating a release and distributing it.

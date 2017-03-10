@@ -9,3 +9,5 @@ export { Args } from "./args/args";
 
 export { Logger } from "./logger";
 export { Timer } from "./timer";
+
+export { CommandModule, buildCommandModule } from "./command-module";

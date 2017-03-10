@@ -12,10 +12,10 @@
 		"allowUnreachableCode": false,
 		"skipLibCheck": true,
 		"strictNullChecks": true,
-		"outDir": "./dist",
 		"noEmitOnError": false,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
+		"stripInternal": true,
 		"noImplicitUseStrict": true,
 		"types": [
 			"node",
@@ -30,7 +30,6 @@
 	],
 	"include": [
 		"typings/**/*.d.ts",
-		"src/index.ts",
-		"src/tasks.ts"
+		"src/**/*.ts"
 	]
 }

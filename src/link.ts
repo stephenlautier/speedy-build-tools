@@ -1,6 +1,5 @@
 import * as process from "process";
 import * as rimraf from "rimraf";
-import * as yargs from "yargs";
 import * as spawn from "cross-spawn-promise";
 import { mkdirSync, symlinkSync, constants, existsSync } from "fs";
 import { join } from "path";
@@ -8,7 +7,7 @@ import { join } from "path";
 import {
 	Logger,
 	Timer,
-	Args,
+	buildCommandModule,
 	ArgumentOptions,
 	mergeArgsWithOptions
 } from "./utils";
@@ -59,7 +58,7 @@ export async function enableLinking(options: LinkOptions): Promise<any> {
 		}
 	} catch (error) {
 		logger.error(error.stderr.toString());
-		process.exit(1);
+		throw error;
 	} finally {
 		timer.finish();
 	}
@@ -105,15 +104,16 @@ export async function createLink(prefix: string, packageNameUnPrefixed: string):
 
 	} catch (error) {
 		logger.error(error.stderr.toString());
-		process.exit(1);
+		throw error;
 	} finally {
 		timer.finish();
 	}
 }
 
-export const linkModule: yargs.CommandModule = {
+/** @internal */
+export const linkModule = buildCommandModule({
 	command: "link",
-	describe: "Link libraries",
+	description: "Link libraries",
 	handler: link,
-	builder: () => Args.set(ARGS)
-};
+	args: ARGS
+});
