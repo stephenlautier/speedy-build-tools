@@ -38,7 +38,10 @@ export async function lintSass(options?: Partial<LintSassOptions>): Promise<Lint
 /** @internal */
 export async function handleLintSass(options: Partial<LintSassOptions>): Promise<LinterResult[]> {
 	const mergedOptions = Args.mergeWithOptions(ARGS, options);
-	const configData = await readJsonFileAsync<JSON>(getConfigFilePath(mergedOptions.config));
+	const configFilePath = getConfigFilePath(mergedOptions.config);
+	logger.debug("handlelintTs", `Config file path: ${configFilePath}`);
+
+	const configData = await readJsonFileAsync<JSON>(configFilePath);
 
 	const failures = (
 		await Promise.all(

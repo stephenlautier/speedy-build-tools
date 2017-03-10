@@ -34,7 +34,10 @@ export async function lintTs(options?: Partial<LintTsOptions>): Promise<LintResu
 /** @internal */
 export async function handlelintTs(options: Partial<LintTsOptions>): Promise<LintResult[]> {
 	const mergedOptions = Args.mergeWithOptions(ARGS, options);
-	const configData = Configuration.findConfiguration(null, getConfigFilePath(mergedOptions.config)).results;
+	const configFilePath = getConfigFilePath(mergedOptions.config);
+	logger.debug("handlelintTs", `Config file path: ${configFilePath}`);
+
+	const configData = Configuration.findConfiguration(null, configFilePath).results;
 
 	if (!configData) {
 		throw new Error(`Cannot retrieve 'config' data, path: ${mergedOptions.config}`);
