@@ -1,4 +1,4 @@
-import { Linter, LintResult, Configuration, ILinterOptions } from "tslint";
+import { Linter, LintResult, Configuration } from "tslint";
 
 import {
 	Logger,
