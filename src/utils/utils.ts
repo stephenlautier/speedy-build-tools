@@ -1,10 +1,21 @@
 import * as _ from "lodash";
-import { readFile, statSync } from "fs";
-import { IOptions, sync } from "fast-glob";
-import { join, sep, normalize } from "path";
+import { sync } from "fast-glob";
+import { readFile, statSync, existsSync } from "fs";
+import { join, sep, normalize, isAbsolute } from "path";
 
-import { Args } from "./args/args";
-import { ArgumentOptions, Arguments } from "./args/args.model";
+let _rootPath: string | null;
+export function getRootPath(): string {
+	if (!_.isNil(_rootPath)) {
+		return _rootPath;
+	}
+
+	_rootPath = findFileRecursively();
+	if (!_rootPath) {
+		_rootPath = "";
+	}
+
+	return _rootPath;
+}
 
 export function readFileAsync(path: string): Promise<string> {
 	return new Promise((resolve, reject) => {
@@ -18,19 +29,15 @@ export function readFileAsync(path: string): Promise<string> {
 	});
 }
 
-export async function readJsonFileAsync<T>(path: string): Promise<T> {
-	return JSON.parse(await readFileAsync(path));
+export function globArray(source: string | string[]): string[] {
+	// empty bashNative is required to fix the below issue on MAC OSX
+	// https://github.com/jonschlinkert/bash-glob/issues/2#issuecomment-285879264
+
+	return sync(source, { bashNative: [] });
 }
 
-export function globArray(patterns: string[], options?: IOptions): string[] {
-	let fileMatches: string[] = [];
-
-	for (let pattern of patterns) {
-		const patternMatches = sync(pattern, options);
-		fileMatches = pattern.startsWith("!") ? _.pullAll(fileMatches, patternMatches) : [...fileMatches, ...patternMatches];
-	}
-
-	return fileMatches;
+export async function readJsonFileAsync<T>(path: string): Promise<T> {
+	return JSON.parse(await readFileAsync(path));
 }
 
 export function toArray<T>(pattern: T | T[]): T[] {
@@ -41,39 +48,46 @@ export function toArray<T>(pattern: T | T[]): T[] {
 	return pattern;
 }
 
-export function findRoot(fileName?: string, filePath?: string): string | null {
-	filePath = normalize(filePath || process.cwd());
+/**
+ * Find a file recursively in the filesystem from the starting path upwards.
+ *
+ * Defaults: fileName: package.json, startPath: process.cwd()
+ *
+ * @export
+ * @param {string} [fileName="package.json"]
+ * @param {string} [startPath=process.cwd()]
+ * @returns {(string | null)}
+ */
+export function findFileRecursively(fileName = "package.json", startPath = process.cwd()): string | null {
+	startPath = normalize(startPath);
 
 	try {
-		const directory = join(filePath, sep);
-		statSync(join(directory, fileName ? fileName : "package.json"));
+		const directory = join(startPath, sep);
+		statSync(join(directory, fileName));
 		return directory;
-	} catch (e) {
+	} catch (error) {
 		// do nothing
 	}
 
-	let position = _.lastIndexOf(filePath, sep);
+	let position = _.lastIndexOf(startPath, sep);
 	if (position < 0) {
 		return null;
 	}
 
-	const truncatedPath = filePath.substr(0, position++);
-	return findRoot(fileName, truncatedPath);
+	const truncatedPath = startPath.substr(0, position++);
+	return findFileRecursively(fileName, truncatedPath);
 }
 
-export function getConfigFilePath(fileName: string): string {
-	let filePath = findRoot(fileName);
-
-	if (!filePath) {
-		filePath = join(__dirname, "../../");
+export function getConfigFilePath(file: string): string {
+	if (isAbsolute(file)) {
+		return file;
 	}
 
-	return join(filePath, fileName);
-}
+	const path = join(getRootPath(), file);
 
-export function mergeArgsWithOptions<T extends Partial<Arguments>>(defaultArgs: ArgumentOptions<T>[], options?: T): T {
-	// todo: add generic type when issue is solved
-	// https://github.com/Microsoft/TypeScript/issues/10727
+	if (existsSync(path)) {
+		return path;
+	}
 
-	return Object.assign({}, Args.set(defaultArgs), options) as T;
+	return join(__dirname, "../../", file);
 }

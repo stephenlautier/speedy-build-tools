@@ -1,9 +1,9 @@
 export interface LintSassOptions {
-	files?: string | string[];
-	config?: string;
-	formatter?: LintSassFormatters;
-	continueOnError?: boolean;
-	fix?: boolean;
+	files: string | string[];
+	config: string;
+	formatter: LintSassFormatters;
+	continueOnError: boolean;
+	fix: boolean;
 }
 
 export type LintSassFormatters = "json" | "string" | "verbose";

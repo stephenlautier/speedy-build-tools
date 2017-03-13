@@ -7,12 +7,12 @@ import {
 	Logger,
 	Worker,
 	Timer,
-	mergeArgsWithOptions,
-	globArray,
-	toArray,
+	Args,
 	readJsonFileAsync,
 	readFileAsync,
-	buildCommandModule
+	globArray,
+	buildCommandModule,
+	getConfigFilePath
 } from "../../utils";
 
 import { LintSassOptions } from "./lint-sass.model";
@@ -20,7 +20,7 @@ import { ARGS } from "./lint-sass.args";
 
 const logger = new Logger("Lint SASS");
 
-export async function lintSass(options?: LintSassOptions): Promise<LinterResult[]> {
+export async function lintSass(options?: Partial<LintSassOptions>): Promise<LinterResult[]> {
 	const timer = new Timer(logger);
 
 	try {
@@ -35,16 +35,18 @@ export async function lintSass(options?: LintSassOptions): Promise<LinterResult[
 }
 
 /** @internal */
-export async function handleLintSass(options: LintSassOptions): Promise<LinterResult[]> {
-	const mergedOptions = mergeArgsWithOptions(ARGS, options);
-	const configData = await readJsonFileAsync<JSON>(mergedOptions.config!);
+export async function handleLintSass(options: Partial<LintSassOptions>): Promise<LinterResult[]> {
+	const mergedOptions = Args.mergeWithOptions(ARGS, options);
+	const configFilePath = getConfigFilePath(mergedOptions.config);
+	logger.debug("handleLintSass", `Config file path: ${configFilePath}`);
+
+	const configData = await readJsonFileAsync<JSON>(configFilePath);
 
 	const failures = (
 		await Promise.all(
-			globArray(toArray(mergedOptions.files!)).map(x => lintFile(x, configData, mergedOptions))
+			globArray(mergedOptions.files).map(x => lintFile(x, configData, mergedOptions))
 		)
-	)
-		.filter(x => x.errored);
+	).filter(x => x.errored);
 
 	failures.forEach(x => logger.info(formatters.string(x.results)));
 
