@@ -1,16 +1,14 @@
-import * as glob from "fast-glob";
 import * as mockFs from "mock-fs";
 import { normalize } from "path";
 
 import {
 	toArray,
-	globArray,
-	findRoot,
+	findFileRecursively,
 	readFileAsync,
 	readJsonFileAsync
 } from "./index";
 
-describe("utilsSpec", () => {
+describe("filesystemSpec", () => {
 
 	describe("readFileAsync", () => {
 		beforeEach(() => {
@@ -81,25 +79,7 @@ describe("utilsSpec", () => {
 		});
 	});
 
-	describe("globArray", () => {
-		const srcFiles = ["test.ts", "test2.ts"];
-		const specFiles = ["test.spec.ts", "test2.spec.ts"];
-		const allFiles = [...srcFiles, ...specFiles];
-
-		beforeEach(() => {
-			spyOn(glob, "sync").and.returnValues(allFiles, specFiles);
-		});
-
-		it("must return files matching pattern", () => {
-			expect(globArray(["*.ts"])).toEqual(allFiles);
-		});
-
-		it("must return files excluding negative pattern", () => {
-			expect(globArray(["*.ts", "!*.spec.ts"])).toEqual(srcFiles);
-		});
-	});
-
-	describe("findRoot", () => {
+	describe("findFileRecursively", () => {
 		beforeEach(() => {
 			mockFs({
 				"src/apps/": {
@@ -114,11 +94,11 @@ describe("utilsSpec", () => {
 		});
 
 		it("must return the correct path to package.json", () => {
-			expect(findRoot("package.json", "src/apps/")).toEqual(normalize("src/"));
+			expect(findFileRecursively("package.json", "src/apps/")).toEqual(normalize("src/"));
 		});
 
 		it("must return the null when package.json doesn't exist", () => {
-			expect(findRoot("package.json", "invalid/path")).toEqual(null);
+			expect(findFileRecursively("package.json", "invalid/path")).toEqual(null);
 		});
 	});
 });

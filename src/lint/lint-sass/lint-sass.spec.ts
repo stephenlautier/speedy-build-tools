@@ -6,9 +6,8 @@ import { LintSassOptions } from "./lint-sass.model";
 
 describe("lintSassSpec", () => {
 
-	const OPTIONS: LintSassOptions = {
+	const OPTIONS: Partial<LintSassOptions> = {
 		continueOnError: true,
-		config: ".stylelintrc",
 		fix: false
 	};
 
@@ -17,12 +16,13 @@ describe("lintSassSpec", () => {
 			"src/invalid.scss": "a {color: red}",
 			"src/can-fix.scss": "div {width: 10.0em}",
 			"src/valid.scss": "a {color: #000}",
+			"package.json": "",
 			".stylelintrc": `{
-									"rules": {
-										"color-named": "never",
-										"number-no-trailing-zeros": true
-									}
-								}`
+				"rules": {
+					"color-named": "never",
+					"number-no-trailing-zeros": true
+				}
+			}`
 		});
 
 		spyOn(Logger.prototype, "info").and.stub();
@@ -36,7 +36,7 @@ describe("lintSassSpec", () => {
 	it("must return errors when incorrect SASS is present", async done => {
 		const result = await handleLintSass({
 			...OPTIONS,
-			files: "src/**/*.scss"
+			files: "**/*.scss"
 		});
 
 		expect(result.length).toBeTruthy();

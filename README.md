@@ -33,7 +33,7 @@ enableLinking();
 createLink("@obg", "ng2.common");
 ```
 
-# npm Scripts
+# NPM Scripts
 
 Instead of depending on external task runners, Obg Build Tools can be configured to being executed from npm scripts.
 
@@ -51,17 +51,31 @@ npm run sync
 ```
 
 
-## Tasks
+# Tasks
 
-| Task                  | Description                                                                                            |
-|-----------------------|--------------------------------------------------------------------------------------------------------|
-| `sync-dependencies`   | Sync dependencies between projects                                                                     |
-| `link`                | Link to an OBG Library. Don’t provide the @obg/ prefix                                                 |
-| `lint-sass`           | Lint Sass files                                                                                        |
-| `lint-ts`             | Lint Typescipt files                                                                                   |
+| Task                | Description                                            |
+|---------------------|--------------------------------------------------------|
+| `clean`             | Delete files and directories                           |
+| `sync-dependencies` | Sync dependencies between projects                     |
+| `link`              | Link to an OBG Library. Don’t provide the @obg/ prefix |
+| `lint-sass`         | Lint Sass files                                        |
+| `lint-ts`           | Lint Typescipt files                                   |
+
 ___
 
-### Lint Sass
+## Clean
+
+```
+speedy-build-tools clean --paths .tmp/**
+```
+
+| Option        | Description                                   | Type  |
+|---------------|-----------------------------------------------|-------|
+| `--paths, -p` | Paths to be deleted  - Supports glob patterns | Array |
+
+___
+
+## Lint Sass
 
 ```
 obg-build-tools lint-sass
@@ -75,12 +89,11 @@ obg-build-tools lint-sass
 | `--fix`             | Determines whether to auto fix lint issues (which support fixing)     | `false`                 | boolean |
 | `--continueOnError` | Determines whether to exit with a non-zero status code on lint errors | `false`                 | boolean |
 
-#### Rules
+### Rules
 By default, it will try to locate the `.stylelintrc` file in the root of your project folder. If the file is not found it will fallback to an internal `.stylelintrc`. This file can also be used as a base for your rules.
-
 ___
 
-### Lint Typescript
+## Lint Typescript
 
 ```
 obg-build-tools lint-ts
@@ -94,7 +107,7 @@ obg-build-tools lint-ts
 | `--fix`             | Determines whether to auto fix lint issues (which support fixing)     | `false`       | boolean |
 | `--continueOnError` | Determines whether to exit with a non-zero status code on lint errors | `false`       | boolean |
 
-#### Rules
+### Rules
 By default, it will try to locate the `tslint.json` file in the root of your project folder. If the file is not found it will fallback to an internal `tslint.json`. This file can also be used as a base for your rules.
 
 ___
