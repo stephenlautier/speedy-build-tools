@@ -66,7 +66,7 @@ ___
 ## Clean
 
 ```
-speedy-build-tools clean --paths .tmp/**
+obg-build-tools clean --paths .tmp/**
 ```
 
 | Option        | Description                                   | Type  |
