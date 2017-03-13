@@ -8,10 +8,9 @@ import {
 	Worker,
 	Timer,
 	Args,
-	globArray,
-	toArray,
 	readJsonFileAsync,
 	readFileAsync,
+	globArray,
 	buildCommandModule,
 	getConfigFilePath
 } from "../../utils";
@@ -45,10 +44,9 @@ export async function handleLintSass(options: Partial<LintSassOptions>): Promise
 
 	const failures = (
 		await Promise.all(
-			globArray(toArray(mergedOptions.files!)).map(x => lintFile(x, configData, mergedOptions))
+			globArray(mergedOptions.files).map(x => lintFile(x, configData, mergedOptions))
 		)
-	)
-		.filter(x => x.errored);
+	).filter(x => x.errored);
 
 	failures.forEach(x => logger.info(formatters.string(x.results)));
 

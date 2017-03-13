@@ -1,6 +1,6 @@
 import * as _ from "lodash";
-import { readFile, statSync } from "fs";
-import { IOptions, sync } from "fast-glob";
+import { sync } from "fast-glob";
+import { readFile, statSync, existsSync } from "fs";
 import { join, sep, normalize, isAbsolute } from "path";
 
 let _rootPath: string | null;
@@ -9,7 +9,7 @@ export function getRootPath(): string {
 		return _rootPath;
 	}
 
-	_rootPath = findRoot();
+	_rootPath = findFileRecursively();
 	if (!_rootPath) {
 		_rootPath = "";
 	}
@@ -29,22 +29,15 @@ export function readFileAsync(path: string): Promise<string> {
 	});
 }
 
-export async function readJsonFileAsync<T>(path: string): Promise<T> {
-	return JSON.parse(await readFileAsync(path));
+export function globArray(source: string | string[]): string[] {
+	// empty bashNative is required to fix the below issue on MAC OSX
+	// https://github.com/jonschlinkert/bash-glob/issues/2#issuecomment-285879264
+
+	return sync(source, { bashNative: [] });
 }
 
-export function globArray(patterns: string[], options?: IOptions): string[] {
-	const rootPath = getRootPath();
-	const mergedOptions = { cwd: rootPath, ...options } as IOptions;
-
-	let fileMatches: string[] = [];
-
-	for (let pattern of patterns) {
-		const patternMatches = sync(pattern, mergedOptions);
-		fileMatches = pattern.startsWith("!") ? _.pullAll(fileMatches, patternMatches) : [...fileMatches, ...patternMatches];
-	}
-
-	return fileMatches.map(x => join(rootPath, x));
+export async function readJsonFileAsync<T>(path: string): Promise<T> {
+	return JSON.parse(await readFileAsync(path));
 }
 
 export function toArray<T>(pattern: T | T[]): T[] {
@@ -55,36 +48,46 @@ export function toArray<T>(pattern: T | T[]): T[] {
 	return pattern;
 }
 
-export function findRoot(fileName?: string, filePath?: string): string | null {
-	filePath = normalize(filePath || _rootPath || process.cwd());
+/**
+ * Find a file recursively in the filesystem from the starting path upwards.
+ *
+ * Defaults: fileName: package.json, startPath: process.cwd()
+ *
+ * @export
+ * @param {string} [fileName="package.json"]
+ * @param {string} [startPath=process.cwd()]
+ * @returns {(string | null)}
+ */
+export function findFileRecursively(fileName = "package.json", startPath = process.cwd()): string | null {
+	startPath = normalize(startPath);
 
 	try {
-		const directory = join(filePath, sep);
-		statSync(join(directory, fileName ? fileName : "package.json"));
+		const directory = join(startPath, sep);
+		statSync(join(directory, fileName));
 		return directory;
-	} catch (e) {
+	} catch (error) {
 		// do nothing
 	}
 
-	let position = _.lastIndexOf(filePath, sep);
+	let position = _.lastIndexOf(startPath, sep);
 	if (position < 0) {
 		return null;
 	}
 
-	const truncatedPath = filePath.substr(0, position++);
-	return findRoot(fileName, truncatedPath);
+	const truncatedPath = startPath.substr(0, position++);
+	return findFileRecursively(fileName, truncatedPath);
 }
 
-export function getConfigFilePath(filePath: string): string {
-	if (isAbsolute(filePath)) {
-		return filePath;
+export function getConfigFilePath(file: string): string {
+	if (isAbsolute(file)) {
+		return file;
 	}
 
-	let path = findRoot(filePath);
+	const path = join(getRootPath(), file);
 
-	if (!path) {
-		path = join(__dirname, "../../");
+	if (existsSync(path)) {
+		return path;
 	}
 
-	return join(path, filePath);
+	return join(__dirname, "../../", file);
 }
