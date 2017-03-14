@@ -13,17 +13,17 @@ OBG build tools
 
 [Change logs][changeLog] | [Project Repository][projectUri] | [Contribution guidelines][contribWiki]
 
-# Getting Started
+## Getting Started
 
-## Installation
+### Installation
 
 ```
 npm install @obg/build-tools --save
 ```
 
-# Usage
+## Usage
 
-## Using linking functions
+### Using linking functions
 
 ```js
 import { enableLinking, createLink } from "@obg/build-tools";
@@ -33,7 +33,7 @@ enableLinking();
 createLink("@obg", "ng2.common");
 ```
 
-# NPM Scripts
+## NPM Scripts
 
 Instead of depending on external task runners, Obg Build Tools can be configured to being executed from npm scripts.
 
@@ -51,7 +51,7 @@ npm run sync
 ```
 
 
-# Tasks
+## Tasks
 
 | Task                | Description                                            |
 |---------------------|--------------------------------------------------------|
@@ -63,7 +63,7 @@ npm run sync
 
 ___
 
-## Clean
+### Clean
 
 ```
 obg-build-tools clean --paths .tmp/**
@@ -71,11 +71,11 @@ obg-build-tools clean --paths .tmp/**
 
 | Option        | Description                                   | Type  |
 |---------------|-----------------------------------------------|-------|
-| `--paths, -p` | Paths to be deleted  - Supports glob patterns | Array |
+| `--paths, -p` | Paths to be deleted - Supports glob patterns  | Array |
 
 ___
 
-## Lint Sass
+### Lint Sass
 
 ```
 obg-build-tools lint-sass
@@ -89,11 +89,11 @@ obg-build-tools lint-sass
 | `--fix`             | Determines whether to auto fix lint issues (which support fixing)     | `false`                 | boolean |
 | `--continueOnError` | Determines whether to exit with a non-zero status code on lint errors | `false`                 | boolean |
 
-### Rules
+#### Rules
 By default, it will try to locate the `.stylelintrc` file in the root of your project folder. If the file is not found it will fallback to an internal `.stylelintrc`. This file can also be used as a base for your rules.
 ___
 
-## Lint Typescript
+### Lint Typescript
 
 ```
 obg-build-tools lint-ts
@@ -107,12 +107,12 @@ obg-build-tools lint-ts
 | `--fix`             | Determines whether to auto fix lint issues (which support fixing)     | `false`       | boolean |
 | `--continueOnError` | Determines whether to exit with a non-zero status code on lint errors | `false`       | boolean |
 
-### Rules
+#### Rules
 By default, it will try to locate the `tslint.json` file in the root of your project folder. If the file is not found it will fallback to an internal `tslint.json`. This file can also be used as a base for your rules.
 
 ___
 
-## Global Options
+### Global Options
 | Option            | Description            |
 |-------------------|------------------------|
 | `--debug`         | Show debug information |
@@ -136,36 +136,36 @@ To display help when running the task from a mapped npm script you should omit t
 npm run lint-sass help
 ```
 
-# Contributing to the project
+## Contributing to the project
 In order to contribute please read the [Contribution guidelines][contribWiki].
 
-## Setup Machine for Development
+### Setup Machine for Development
 Install/setup the machine by following [Setup Machine for Development - Libraries WIKI][setupMachineWiki].
 
-## Setup Project to Develop
+### Setup Project to Develop
 
-### Cloning Repo
+#### Cloning Repo
 
 - Open SourceTree
 - Clone project repo from [project git][projectGit]
 - Switch to `develop` branch
 
-## Project Setup
+### Project Setup
 The following process need to be executed in order to get started.
 
 ```
 npm install
 ```
 
-## Building the code
+### Building the code
 
 ```
 npm run build
 ```
 
-## Development utils
+### Development utils
 
-### Trigger watch
+#### Trigger watch
 Handles compiling of changes.
 ```
 npm run watch
