@@ -2,7 +2,7 @@ import * as yargs from "yargs";
 
 import { Args } from "./args";
 
-fdescribe("argsSpec", () => {
+describe("argsSpec", () => {
 
 	describe("mergedConfigArgsAndProcessArgv", () => {
 		const processArgs = process.argv;
