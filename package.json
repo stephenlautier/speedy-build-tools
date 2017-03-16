@@ -39,7 +39,8 @@
     "stylelint": "^7.9.0",
     "stylelint-scss": "^1.4.3",
     "tslint": "^4.5.1",
-    "yargs": "^7.0.1"
+    "yargs": "^7.0.1",
+    "yargs-parser": "^5.0.0"
   },
   "devDependencies": {
     "@types/chalk": "^0.4.31",

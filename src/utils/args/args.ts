@@ -1,5 +1,6 @@
 import * as  _ from "lodash";
 import * as yargs from "yargs";
+import * as yargsParser from "yargs-parser";
 
 import { Arguments, ArgumentOptions } from "./args.model";
 
@@ -7,9 +8,7 @@ export namespace Args {
 
 	const ARGS_REQUIRED_FLAGS = ["require", "required", "demand"];
 
-	if (process.env.npm_config_argv) {
-		yargs.parse(JSON.parse(process.env.npm_config_argv).original);
-	}
+	yargs.parse(mergedConfigArgsAndProcessArgv());
 
 	set<Arguments>([{
 		key: "debug",
@@ -52,6 +51,39 @@ export namespace Args {
 		return yargs.argv;
 	}
 
+	/**
+	 * Merges `process.env.npm_config_argv` with `process.argv` and remove duplicate arguments
+	 *
+	 * @export
+	 * @returns {string[]}
+	 */
+	export function mergedConfigArgsAndProcessArgv(): string[] {
+		if (process.env.npm_config_argv) {
+			const parsedArgv = yargsParser.detailed(process.argv).argv;
+			const parsedConfigArgv = yargsParser.detailed(JSON.parse(process.env.npm_config_argv).original).argv;
+			const mergedArgv = { ...parsedArgv, ...parsedConfigArgv };
+			const convertedArgs: any[] = parsedArgv._;
+
+			_.forEach(mergedArgv, (value, key) => {
+				if (key === "_") {
+					return;
+				};
+
+				convertedArgs.push(`--${key}`, value);
+			});
+
+			return _.uniq(convertedArgs);
+		}
+
+		return process.argv;
+	}
+
+	/**
+	 * Merges `Default Arguments` object with process `Arguments` and `Options`
+	 *
+	 * @export
+	 * @returns {string[]}
+	 */
 	export function mergeWithOptions<T extends Partial<Arguments>>(defaultArgs: ArgumentOptions<T>[], options?: Partial<T>): T {
 		// if this has been called it means that the CLI was called and required 'args' have been passed.
 		// thus the required flags are not required anymore. Or it's from the API which we need to handle else where.
