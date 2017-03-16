@@ -72,7 +72,7 @@ export namespace Args {
 				convertedArgs.push(`--${key}`, value);
 			});
 
-			return _.uniq(convertedArgs);
+			return convertedArgs;
 		}
 
 		return process.argv;
