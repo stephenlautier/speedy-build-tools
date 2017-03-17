@@ -93,32 +93,32 @@ export namespace Args {
 	 */
 	export function parse(argv: string[]): Dictionary<any> {
 		const parsedArgv: Dictionary<any> = {};
-		let lastKey = "_";
+		let previousKey = "_";
 
 		for (let i = 0; i < argv.length; i++) {
 			const keyOrValue = argv[i];
 
 			if (_.startsWith(keyOrValue, "-") && !_.isNumber(keyOrValue)) {
-				lastKey = keyOrValue.replace(ARGS_REGEXP, "");
-				parsedArgv[lastKey] = true;
+				previousKey = keyOrValue.replace(ARGS_REGEXP, "");
+				parsedArgv[previousKey] = true;
 				continue;
 			}
 
 			if (_.isEmpty(parsedArgv)) {
-				parsedArgv[lastKey] = keyOrValue;
+				parsedArgv[previousKey] = keyOrValue;
 				continue;
 			}
 
-			const value = parsedArgv[lastKey];
+			const value = parsedArgv[previousKey];
 
 			if (keyOrValue === "true" || keyOrValue === "false") {
-				parsedArgv[lastKey] = !keyOrValue;
+				parsedArgv[previousKey] = keyOrValue === "true";
 			} else if (_.isBoolean(value)) {
-				parsedArgv[lastKey] = keyOrValue;
+				parsedArgv[previousKey] = keyOrValue;
 			} else if (_.isArray(value)) {
-				parsedArgv[lastKey] = [...value, keyOrValue];
+				parsedArgv[previousKey] = [...value, keyOrValue];
 			} else {
-				parsedArgv[lastKey] = [value, keyOrValue];
+				parsedArgv[previousKey] = [value, keyOrValue];
 			}
 		}
 
