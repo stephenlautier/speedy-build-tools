@@ -1,11 +1,12 @@
 import * as  _ from "lodash";
 import * as yargs from "yargs";
-import * as yargsParser from "yargs-parser";
 
+import { Dictionary } from "../dictionary";
 import { Arguments, ArgumentOptions } from "./args.model";
 
 export namespace Args {
 
+	const ARGS_REGEXP = /-/g;
 	const ARGS_REQUIRED_FLAGS = ["require", "required", "demand"];
 
 	yargs.parse(mergedConfigArgsAndProcessArgv());
@@ -58,24 +59,70 @@ export namespace Args {
 	 * @returns {string[]}
 	 */
 	export function mergedConfigArgsAndProcessArgv(): string[] {
-		if (process.env.npm_config_argv) {
-			const parsedArgv = yargsParser.detailed(process.argv).argv;
-			const parsedConfigArgv = yargsParser.detailed(JSON.parse(process.env.npm_config_argv).original).argv;
-			const mergedArgv = { ...parsedArgv, ...parsedConfigArgv };
-			const convertedArgs: any[] = parsedArgv._;
-
-			_.forEach(mergedArgv, (value, key) => {
-				if (key === "_") {
-					return;
-				};
-
-				convertedArgs.push(`--${key}`, value);
-			});
-
-			return convertedArgs;
+		if (!process.env.npm_config_argv) {
+			return process.argv;
 		}
 
-		return process.argv;
+		const parsedArgv = parse(process.argv);
+		const parsedConfigArgv = parse(JSON.parse(process.env.npm_config_argv).original);
+		const mergedArgv = { ...parsedArgv, ...parsedConfigArgv };
+		const tranformedArgs = _.flatten(_.get<string[]>(parsedArgv, "_"));
+
+		_.forEach(mergedArgv, (value, key) => {
+			if (key === "_") {
+				return;
+			};
+
+			if (_.isArray(value)) {
+				tranformedArgs.push(`--${key}`, ..._.flatten(value).map(_.toString));
+				return;
+			}
+
+			tranformedArgs.push(`--${key}`, _.toString(value));
+		});
+
+		return tranformedArgs;
+	}
+
+	/**
+	 * Parse Argv and tranform them to a Dictionary
+	 *
+	 * @export
+	 * @param {string[]} argv
+	 * @returns {Dictionary<any>}
+	 */
+	export function parse(argv: string[]): Dictionary<any> {
+		const parsedArgv: Dictionary<any> = {};
+		let lastKey = "_";
+
+		for (let i = 0; i < argv.length; i++) {
+			const keyOrValue = argv[i];
+
+			if (_.startsWith(keyOrValue, "-") && !_.isNumber(keyOrValue)) {
+				lastKey = keyOrValue.replace(ARGS_REGEXP, "");
+				parsedArgv[lastKey] = true;
+				continue;
+			}
+
+			if (_.isEmpty(parsedArgv)) {
+				parsedArgv[lastKey] = keyOrValue;
+				continue;
+			}
+
+			const value = parsedArgv[lastKey];
+
+			if (keyOrValue === "true" || keyOrValue === "false") {
+				parsedArgv[lastKey] = !keyOrValue;
+			} else if (_.isBoolean(value)) {
+				parsedArgv[lastKey] = keyOrValue;
+			} else if (_.isArray(value)) {
+				parsedArgv[lastKey] = [...value, keyOrValue];
+			} else {
+				parsedArgv[lastKey] = [value, keyOrValue];
+			}
+		}
+
+		return parsedArgv;
 	}
 
 	/**

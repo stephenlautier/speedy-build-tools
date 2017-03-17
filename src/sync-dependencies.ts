@@ -1,9 +1,7 @@
 import { join } from "path";
 import { writeFile } from "fs";
 
-import { Timer, Logger } from "./utils";
-
-type Dictionary<T> = { [key: string]: T };
+import { Timer, Logger, Dictionary } from "./utils";
 
 const logger = new Logger("Dependencies");
 const timer = new Timer(logger);
