@@ -59,7 +59,7 @@ npm run sync
 | `sync-dependencies` | Sync dependencies between projects                     |
 | `link`              | Link to an OBG Library. Don’t provide the @obg/ prefix |
 | `lint-sass`         | Lint Sass files                                        |
-| `lint-ts`           | Lint Typescipt files                                   |
+| `lint-ts`           | Lint Typescript files                                  |
 
 ___
 
