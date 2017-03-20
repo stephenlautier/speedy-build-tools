@@ -60,6 +60,7 @@ npm run sync
 | `link`              | Link to an OBG Library. Don’t provide the @obg/ prefix |
 | `lint-sass`         | Lint Sass files                                        |
 | `lint-ts`           | Lint Typescipt files                                   |
+| `lint-html`         | Lint Html files                                        |
 
 ___
 
@@ -73,6 +74,22 @@ obg-build-tools clean --paths .tmp/**
 |---------------|-----------------------------------------------|-------|
 | `--paths, -p` | Paths to be deleted - Supports glob patterns  | Array |
 
+___
+
+### Lint Html
+
+```
+obg-build-tools lint-html
+```
+
+| Option              | Description                                                           | Default Value           | Type    |
+|---------------------|-----------------------------------------------------------------------|-------------------------|---------|
+| `--config`, `-c`    | Lint rules file path                                                  | `.htmlhintrc`           | string  |
+| `--files`, `-f`     | Files to be linted - Supports glob patterns                           | `src/**/*.*(html|htm)`  | Array   |
+| `--continueOnError` | Determines whether to exit with a non-zero status code on lint errors | `false`                 | boolean |
+
+#### Rules
+By default, it will try to locate the `.htmlhintrc` file in the root of your project folder. If the file is not found it will fallback to an internal `.htmlhintrc`. This file can also be used as a base for your rules.
 ___
 
 ### Lint Sass
@@ -135,6 +152,15 @@ To display help when running the task from a mapped npm script you should omit t
 ```
 npm run lint-sass help
 ```
+
+## Stack
+
+- [Stylelint](https://github.com/stylelint/stylelint)
+- [Stylelint SCSS](https://github.com/kristerkari/stylelint-scss)
+- [Stylefmt](https://github.com/morishitter/stylefmt)
+- [TSLint](http://palantir.github.io/tslint)
+- [Codelyzer](https://github.com/mgechev/codelyzer)
+- [HTMLHint](https://github.com/yaniswang/HTMLHint)
 
 ## Contributing to the project
 In order to contribute please read the [Contribution guidelines][contribWiki].
