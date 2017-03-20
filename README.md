@@ -160,6 +160,7 @@ npm run lint-sass help
 - [Stylefmt](https://github.com/morishitter/stylefmt)
 - [TSLint](http://palantir.github.io/tslint)
 - [Codelyzer](https://github.com/mgechev/codelyzer)
+- [@obg/fe.tools.tslint](https://bitbucketsson.betsson.local/projects/OT/repos/obg.fe.tools.tslint)
 - [HTMLHint](https://github.com/yaniswang/HTMLHint)
 
 ## Contributing to the project
