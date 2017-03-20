@@ -6,9 +6,12 @@ import { LintSassOptions } from "./lint-sass.model";
 
 describe("lintSassSpec", () => {
 
-	const OPTIONS: Partial<LintSassOptions> = {
+	const OPTIONS: LintSassOptions = {
+		config: ".stylelintrc",
 		continueOnError: true,
-		fix: false
+		formatter: "verbose",
+		fix: false,
+		files: []
 	};
 
 	beforeEach(() => {
@@ -33,7 +36,7 @@ describe("lintSassSpec", () => {
 		mockFs.restore();
 	});
 
-	it("must return errors when incorrect SASS is present", async done => {
+	it("should return errors when incorrect SASS is present", async done => {
 		const result = await handleLintSass({
 			...OPTIONS,
 			files: "**/*.scss"
@@ -43,7 +46,7 @@ describe("lintSassSpec", () => {
 		done();
 	});
 
-	it("must not return errors when SASS is valid", async done => {
+	it("should not return errors when SASS is valid", async done => {
 		const result = await handleLintSass({
 			...OPTIONS,
 			files: "src/valid.scss"
@@ -53,7 +56,7 @@ describe("lintSassSpec", () => {
 		done();
 	});
 
-	it("must fix errors when `fix` parameter is set to true", async done => {
+	it("should fix errors when `fix` parameter is set to true", async done => {
 		const result = await handleLintSass({
 			...OPTIONS,
 			files: "src/can-fix.scss",
@@ -64,7 +67,7 @@ describe("lintSassSpec", () => {
 		done();
 	});
 
-	it("must not fix errors when `fix` parameter is set to false", async done => {
+	it("should not fix errors when `fix` parameter is set to false", async done => {
 		const result = await handleLintSass({
 			...OPTIONS,
 			files: "src/can-fix.scss"
