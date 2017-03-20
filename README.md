@@ -50,12 +50,22 @@ To run the build script found in the package.json scripts property, execute:
 npm run sync
 ```
 
+## CLI
+
+Tasks can be used via CLI (without adding them to NPM scripts).
+
+```
+obg-build-tools clean **/.tmp
+
+// or shorthand
+obg clean **/.tmp
+```
 
 ## Tasks
 
 | Task                | Description                                            |
 |---------------------|--------------------------------------------------------|
-| `clean`             | Delete files and directories                           |
+| `clean [paths..]`   | Delete files and directories                           |
 | `sync-dependencies` | Sync dependencies between projects                     |
 | `link`              | Link to an OBG Library. Don’t provide the @obg/ prefix |
 | `lint-sass`         | Lint Sass files                                        |
@@ -67,6 +77,7 @@ ___
 
 ```
 obg-build-tools clean --paths .tmp/**
+obg-build-tools clean .tmp/** .test/**
 ```
 
 | Option        | Description                                   | Type  |
