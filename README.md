@@ -52,14 +52,12 @@ npm run sync
 
 ## CLI
 
-You can also use the CLI tasks direcly without the need to added them as NPM scripts.
+Tasks can be used via CLI (without adding them to NPM scripts).
+
 ```
 obg-build-tools clean **/.tmp
-```
 
-alternatively use the shorthand version:
-
-```
+// or shorthand
 obg clean **/.tmp
 ```
 
