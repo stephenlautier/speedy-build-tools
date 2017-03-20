@@ -11,7 +11,7 @@ describe("argsSpec", () => {
 
 		beforeAll(() => {
 			process.env.npm_config_argv = JSON.stringify({
-				original: [
+				cooked: [
 					"run",
 					"clean",
 					"--config",
@@ -38,15 +38,16 @@ describe("argsSpec", () => {
 			process.env.npm_config_argv = npmConfigArgv;
 		});
 
-		it("must merge and override process.env.npm_config_argv with process.args values", () => {
+		it("should merge and override process.env.npm_config_argv with process.args values", () => {
 			yargs.parse(Args.mergedConfigArgsAndProcessArgv());
 
 			expect(yargs.argv.config).toBe("config.txt");
 			expect(yargs.argv.debug).toBe(true);
 		});
 
-		it("must return 'files' argument as array", () => {
+		it("should return 'files' argument as array", () => {
 			yargs.parse(Args.mergedConfigArgsAndProcessArgv());
+			yargs.array("files");
 
 			expect(yargs.argv.files).toEqual([
 				"file-1.txt",
@@ -59,7 +60,7 @@ describe("argsSpec", () => {
 	describe("parse", () => {
 		const ARGS = ["--debug", "--config", "config-1.txt", "config-2.txt", "--help", "false"];
 
-		it("must parse 'Args' and convert them to a dictionary", () => {
+		it("should parse 'Args' and convert them to a dictionary", () => {
 			const parsedArgs = Args.parse(ARGS);
 			expect(_.get(parsedArgs, "help")).toBe(false);
 			expect(_.get(parsedArgs, "debug")).toBe(true);
