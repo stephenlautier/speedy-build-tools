@@ -70,7 +70,7 @@ obg clean **/.tmp
 | `link`              | Link to an OBG Library. Don’t provide the @obg/ prefix |
 | `lint-sass`         | Lint Sass files                                        |
 | `lint-html`         | Lint Html files                                        |
-| `lint-ts`           | Lint Typescript files                                  |
+| `lint-ts`           | Lint TypeScript files                                  |
 
 ___
 
@@ -121,7 +121,7 @@ obg-build-tools lint-sass
 By default, it will try to locate the `.stylelintrc` file in the root of your project folder. If the file is not found it will fallback to an internal `.stylelintrc`. This file can also be used as a base for your rules.
 ___
 
-### Lint Typescript
+### Lint TypeScript
 
 ```
 obg-build-tools lint-ts

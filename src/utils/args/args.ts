@@ -136,7 +136,7 @@ export namespace Args {
 	export function mergeWithOptions<T>(defaultArgs: ArgumentOptions<T>[], options?: Partial<T>): T {
 		const defaultOptions = {} as T;
 
-		for (let arg of defaultArgs) {
+		for (const arg of defaultArgs) {
 			if (_.isNil(arg.default)) {
 				continue;
 			}

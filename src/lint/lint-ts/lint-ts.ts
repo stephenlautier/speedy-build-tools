@@ -23,7 +23,7 @@ export async function lintTs(options?: Partial<LintTsOptions>): Promise<LintTsRe
 	try {
 		timer.start();
 		const mergedOptions = Args.mergeWithOptions(ARGS, options);
-		return await Worker.run<LintTsResult>(__filename, handlelintTs.name, mergedOptions);
+		return await Worker.run<LintTsResult>(__filename, handleLintTs.name, mergedOptions);
 	} catch (error) {
 		logger.error("", error);
 		throw error;
@@ -33,9 +33,9 @@ export async function lintTs(options?: Partial<LintTsOptions>): Promise<LintTsRe
 }
 
 /** @internal */
-export async function handlelintTs(options: LintTsOptions): Promise<LintTsResult> {
+export async function handleLintTs(options: LintTsOptions): Promise<LintTsResult> {
 	const configFilePath = getConfigFilePath(options.config);
-	logger.debug(handlelintTs.name, `Config file path: ${configFilePath}`);
+	logger.debug(handleLintTs.name, `Config file path: ${configFilePath}`);
 
 	const configData = await readJsonFileAsync<Configuration.IConfigurationLoadResult>(configFilePath);
 
@@ -74,7 +74,7 @@ async function lintFile(filePath: string, configData: Configuration.IConfigurati
 /** @internal */
 export const lintTsModule = buildCommandModule({
 	command: "lint-ts",
-	description: "Lint Typescript files",
+	description: "Lint TypeScript files",
 	handler: lintTs,
 	args: ARGS
 });
