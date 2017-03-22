@@ -9,6 +9,7 @@
 			"spec",
 			"mock"
 		],
+		"prefer-const": true,
 		"multiline-constructor-params": true,
 		"no-duplicate-imports": true,
 		"import-vendors-first": [
