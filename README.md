@@ -65,7 +65,7 @@ obg clean **/.tmp
 
 | Task                | Description                                            |
 |---------------------|--------------------------------------------------------|
-| `clean [paths..]`   | Delete files and directories                           |
+| `clean [paths...]`  | Delete files and directories                           |
 | `sync-dependencies` | Sync dependencies between projects                     |
 | `link`              | Link to an OBG Library. Don’t provide the @obg/ prefix |
 | `lint-sass`         | Lint Sass files                                        |
