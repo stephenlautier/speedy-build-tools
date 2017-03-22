@@ -59,7 +59,7 @@ export async function handleLintHtml(options: LintHtmlOptions): Promise<HtmlLint
 }
 
 async function lintFile(filePath: string, configData: RuleSet): Promise<HtmlLintResult> {
-	logger.debug(lintFile.name,`filePath: ${filePath}`);
+	logger.debug(lintFile.name, `filePath: ${filePath}`);
 
 	return {
 		result: HTMLHint.verify(await readFileAsync(filePath), configData),
