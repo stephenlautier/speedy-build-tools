@@ -11,7 +11,6 @@ import {
 	getConfigFilePath,
 	readJsonFileAsync
 } from "../../utils";
-
 import { LintTsOptions, LintTsResult } from "./lint-ts.model";
 import { ARGS } from "./lint-ts.args";
 
