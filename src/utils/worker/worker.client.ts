@@ -3,6 +3,7 @@ import { join } from "path";
 import { findIndex } from "lodash";
 
 import { Logger } from "../logger";
+import "./worker.process";
 import { WorkerProcess, WorkerMessage } from "./worker.model";
 
 const logger = new Logger("Worker Client");
