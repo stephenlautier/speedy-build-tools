@@ -35,7 +35,7 @@ createLink("@obg", "ng2.common");
 
 ## NPM Scripts
 
-Instead of depending on external task runners, Obg Build Tools can be configured to being executed from npm scripts.
+Instead of depending on external task runners, `obg-build-tools` can be configured to run from npm scripts in `package.json`.
 
 ```json
 "scripts": {
@@ -52,7 +52,7 @@ npm run sync
 
 ## CLI
 
-Tasks can be used via CLI (without adding them to NPM scripts).
+CLI can also be used directly without being added to NPM scripts.
 
 ```
 obg-build-tools clean **/.tmp
@@ -100,7 +100,10 @@ obg-build-tools lint-html
 | `--continueOnError` | Determines whether to exit with a non-zero status code on lint errors | `false`                 | boolean |
 
 #### Rules
-By default, it will try to locate the `.htmlhintrc` file in the root of your project folder. If the file is not found it will fallback to an internal `.htmlhintrc`. This file can also be used as a base for your rules.
+By default, it will try to locate the `.htmlhintrc` file in the root of your project folder.
+
+If the file is not found it will fallback to an internal `.htmlhintrc`.
+This file can also be used as a base for your rules.
 ___
 
 ### Lint Sass
@@ -118,7 +121,10 @@ obg-build-tools lint-sass
 | `--continueOnError` | Determines whether to exit with a non-zero status code on lint errors | `false`                 | boolean |
 
 #### Rules
-By default, it will try to locate the `.stylelintrc` file in the root of your project folder. If the file is not found it will fallback to an internal `.stylelintrc`. This file can also be used as a base for your rules.
+By default, it will try to locate the `.stylelintrc` file in the root of your project folder.
+
+If the file is not found it will fallback to an internal `.stylelintrc`.
+This file can also be used as a base for your rules.
 ___
 
 ### Lint Typescript
@@ -136,7 +142,10 @@ obg-build-tools lint-ts
 | `--continueOnError` | Determines whether to exit with a non-zero status code on lint errors | `false`       | boolean |
 
 #### Rules
-By default, it will try to locate the `tslint.json` file in the root of your project folder. If the file is not found it will fallback to an internal `tslint.json`. This file can also be used as a base for your rules.
+By default, it will try to locate the `tslint.json` file in the root of your project folder.
+
+If the file is not found it will fallback to an internal `tslint.json`.
+This file can also be used as a base for your rules.
 
 ___
 
