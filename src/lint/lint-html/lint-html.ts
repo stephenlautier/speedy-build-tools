@@ -12,8 +12,7 @@ import {
 	readFileAsync,
 	glob,
 	buildCommandModule,
-	getConfigFilePath,
-	Dictionary
+	getConfigFilePath
 } from "../../utils";
 
 import { LintHtmlOptions, HtmlLintResult } from "./lint-html.model";
@@ -58,8 +57,7 @@ export async function handleLintHtml(options: LintHtmlOptions): Promise<HtmlLint
 	return failures;
 }
 
-// todo: change Dictionary to type boolean | string when typyings are released
-async function lintFile(filePath: string, configData: Dictionary<any>): Promise<HtmlLintResult> {
+async function lintFile(filePath: string, configData: RuleSet): Promise<HtmlLintResult> {
 	logger.debug(lintFile.name, `filePath: ${filePath}`);
 
 	return {
