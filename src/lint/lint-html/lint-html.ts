@@ -70,7 +70,7 @@ async function lintFile(filePath: string, configData: RuleSet): Promise<HtmlLint
 function formatFailuresForFile(failure: HtmlLintResult): string {
 	let message = `\n${failure.filePath.replace(getRootPath(), "")}`;
 
-	for (let error of failure.result) {
+	for (const error of failure.result) {
 		message += `\n${red(`${error.line}:${error.col}`)}: ${white(error.message)} ${yellow(`(${error.rule.id})`)}`;
 	}
 

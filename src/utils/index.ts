@@ -1,6 +1,7 @@
 export * from "./file-system";
 export * from "./dictionary";
 export * from "./worker";
+export * from "./string";
 export * from "./args";
 
 export { Logger } from "./logger";

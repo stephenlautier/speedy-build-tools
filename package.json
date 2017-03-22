@@ -13,7 +13,8 @@
     "tools"
   ],
   "bin": {
-    "obg-build-tools": "./bin/obg-build-tools.js"
+    "obg-build-tools": "./bin/obg-build-tools.js",
+    "obg": "./bin/obg-build-tools.js"
   },
   "author": "One Betsson Group Frontend",
   "license": "MIT",

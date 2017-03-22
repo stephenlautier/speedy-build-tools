@@ -1,6 +1,6 @@
 import * as mockFs from "mock-fs";
-import { Logger } from "../../utils";
 
+import { Logger } from "../../utils";
 import { handleLintHtml } from "./lint-html";
 
 describe("lintHtmlSpec", () => {
@@ -21,28 +21,26 @@ describe("lintHtmlSpec", () => {
 			mockFs.restore();
 		});
 
-		it("should return errors when incorrect HTML is present", done => {
-			handleLintHtml({
+		it("should return errors when incorrect HTML is present", async done => {
+			const result = await handleLintHtml({
 				files: "src/**/*.html",
 				config: ".htmlhintrc",
 				continueOnError: true
-			})
-				.then(result => {
-					expect(result).toBeTruthy();
-					done();
-				});
+			});
+
+			expect(result.length).toBeGreaterThan(0);
+			done();
 		});
 
-		it("should not return errors when HTML is valid", done => {
-			handleLintHtml({
+		it("should not return errors when HTML is valid", async done => {
+			const result = await handleLintHtml({
 				files: "src/valid.html",
 				config: ".htmlhintrc",
 				continueOnError: true
-			})
-				.then(result => {
-					expect(result.length).toBeFalsy();
-					done();
-				});
+			});
+
+			expect(result.length).toBe(0);
+			done();
 		});
 
 	});
