@@ -30,7 +30,13 @@ export namespace Worker {
 					kill(worker.pid);
 				})
 				.on("error", error => logger.error(`task: ${task}, pid: ${worker.pid}`, error))
-				.on("exit", () => logger.debug(run.name, `Exit task: ${task}, pid: ${worker.pid}`))
+				.on("exit", code => {
+					logger.debug(run.name, `Exit task: ${task}, pid: ${worker.pid}, exitCode: ${code}`);
+
+					if (code > 0) {
+						process.exit(1);
+					}
+				})
 				.send({
 					task,
 					modulePath,
