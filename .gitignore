@@ -1,10 +1,5 @@
 node_modules
-jspm_packages
-bower_components
-_artifact
-.idea
+/dist
 .vscode
-dist/
-*.log
-npm-debug.*
-test
+.log
+*.tgz
