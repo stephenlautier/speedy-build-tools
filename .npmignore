@@ -1,19 +1,17 @@
-jspm_packages
-bower_components
 node_modules
 /.idea
 /tools
-/_artifact
 /typings
-/test
 /src
-.vscode
+/tsconfig.json
+/tslint.json
 
+.vscode
 .editorconfig
-gulpfile.js
+jasmine.json
 jsconfig.json
 karma.conf.js
 karma-test-shim.js
-tsconfig.json
-tslint.json
-typings.json
+tsconfig.build.json
+tsconfig.test.json
+*.tgz
