@@ -26,6 +26,7 @@
 		],
 		// tslint
 		"prefer-const": true,
+		"prefer-for-of": true,
 		"seperator-between-imports": false,
 		"class-name": true,
 		"comment-format": [
