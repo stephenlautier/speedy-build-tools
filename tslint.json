@@ -1,5 +1,8 @@
 {
 	"extends": [
 		"./config/tslint.json"
+	],
+	"rulesDirectory": [
+		"./node_modules/@obg/fe.tools.tslint/dist/amd/rules"
 	]
 }
