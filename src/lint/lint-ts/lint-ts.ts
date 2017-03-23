@@ -8,8 +8,7 @@ import {
 	buildCommandModule,
 	Args,
 	glob,
-	getConfigFilePath,
-	readJsonFileAsync
+	getConfigFilePath
 } from "../../utils";
 import { LintTsOptions, LintTsResult } from "./lint-ts.model";
 import { ARGS } from "./lint-ts.args";
@@ -36,7 +35,7 @@ export async function handleLintTs(options: LintTsOptions): Promise<LintTsResult
 	const configFilePath = getConfigFilePath(options.config);
 	logger.debug(handleLintTs.name, `Config file path: ${configFilePath}`);
 
-	const configData = await readJsonFileAsync<Configuration.IConfigurationLoadResult>(configFilePath);
+	const configData = Configuration.loadConfigurationFromPath(configFilePath);
 
 	if (!configData) {
 		throw new Error(`Cannot retrieve 'config' data, path: ${options.config}`);
