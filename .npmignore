@@ -1,12 +1,13 @@
 node_modules
 /.idea
+/.vscode
 /tools
 /typings
 /src
 /tsconfig.json
 /tslint.json
 
-.vscode
+.npmignore
 .editorconfig
 jasmine.json
 jsconfig.json
@@ -14,4 +15,5 @@ karma.conf.js
 karma-test-shim.js
 tsconfig.build.json
 tsconfig.test.json
+yarn.lock
 *.tgz
